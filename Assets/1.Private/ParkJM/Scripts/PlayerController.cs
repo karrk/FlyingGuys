@@ -84,6 +84,7 @@ public class PlayerObject : MonoBehaviourPun
         if (!photonView.IsMine) 
             return;
 
+        MovePlayer();
         //Vector3 inputDir = PlayerController.inputs[player.GetPlayerNumber()].inputDir;
 
 
