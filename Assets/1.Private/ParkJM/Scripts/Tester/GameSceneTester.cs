@@ -42,7 +42,7 @@ public class GameSceneTester : MonoBehaviourPunCallbacks
     public void SpawnPlayer()
     {
         Vector3 randomPos = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-        PhotonNetwork.Instantiate("TestPlayer", randomPos, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", randomPos, Quaternion.identity);
     }
 
     IEnumerator StartDelayCoroutine()
