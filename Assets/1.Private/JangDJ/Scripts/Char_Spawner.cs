@@ -5,12 +5,22 @@ using UnityEngine;
 
 public class Char_Spawner : MonoBehaviour
 {
+    public static Char_Spawner Instance { get; private set; }
+
     [SerializeField] private CapsuleCollider _characterCollider;
     [SerializeField] private int _testCount = 5;
-    [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger(); 
+    [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger();
+
+    public List<GameObject> SpawnedPlayers { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
+        SpawnedPlayers = new List<GameObject>();
         _ranger.CalculateSize();
         _ranger.SettingPlayerInfo(_characterCollider, 3);
         _ranger.DrawCrossRay();
@@ -20,8 +30,14 @@ public class Char_Spawner : MonoBehaviour
     {
         // TODO 플레이어 넘버 = 0부터
 
-        //Vector3 forward = Camera.main.transform.forward;
-        //PhotonNetwork.InstantiateRoomObject("Character", _ranger[playerNumber], Quaternion.Euler(forward));
+        Vector3 forward = Camera.main.transform.forward;
+        GameObject playerObject = PhotonNetwork.InstantiateRoomObject("Player", _ranger[playerNumber], Quaternion.Euler(forward));
+        SpawnedPlayers.Add(playerObject);
+    }
+
+    private void OnDisable()
+    {
+        Instance = null;
     }
 }
 
@@ -63,7 +79,7 @@ public class Tr_Ranger
 
         _xInterval = _width/maxPlayerCount;
 
-        Debug.Log(_xInterval);
+        //Debug.Log(_xInterval);
 
         if(CheckUseableRange(ObjectRadius, maxPlayerCount) == false)
         {
