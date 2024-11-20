@@ -19,9 +19,9 @@ public class Char_Spawner : MonoBehaviour
     public void Spawn(int playerNumber)
     {
         // TODO 플레이어 넘버 = 0부터
-
+        Debug.Log($"{playerNumber}. 캐릭터 생성");
+        PhotonNetwork.InstantiateRoomObject("Player", _ranger[playerNumber], Quaternion.identity);
         //Vector3 forward = Camera.main.transform.forward;
-        //PhotonNetwork.InstantiateRoomObject("Character", _ranger[playerNumber], Quaternion.Euler(forward));
     }
 }
 
