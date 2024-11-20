@@ -13,6 +13,7 @@ public class Char_Spawner : MonoBehaviour
     {
         _ranger.CalculateSize();
         _ranger.SettingPlayerInfo(_characterCollider, 3);
+        _ranger.DrawCrossRay();
     }
 
     public void Spawn(int playerNumber)
@@ -21,14 +22,6 @@ public class Char_Spawner : MonoBehaviour
 
         //Vector3 forward = Camera.main.transform.forward;
         //PhotonNetwork.InstantiateRoomObject("Character", _ranger[playerNumber], Quaternion.Euler(forward));
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _ranger.DrawCrossRay();
-        }
     }
 }
 
