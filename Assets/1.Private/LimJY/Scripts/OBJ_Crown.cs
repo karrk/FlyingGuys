@@ -28,13 +28,13 @@ public class OBJ_Crown : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            CrownDisable(other.gameObject);
-        }
-    }
+    //private void OnTriggerStay(Collider[] other)
+    //{
+    //    //if (other[].CompareTag("Player"))
+    //    //{
+
+    //    //}
+    //}
 
     private void OnTriggerExit(Collider other)
     {
@@ -48,14 +48,23 @@ public class OBJ_Crown : MonoBehaviour
     // -------------------------------------------------------------------------
 
     /// <summary>
-    /// 왕관 오브젝트 비활성화 조건
+    /// 왕관 오브젝트 비활성화
     /// <summary>
-    void CrownDisable(GameObject Player)
+    void CrownDisable(GameObject[] Player)
     {
         if (IsGrabEnable)
         {
             // 잡기 기능이 활성화 상태일 때,
             // Player의 State가 grab으로 변경 시, 왕관 오브젝트를 비활성화 한다.
+            /*
+
+                for (int i = 0; i < Player.Length; i++)
+                {
+                    if (Player.PlayerController.State !=  State.Grab) return;
+
+                    PlayerWinner = Player[i];
+                }
+             */
             gameObject.SetActive(false); // 추후 if문 사용 예정
         }
         else
@@ -81,6 +90,7 @@ public class OBJ_Crown : MonoBehaviour
 
         // PlayerWinner.animator.Play(우승 모션 재생);
         StartCoroutine(ShortLoadingPlay());
+
     }
 
     IEnumerator ShortLoadingPlay()
