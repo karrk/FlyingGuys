@@ -4,21 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetWorkManager : MonoBehaviourPunCallbacks
+public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 {
     public static NetWorkManager Instance { get; private set; }
 
-    private void Awake()
+    public void Init()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
     }
 
     public override void OnConnectedToMaster()
@@ -30,4 +22,6 @@ public class NetWorkManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.JoinOrCreateRoom("Room", options, TypedLobby.Default);
     }
+
+
 }
