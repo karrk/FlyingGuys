@@ -13,9 +13,12 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public Player player;
     public Vector3 inputDir;
     public Rigidbody rb;
+    public int playerNumber;
+
+    // 상태
     [SerializeField] E_PlayeState curState;
     private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
-    public int playerNumber;
+    
 
     private void Awake()
     {
@@ -29,6 +32,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
         player = PhotonNetwork.LocalPlayer;
         playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        inputs[playerNumber] = this;
+        
     }
 
 
@@ -39,7 +44,9 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
         //player = PhotonNetwork.LocalPlayer;
         //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        Debug.Log($"플레이어 넘버 :  {player.GetPlayerNumber()}");
+        Debug.Log($"플레이어 넘버1 :  {player.GetPlayerNumber()}");
+        Debug.Log($"플레이어 넘버2 :  {playerNumber}");
+
         if (playerNumber >= 0 && playerNumber < inputs.Length)
         {
             inputs[playerNumber] = this;
@@ -95,6 +102,9 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         Util.SendAndReceiveStruct(stream, ref inputDir);
     }
+
+
+    // 상태
 
     /// <summary>
     /// 상태 변경 기본 틀

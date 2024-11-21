@@ -8,12 +8,13 @@ using Photon.Pun.UtilityScripts;
 [System.Serializable]
 public class PlayerObject : MonoBehaviourPun
 {
-    [SerializeField] PlayerController player;
+    public Player player;
+    [SerializeField] PlayerController playerController;
     [SerializeField] float moveSpeed = 5f;
 
     private void Start()
     {
-        player = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -30,14 +31,14 @@ public class PlayerObject : MonoBehaviourPun
             Debug.Log("마스터 플레이어가 아닙니다.");
             return;
         }
-            
 
+        // 인덱스 에러
+        Vector3 inputDir = PlayerController.inputs[player.GetPlayerNumber()].inputDir;
+       // Vector3 inputDir = PlayerController.inputs[playerController.playerNumber].inputDir;
         MoveAllPlayer();
-        //Vector3 inputDir = PlayerController.inputs[player.GetPlayerNumber()].inputDir;
-
-
     }
 
+    // 이렇게 하는게 아닌것같은데
     private void MoveAllPlayer()
     {
         foreach (PlayerController player in PlayerController.inputs)
