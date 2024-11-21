@@ -7,7 +7,6 @@ public class Char_Spawner : MonoBehaviour
 {
     public static Char_Spawner Instance { get; private set; }
 
-    [SerializeField] private CapsuleCollider _characterCollider;
     [SerializeField] private int _testCount = 5;
     [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger();
 
