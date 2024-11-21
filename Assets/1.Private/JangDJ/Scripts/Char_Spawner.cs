@@ -3,19 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Char_Spawner : MonoBehaviour
+public class Char_Spawner : MonoBehaviourPun
 {
     public static Char_Spawner Instance { get; private set; }
 
-    [SerializeField] private CapsuleCollider _characterCollider;
     [SerializeField] private int _testCount = 5;
     [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger();
 
     // 생성된 플레이어 게임 오브젝트 목록 // Player 컴포넌트를 받아오는게 좋을것같음
     public List<GameObject> SpawnedPlayers { get; private set; }
 
+    private int _spawnNumber = 0;
+
     private void Awake()
     {
+        if (PhotonNetwork.IsMasterClient != this)
+            Destroy(this.gameObject);
+
         Instance = this;
     }
 
@@ -30,13 +34,19 @@ public class Char_Spawner : MonoBehaviour
     /// <summary>
     /// 플레이어의 ID를 기반으로 캐릭터를 스폰합니다.
     /// </summary>
-    public void Spawn(int playerNumber)
+    public void SpawnCharacter()
     {
-        // TODO 플레이어 넘버 = 0부터
+        photonView.RPC(nameof(CreatePlayer), RpcTarget.MasterClient);
+    }
 
-        Vector3 forward = Camera.main.transform.forward;
-        GameObject playerObject = PhotonNetwork.InstantiateRoomObject("Player", _ranger[playerNumber], Quaternion.Euler(forward));
-        SpawnedPlayers.Add(playerObject);
+    [PunRPC]
+    private void CreatePlayer(PhotonMessageInfo info)
+    {
+        GameObject newObj = PhotonNetwork.InstantiateRoomObject
+            ("Player", _ranger[_spawnNumber++], 
+            Quaternion.Euler(Camera.main.transform.forward), data: new object[] { info.Sender });
+
+        SpawnedPlayers.Add(newObj);
     }
 
     private void OnDisable()
