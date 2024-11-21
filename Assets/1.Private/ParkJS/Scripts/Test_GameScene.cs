@@ -33,6 +33,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         Debug.Log("게임 시작");
 
         // TODO : 모든 클라이언트가 실행 하는 곳
+        PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
 
         if (PhotonNetwork.IsMasterClient == false)
@@ -46,6 +47,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     {
         // TODO : 플레이어 리모트 스폰 추가
 
-        //charSpawner.SpawnCharacter(info);
+        charSpawner.SpawnCharacter(info);
     }
 }

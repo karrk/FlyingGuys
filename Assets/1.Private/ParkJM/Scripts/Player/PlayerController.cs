@@ -9,11 +9,14 @@ public class PlayerController : MonoBehaviourPun
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] Vector3 moveDir;
-    
+    [SerializeField] Vector3 rotVec;
+
     private Player player;
     [SerializeField] int playerNumber;
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
+
+    [SerializeField] CamController _cam;
 
     private void Awake()
     {
@@ -41,7 +44,14 @@ public class PlayerController : MonoBehaviourPun
             return;
 
         moveDir = RemoteInput.inputs[playerNumber].MoveDir;
-        rb.velocity = moveDir.normalized * moveSpeed;
+        rotVec = RemoteInput.inputs[playerNumber].RotVec;
+
+        rb.velocity = moveDir.normalized * moveSpeed + Vector3.up * rb.velocity.y;
+    }
+
+    private void LateUpdate()
+    {
+        _cam.RotY(rotVec.y);
     }
 
     private void JumpTemp()
