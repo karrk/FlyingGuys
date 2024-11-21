@@ -34,19 +34,21 @@ public class GameSceneTester : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsMasterClient)
             return;
-        // ToDo : 방장만 플레이어를 스폰시켜주도록
-        SpawnPlayer();
     }
 
-    public void SpawnPlayer()
+    [PunRPC]
+    public void SpawnPlayer(PhotonMessageInfo info)
     {
         Vector3 randomPos = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-        PhotonNetwork.InstantiateRoomObject("Player", randomPos, Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject("Player", randomPos, Quaternion.identity, data: new object[] {info.Sender});
     }
 
     IEnumerator StartDelayCoroutine()
     {
         yield return new WaitForSeconds(1f);
+        PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
+        photonView.RPC(nameof(SpawnPlayer), RpcTarget.MasterClient);
+
         TestGameStart();
     }
 }

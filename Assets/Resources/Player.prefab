@@ -452,13 +452,12 @@ GameObject:
   - component: {fileID: 8114245683819531038}
   - component: {fileID: 8114245683819531039}
   - component: {fileID: 8114245683819531036}
-  - component: {fileID: 8114245683819531037}
   - component: {fileID: 8114245683819531008}
   - component: {fileID: 8114245683819531009}
-  - component: {fileID: 153295334526381470}
+  - component: {fileID: 8825885715882704432}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,7 +493,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &8114245683819531036
 CapsuleCollider:
@@ -510,21 +509,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8114245683819531037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8114245683819531034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cc2bfcb025f43e499c9ed89a1001bf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputDir: {x: 0, y: 0, z: 0}
-  rb: {fileID: 0}
-  playerNumber: 0
 --- !u!114 &8114245683819531008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,11 +524,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8114245683819531037}
   - {fileID: 8114245683819531009}
   sceneViewId: 0
   InstantiationId: 0
@@ -562,10 +545,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &153295334526381470
+--- !u!114 &8825885715882704432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -574,8 +557,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8114245683819531034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148703e3fcb66dd49a33f0401871713f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cc2bfcb025f43e499c9ed89a1001bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  rb: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
+  playerNumber: 0
   moveSpeed: 5
+  jumpForce: 10

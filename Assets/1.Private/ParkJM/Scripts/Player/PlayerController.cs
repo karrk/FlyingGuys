@@ -1,120 +1,51 @@
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
 
-
-public class PlayerController : MonoBehaviourPun, IPunObservable
+public class PlayerController : MonoBehaviourPun
 {
+    [SerializeField] Rigidbody rb;
+    [SerializeField] Vector3 moveDir;
     
-    public static PlayerController[] inputs = new PlayerController[8]; // 임시 최대인원수
-    public Player player;
-    public Vector3 inputDir;
-    public Rigidbody rb;
-    public int playerNumber;
-
-    // 상태
-    [SerializeField] E_PlayeState curState;
-    private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
-    
+    private Player player;
+    [SerializeField] int playerNumber;
+    [SerializeField] float moveSpeed;
+    [SerializeField] float jumpForce;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    private void OnEnable()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        player = PhotonNetwork.LocalPlayer;
-        playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        inputs[playerNumber] = this;
-        
-    }
-
-
-    private void Start()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        //player = PhotonNetwork.LocalPlayer;
-        //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        Debug.Log($"플레이어 넘버1 :  {player.GetPlayerNumber()}");
-        Debug.Log($"플레이어 넘버2 :  {playerNumber}");
-
-        if (playerNumber >= 0 && playerNumber < inputs.Length)
-        {
-            inputs[playerNumber] = this;
-        }
-        else
-        {
-            Debug.LogError($"플레이어 넘버 인덱스 오류: {playerNumber}");
-        }
-        
+        player = (Player)photonView.InstantiationData[0];
+        playerNumber = player.GetPlayerNumber();
     }
 
     private void Update()
     {
-        if(!photonView.IsMine)
+        if (!photonView.IsMine)
             return;
 
-        HandleInputs();
-
-        //if(Input.GetKeyDown("Jump"))
-
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (RemoteInput.inputs[playerNumber].jumpInput)
         {
-            photonView.RPC(nameof(Jump), RpcTarget.MasterClient);
+            Debug.Log("점프 입력됨");
+            JumpTemp();
+            RemoteInput.inputs[playerNumber].jumpInput = false;
         }
-
-        //photonView.RPC(nameof(SentMoveInputToMaster), RpcTarget.MasterClient, inputDir);
     }
 
-    private void HandleInputs()
+    private void FixedUpdate()
     {
-        inputDir.x = Input.GetAxisRaw("Horizontal");
-        inputDir.z = Input.GetAxisRaw("Vertical");
+        if (!photonView.IsMine)
+            return;
+
+        moveDir = RemoteInput.inputs[playerNumber].MoveDir;
+        rb.velocity = moveDir.normalized * moveSpeed;
     }
 
-    //[PunRPC]
-    //private void SentMoveInputToMaster(Vector3 _inputDir)
-    //{
-    //    if (!PhotonNetwork.IsMasterClient)
-    //        return;
-
-    //    PlayerController.inputs[playerNumber].inputDir = _inputDir;
-    //}
-
-    [PunRPC]
-    private void Jump()
+    private void JumpTemp()
     {
-        Debug.Log("점프함");
-    }
-
-
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Util.SendAndReceiveStruct(stream, ref inputDir);
-    }
-
-
-    // 상태
-
-    /// <summary>
-    /// 상태 변경 기본 틀
-    /// </summary>
-    /// <param name="nextState"></param>
-    public void ChangeState(E_PlayeState nextState)
-    {
-        states[(int)curState].Exit();
-        curState = nextState;
-        states[(int)curState].Enter();
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 }
-
