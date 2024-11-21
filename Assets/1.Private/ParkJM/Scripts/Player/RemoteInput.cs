@@ -11,6 +11,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     //PlayerController player;
     [SerializeField] Vector3 moveDir;
     [SerializeField] Vector3 rotVec;
+    [SerializeField] int playerNumber;
     public Vector3 MoveDir { get { return moveDir; } }
     public Vector3 RotVec { get { return rotVec; } }
 
@@ -18,7 +19,9 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
-        inputs[photonView.Owner.GetPlayerNumber()] = this;
+        playerNumber = photonView.Owner.GetPlayerNumber();
+        inputs[playerNumber] = this;
+        
     }
 
     private void Update()
@@ -41,8 +44,14 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     {
         if(Input.GetButtonDown("Jump"))
         {
-            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+            //photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber);
         }
+        else
+        {
+            inputs[playerNumber].jumpInput = false;
+        }
+            
     }
 
     private void InputRot()
@@ -51,11 +60,11 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    private void Jump_RPC(int playerNumber)
+    private void Jump_RPC(int playerNum)
     {
-        if (inputs[playerNumber] != null)
+        if (inputs[playerNum] != null)
         {
-            inputs[playerNumber].jumpInput = true;
+            inputs[playerNum].jumpInput = true;
         }
     }
 
