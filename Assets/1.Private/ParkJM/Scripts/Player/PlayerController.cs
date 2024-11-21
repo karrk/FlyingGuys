@@ -9,25 +9,36 @@ using Photon.Pun.UtilityScripts;
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
     
-    public static PlayerController[] inputs = new PlayerController[8];
+    public static PlayerController[] inputs = new PlayerController[8]; // 임시 최대인원수
     public Player player;
     public Vector3 inputDir;
     public Rigidbody rb;
+    public int playerNumber;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (!photonView.IsMine)
             return;
 
         player = PhotonNetwork.LocalPlayer;
-        int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        
-        if(playerNumber >= 0 && playerNumber < inputs.Length)
+        playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+    }
+
+
+    private void Start()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        //player = PhotonNetwork.LocalPlayer;
+        //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        Debug.Log($"플레이어 넘버 :  {player.GetPlayerNumber()}");
+        if (playerNumber >= 0 && playerNumber < inputs.Length)
         {
             inputs[playerNumber] = this;
         }
@@ -45,10 +56,14 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
         HandleInputs();
 
+        //if(Input.GetKeyDown("Jump"))
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             photonView.RPC(nameof(Jump), RpcTarget.MasterClient);
         }
+
+        //photonView.RPC(nameof(SentMoveInputToMaster), RpcTarget.MasterClient, inputDir);
     }
 
     private void HandleInputs()
@@ -56,6 +71,15 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         inputDir.x = Input.GetAxisRaw("Horizontal");
         inputDir.z = Input.GetAxisRaw("Vertical");
     }
+
+    //[PunRPC]
+    //private void SentMoveInputToMaster(Vector3 _inputDir)
+    //{
+    //    if (!PhotonNetwork.IsMasterClient)
+    //        return;
+
+    //    PlayerController.inputs[playerNumber].inputDir = _inputDir;
+    //}
 
     [PunRPC]
     private void Jump()
@@ -72,36 +96,3 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     
 }
 
-// 따로 둘걸 상정
-public class PlayerObject : MonoBehaviourPun
-{
-    public Player player;
-    [SerializeField] float moveSpeed = 5f;
-
-    private void Update()
-    {
-        // 룸 오브젝트이므로 방장만 돌릴 수 있음
-        if (!photonView.IsMine) 
-            return;
-
-        MovePlayer();
-        //Vector3 inputDir = PlayerController.inputs[player.GetPlayerNumber()].inputDir;
-
-
-    }
-
-    private void MovePlayer()
-    {
-
-        Vector3 inputDir = PlayerController.inputs[player.GetPlayerNumber()].inputDir.normalized;
-        bool isMove = inputDir.sqrMagnitude != 0;
-        if(isMove)
-        {
-            PlayerController.inputs[player.GetPlayerNumber()].rb.velocity = inputDir * moveSpeed;
-        }
-
-    }
-
-
-
-}

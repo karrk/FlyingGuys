@@ -31,12 +31,11 @@ public class GameSceneTester : MonoBehaviourPunCallbacks
     {
         Debug.Log("게임 시작");
 
-        //TODO : 테스트용 게임 시작
-        SpawnPlayer();
 
         if (!PhotonNetwork.IsMasterClient)
             return;
-
+        // ToDo : 방장만 플레이어를 스폰시켜주도록
+        SpawnPlayer();
     }
 
     public void SpawnPlayer()
