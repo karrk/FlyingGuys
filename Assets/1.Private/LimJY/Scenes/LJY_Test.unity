@@ -489,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582654393}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: -4.5}
   m_LocalScale: {x: 1.8000002, y: 1.8, z: 1.8000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -698,7 +698,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1216646121}
-  - component: {fileID: 1216646123}
   m_Layer: 0
   m_Name: Hurdle_UpDownHammer
   m_TagString: Untagged
@@ -723,27 +722,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!95 &1216646123
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216646120}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8700d3312b836784da1388da45f12e3b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1265692940
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +733,7 @@ GameObject:
   - component: {fileID: 1265692941}
   - component: {fileID: 1265692945}
   - component: {fileID: 1265692944}
+  - component: {fileID: 1265692946}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -807,6 +786,19 @@ CapsuleCollider:
   m_Height: 4.3
   m_Direction: 2
   m_Center: {x: 0, y: 5, z: 0}
+--- !u!114 &1265692946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265692940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cf72e716fb3dd48a68f6433a46955a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 150
 --- !u!1 &1317899725
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +808,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317899726}
-  - component: {fileID: 1317899727}
   m_Layer: 0
   m_Name: Hurdle_Roller
   m_TagString: Untagged
@@ -841,27 +832,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!95 &1317899727
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317899725}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 809c606130af5674cb97ad6b92b16a3c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1434581742
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +843,7 @@ GameObject:
   - component: {fileID: 1434581743}
   - component: {fileID: 1434581744}
   - component: {fileID: 1434581746}
+  - component: {fileID: 1434581747}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -887,7 +858,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434581742}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -896,7 +867,7 @@ Transform:
   - {fileID: 2075893530}
   m_Father: {fileID: 1216646121}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!136 &1434581744
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -909,8 +880,8 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 0.3
   m_Height: 5
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -2.5}
 --- !u!136 &1434581746
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -924,7 +895,20 @@ CapsuleCollider:
   m_Radius: 1
   m_Height: 4.3
   m_Direction: 0
-  m_Center: {x: 0, y: 5, z: 0}
+  m_Center: {x: 0, y: 0, z: -4.5}
+--- !u!114 &1434581747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434581742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3d698468bc3cd428a11e3e6ec40e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 150
 --- !u!1 &1498739951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1469,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1860579923}
-  - component: {fileID: 1860579924}
   m_Layer: 0
   m_Name: Hurdle_Hammer
   m_TagString: Untagged
@@ -1510,27 +1493,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1860579924
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860579922}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf94491fe9457454fb222c6dbd0c1eee, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1863884841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,7 +1600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863884841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1701,14 +1663,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075893529}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.5, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0, z: -2.5}
   m_LocalScale: {x: 0.3, y: 2.5, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1434581743}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &2075893532
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1884,6 +1846,7 @@ GameObject:
   - component: {fileID: 2108862567}
   - component: {fileID: 2108862568}
   - component: {fileID: 2108862570}
+  - component: {fileID: 2108862571}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -1936,6 +1899,19 @@ CapsuleCollider:
   m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &2108862571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108862566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8fe2bf6f21f2e4d966b0e63d2e3652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 150
 --- !u!1 &2113610241
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,8 +2243,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc2bfcb025f43e499c9ed89a1001bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputDir: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
+  playerNumber: 0
+  moveSpeed: 0
+  jumpForce: 0
 --- !u!4 &670478086239241050
 Transform:
   m_ObjectHideFlags: 0

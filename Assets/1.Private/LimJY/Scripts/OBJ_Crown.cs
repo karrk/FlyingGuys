@@ -27,11 +27,11 @@ public class OBJ_Crown : MonoBehaviour
 
     //private void OnTriggerExit(Collider other)
     //{
-    //if (other.CompareTag("Player"))
-    //{
-    //    // TODO : 닿은 플레이어 내부의 bool형 변수를 false로 변경한다.         
-    //    IsGrabEnable = false;
-    //}
+         //if (other.CompareTag("Player"))
+         //{
+         //    // TODO : 닿은 플레이어 내부의 bool형 변수를 false로 변경한다.         
+         //    IsGrabEnable = false;
+         //}
     //}
 
     // -------------------------------------------------------------------------

@@ -43,6 +43,8 @@ MonoBehaviour:
   - SentMoveInputToMaster
   - SpawnPlayer
   - Jump_RPC
+  - CreatePlayer
+  - PlayerSpawn
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
