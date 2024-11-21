@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerState : BaseState
 {
-    public BeforePlayerController player;
+    public PlayerController player;
 
-    public PlayerState(BeforePlayerController player)
+    public PlayerState(PlayerController player)
     {
         this.player = player;
     }
