@@ -10,6 +10,10 @@ public class Manager : MonoBehaviour
         if(_instance == null)
         {
             _instance = FindAnyObjectByType<Manager>();
+
+            if (_instance == null)
+                _instance = Instantiate(Resources.Load<Manager>("Manager"));
+
             DontDestroyOnLoad(_instance);
 
             _instance.InitManagers();
@@ -19,7 +23,7 @@ public class Manager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != this)
+        if (_instance != this && _instance != null)
         {
             Destroy(this.gameObject);
         }
