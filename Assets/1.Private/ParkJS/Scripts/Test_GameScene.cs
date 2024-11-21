@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestGameScene : MonoBehaviourPunCallbacks
+public class Test_GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] Char_Spawner charSpawner;
 
