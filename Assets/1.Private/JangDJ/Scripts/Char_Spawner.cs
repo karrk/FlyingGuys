@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Char_Spawner : MonoBehaviourPun
+public class Char_Spawner : MonoBehaviour
 {
     public static Char_Spawner Instance { get; private set; }
 
@@ -17,9 +17,6 @@ public class Char_Spawner : MonoBehaviourPun
 
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient != this)
-            Destroy(this.gameObject);
-
         Instance = this;
     }
 
@@ -34,16 +31,10 @@ public class Char_Spawner : MonoBehaviourPun
     /// <summary>
     /// 플레이어의 ID를 기반으로 캐릭터를 스폰합니다.
     /// </summary>
-    public void SpawnCharacter()
-    {
-        photonView.RPC(nameof(CreatePlayer), RpcTarget.MasterClient);
-    }
-
-    [PunRPC]
-    private void CreatePlayer(PhotonMessageInfo info)
+    public void SpawnCharacter(PhotonMessageInfo info)
     {
         GameObject newObj = PhotonNetwork.InstantiateRoomObject
-            ("Player", _ranger[_spawnNumber++], 
+            ("Player", _ranger[_spawnNumber++],
             Quaternion.Euler(Camera.main.transform.forward), data: new object[] { info.Sender });
 
         SpawnedPlayers.Add(newObj);

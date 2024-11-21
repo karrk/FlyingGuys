@@ -10,7 +10,9 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     //PlayerController player;
     [SerializeField] Vector3 moveDir;
+    [SerializeField] Vector3 rotVec;
     public Vector3 MoveDir { get { return moveDir; } }
+    public Vector3 RotVec { get { return rotVec; } }
 
     public bool jumpInput; // rpc 구현
 
@@ -26,6 +28,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
         InputMoving();
         InputJump();
+        InputRot();
     }
 
     private void InputMoving()
@@ -40,6 +43,11 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
         }
+    }
+
+    private void InputRot()
+    {
+        rotVec.y = Input.GetAxisRaw("Mouse Y");
     }
 
     [PunRPC]

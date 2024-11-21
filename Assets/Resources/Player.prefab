@@ -54,8 +54,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 0
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 8114245683819531038}
+  m_Follow: {fileID: 8114245683819531038}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -562,6 +562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
+  rotVec: {x: 0, y: 0, z: 0}
   playerNumber: 0
   moveSpeed: 5
   jumpForce: 10
+  _cam: {fileID: 1268251635224441391}
