@@ -3,12 +3,14 @@ using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Test_GameScene : MonoBehaviourPunCallbacks
 {
-    [SerializeField] Char_Spawner charSpawner;
     [SerializeField] bool inGamePlay;
+    [SerializeField] Char_Spawner charSpawner;
+    [SerializeField] TMP_Text countText;
 
     private void Start()
     {
@@ -16,6 +18,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.ConnectUsingSettings();
         }
+
+        countText.text = null;
     }
 
     public override void OnJoinedRoom()
@@ -43,7 +47,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
         // TODO : 마스터 클라이언트만 실행 하는 곳
 
-
     }
 
     [PunRPC]
@@ -62,6 +65,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
             if (allLoad)
             {
                 Debug.Log("모든 플레이어 준비 완료");
+                StartCoroutine(CountDownRoutine());
             }
         }
     }
@@ -79,6 +83,21 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         }
 
         return true;
+    }
+
+    IEnumerator CountDownRoutine()
+    {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 3; i > 0; i--)
+        {
+            countText.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+
+        countText.text = "Go!";
+        yield return new WaitForSeconds(1f);
+        countText.gameObject.SetActive(false);
     }
 }
 
