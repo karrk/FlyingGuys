@@ -18,17 +18,33 @@ public class PlayerController : MonoBehaviourPun
 
     [SerializeField] CamController _cam;
 
+    // 상태
+    [SerializeField] E_PlayeState curState;
+    private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         player = (Player)photonView.InstantiationData[0];
         playerNumber = player.GetPlayerNumber();
+
+        // 상태
+        states[(int)E_PlayeState.Idle] = new IdleState(this);
+        states[(int)(E_PlayeState.Run] = new RunState(this);
+    }
+
+    private void Start()
+    {
+        curState = E_PlayeState.Idle;
+        states[(int)curState].Enter();
     }
 
     private void Update()
     {
         if (!photonView.IsMine)
             return;
+
+        states[(int)curState].Update();
 
         if (RemoteInput.inputs[playerNumber].jumpInput)
         {
@@ -43,6 +59,8 @@ public class PlayerController : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
+        states[(int)curState].FixedUpdate();
+
         moveDir = RemoteInput.inputs[playerNumber].MoveDir;
         rotVec = RemoteInput.inputs[playerNumber].RotVec;
 
@@ -52,6 +70,14 @@ public class PlayerController : MonoBehaviourPun
     private void LateUpdate()
     {
         _cam.RotY(rotVec.y);
+    }
+
+
+    public void ChangeState(E_PlayeState newState)
+    {
+        states[(int)curState].Exit();
+        curState = newState;
+        states[(int)curState].Enter();
     }
 
     private void JumpTemp()
