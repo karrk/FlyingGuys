@@ -7,6 +7,15 @@ using UnityEngine;
 public class Test_GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] Char_Spawner charSpawner;
+    [SerializeField] bool inGamePlay;
+
+    private void Start()
+    {
+        if(inGamePlay)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
 
     public override void OnJoinedRoom()
     {
@@ -23,17 +32,20 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     {
         Debug.Log("게임 시작");
 
-        // TODO : 마스터 클라이언트가 실행해야 하는 곳
-        PlayerSpawn();
+        // TODO : 모든 클라이언트가 실행 하는 곳
+        photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
 
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
-        // TODO : 개인이 실행해야 하는 곳
+        // TODO : 마스터 클라이언트만 실행 하는 곳
     }
 
-    private void PlayerSpawn()
+    [PunRPC]
+    private void PlayerSpawn(PhotonMessageInfo info)
     {
-        charSpawner.Spawn(PhotonNetwork.LocalPlayer.GetPlayerNumber());
+        // TODO : 플레이어 리모트 스폰 추가
+
+        //charSpawner.SpawnCharacter(info);
     }
 }
