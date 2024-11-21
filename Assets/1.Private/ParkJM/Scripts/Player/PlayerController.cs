@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public Player player;
     public Vector3 inputDir;
     public Rigidbody rb;
+    [SerializeField] E_PlayeState curState;
+    private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
     public int playerNumber;
 
     private void Awake()
@@ -88,11 +90,21 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     }
 
 
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Util.SendAndReceiveStruct(stream, ref inputDir);
     }
 
-    
+    /// <summary>
+    /// 상태 변경 기본 틀
+    /// </summary>
+    /// <param name="nextState"></param>
+    public void ChangeState(E_PlayeState nextState)
+    {
+        states[(int)curState].Exit();
+        curState = nextState;
+        states[(int)curState].Enter();
+    }
 }
 
