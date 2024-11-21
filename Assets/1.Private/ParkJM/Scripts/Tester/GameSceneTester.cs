@@ -31,23 +31,24 @@ public class GameSceneTester : MonoBehaviourPunCallbacks
     {
         Debug.Log("게임 시작");
 
-        //TODO : 테스트용 게임 시작
-        SpawnPlayer();
 
         if (!PhotonNetwork.IsMasterClient)
             return;
-
     }
 
-    public void SpawnPlayer()
+    [PunRPC]
+    public void SpawnPlayer(PhotonMessageInfo info)
     {
         Vector3 randomPos = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-        PhotonNetwork.Instantiate("Player", randomPos, Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject("Player", randomPos, Quaternion.identity, data: new object[] {info.Sender});
     }
 
     IEnumerator StartDelayCoroutine()
     {
         yield return new WaitForSeconds(1f);
+        PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
+        photonView.RPC(nameof(SpawnPlayer), RpcTarget.MasterClient);
+
         TestGameStart();
     }
 }

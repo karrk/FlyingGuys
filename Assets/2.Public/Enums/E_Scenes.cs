@@ -12,3 +12,14 @@ public enum E_Scenes
     
     Size
 }
+
+public enum E_PlayeState
+{
+    Idle,
+    Run,
+    Jump,
+    Diving,
+    Fall,
+    Grab,
+    Size
+}
