@@ -4,50 +4,35 @@ using UnityEngine;
 
 public class Obj_StaticBounce : MonoBehaviour
 {
-    [SerializeField] private Transform _pivot;
-    [SerializeField] private LayerMask _player;
+    [SerializeField] private Vector3 _bouceDir;
+    private Vector3 _tempVec;
+    private Vector3 _convertedVec;
+    [SerializeField] private float _bounceForce = 10f; // 튕기는 힘 크기
+    [SerializeField] private bool _keepVelocityMode;
 
-    [SerializeField] private float _bouncePower;
-
-    [SerializeField] private ForceMode _forceMode;
-
-    [SerializeField] private bool _isBounced;
+    private void Start()
+    {
+        if (_bouceDir == Vector3.zero)
+            _bouceDir = transform.forward;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_isBounced == true)
-            return;
-
-        _isBounced = true;
-
-        if (collision.collider.CompareTag("Player"))
+        if(collision.collider.CompareTag("Player") == true)
         {
-            if(collision.collider.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            if(collision.collider.TryGetComponent<PlayerController>(out PlayerController player))
             {
-                Vector3 normal = collision.collider.ClosestPoint(rb.transform.position);
+                if(_keepVelocityMode == true)
+                {
+                    _tempVec = player.Velocity.normalized;
+                    _tempVec.y = 0;
+                    _convertedVec = _tempVec + _bouceDir;
+                }
 
-                Vector3 dir = normal.normalized;
-
-                rb.velocity = Vector3.zero;
-                rb.AddForce(_bouncePower * dir, _forceMode);
-
-                StartCoroutine(WaitBounceDealy());
+                collision.collider.GetComponent<PlayerController>().
+                Bounce(_keepVelocityMode == true ? _convertedVec : _bouceDir, _bounceForce);
             }
+            
         }
-    }
-
-    private void BounceObject(Rigidbody rb)
-    {
-        Vector3 dir = (rb.position - _pivot.position).normalized;
-
-        rb.velocity = Vector3.zero;
-        rb.AddForce(_bouncePower * dir, _forceMode);
-    }
-
-    private IEnumerator WaitBounceDealy()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-        _isBounced = false;
     }
 }

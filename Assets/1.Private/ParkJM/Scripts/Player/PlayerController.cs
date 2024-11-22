@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviourPun
     public bool isDiving;
     [SerializeField] Vector3 rotVec;
 
+    public Vector3 Velocity => rb.velocity;
+
     public PlayerModel model;
 
     private Player player;
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviourPun
         states[(int)E_PlayeState.Jump] = new JumpState(this);
         states[(int)E_PlayeState.Fall] = new FallState(this);
         states[(int)E_PlayeState.Diving] = new DivingState(this);
+        states[(int)E_PlayeState.Bounced] = new BounceState(this);
     }
 
     private void Start()
@@ -132,6 +135,12 @@ public class PlayerController : MonoBehaviourPun
         isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
     }
 
+    public void Bounce(Vector3 dir, float power)
+    {
+        rb.velocity = dir * power;
+        ChangeState(E_PlayeState.Bounced);
+    }
+
     //private void OnCollisionEnter(Collision collision)
     //{
     //    isGround = true;
@@ -146,5 +155,25 @@ public class PlayerController : MonoBehaviourPun
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
+    }
+}
+
+public class BounceState : PlayerState
+{
+    private Coroutine bounceRoutine;
+
+    public BounceState(PlayerController player) : base(player)
+    {
+    }
+
+    public override void Enter()
+    {
+        player.StartCoroutine(InputWait());
+    }
+
+    private IEnumerator InputWait()
+    {
+        yield return new WaitForSeconds(1f);
+        player.ChangeState(E_PlayeState.Idle);
     }
 }

@@ -21,5 +21,6 @@ public enum E_PlayeState
     Fall,
     Diving,
     Grab,
+    Bounced,
     Size
 }
