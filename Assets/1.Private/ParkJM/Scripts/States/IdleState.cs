@@ -21,9 +21,15 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-        else if (player.moveDir != Vector3.zero)
+
+        if (player.moveDir != Vector3.zero)
         {
             player.ChangeState(E_PlayeState.Run);
+        }
+
+        if(!player.isGround && player.rb.velocity.y != 0)
+        {
+            player.ChangeState(E_PlayeState.Fall);
         }
 
 

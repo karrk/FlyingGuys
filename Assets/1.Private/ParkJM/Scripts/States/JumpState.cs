@@ -18,7 +18,16 @@ public class JumpState : PlayerState
 
     public override void Update()
     {
+        // 임시
+        if (player.rb.velocity.y < -0.1f)
+        {
+            player.ChangeState(E_PlayeState.Fall);
+        }
 
+        //if (player.isGround)
+        //{
+        //    player.ChangeState(E_PlayeState.Idle);
+        //}
 
         // Todo : fall 상태 전환
         //if(player.rb.velocity.y < 0)
@@ -30,16 +39,12 @@ public class JumpState : PlayerState
 
     public override void FixedUpdate()
     {
-        // 임시
-        if (player.isGround)
-        {
-            player.ChangeState(E_PlayeState.Idle);
-        }
+
     }
 
     public override void Exit()
     {
-        player.isJumping = false;
+        
         Debug.Log("Jump 종료");
     }
 }
