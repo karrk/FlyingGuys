@@ -16,7 +16,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+        //crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
     }
@@ -118,14 +118,14 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         {
             foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
             {
-                //Debug.Log(item == (crown.Num - 1));
-                //Debug.Log($"{item} / {crown.Num}");
+                Debug.Log(item == (crown.Num - 1));
+                Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown )//&& item == (crown.Num - 1))
+                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - 1))//
                 {
                     //Debug.Log($"{PhotonNetwork.CurrentRoom.Players[crown.Num - 1]}. ");
 
-                    if (PhotonNetwork.CurrentRoom.Players[/*crown.Num-*/1] == PhotonNetwork.LocalPlayer)
+                    if (PhotonNetwork.CurrentRoom.Players[crown.Num-1] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
                         Debug.Log("승리"); 
