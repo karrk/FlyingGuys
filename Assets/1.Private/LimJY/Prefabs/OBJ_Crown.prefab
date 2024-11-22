@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1469732699347416152}
   - component: {fileID: 1469732699347416156}
   m_Layer: 0
-  m_Name: Crown
+  m_Name: OBJ_Crown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
