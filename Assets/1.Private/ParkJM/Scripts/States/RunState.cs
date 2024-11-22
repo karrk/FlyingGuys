@@ -30,6 +30,7 @@ public class RunState : PlayerState
     public override void FixedUpdate()
     {
         Run();
+        LookForward();
     }
 
     public override void Exit()
@@ -40,11 +41,20 @@ public class RunState : PlayerState
     private void Run()
     {
         player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
+    }
 
-        //if (player.moveDir != Vector3.zero)
-        //{
-        //    Quaternion targetRotation = Quaternion.LookRotation(player.moveDir);
-        //    player.rb.transform.rotation = Quaternion.Slerp(player.rb.transform.rotation, targetRotation, Time.deltaTime * 10);
-        //}
+    private void LookForward()
+    {
+        if (player.moveDir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(player.moveDir);
+            targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+            player.transform.rotation = Quaternion.Slerp(
+                player.transform.rotation,
+                targetRotation,
+                Time.deltaTime * 15
+            );
+        }
     }
 }

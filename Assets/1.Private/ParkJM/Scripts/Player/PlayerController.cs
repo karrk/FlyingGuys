@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] CamController _cam;
 
     // 임시 바닥 탐지
-    private float rayLength = 0.1f;
+    private float rayLength = 0.5f;
     public bool isGrounded;
 
 
@@ -58,14 +58,13 @@ public class PlayerController : MonoBehaviourPun
 
     private void Update()
     {
+        HandleCamInput();
+
         if (!photonView.IsMine)
             return;
 
-        
-
         HandleMoveInputs();
-        HandleCamInput();
-
+        
         states[(int)curState].Update();
 
         //if (RemoteInput.inputs[model.playerNumber].jumpInput && !isJumping)
@@ -130,8 +129,7 @@ public class PlayerController : MonoBehaviourPun
 
     private void CheckGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, rayLength);
-        Debug.Log(hitInfo.collider.gameObject.name);
+        isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
     }
 
     //private void OnCollisionEnter(Collision collision)
