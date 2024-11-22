@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviourPun
     public Rigidbody rb;
     public Vector3 moveDir;
     public bool isJumping;
+    public bool isDiving;
     [SerializeField] Vector3 rotVec;
 
     public PlayerModel model;
@@ -41,10 +42,16 @@ public class PlayerController : MonoBehaviourPun
         states[(int)E_PlayeState.Run] = new RunState(this);
         states[(int)E_PlayeState.Jump] = new JumpState(this);
         states[(int)E_PlayeState.Fall] = new FallState(this);
+        states[(int)E_PlayeState.Diving] = new DivingState(this);
     }
 
     private void Start()
     {
+        if(player == PhotonNetwork.LocalPlayer)
+        {
+            _cam.SetForcePriority(10);
+        }
+
         curState = E_PlayeState.Idle;
         states[(int)curState].Enter();
     }
