@@ -10,11 +10,15 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
     [SerializeField] TMP_Text countText;
+    [SerializeField] GameObject winUI;
+    [SerializeField] GameObject loseUI;
     [SerializeField] OBJ_Crown crown;
 
     private void Awake()
     {
         crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+        winUI.SetActive(false);
+        loseUI.SetActive(false);
     }
 
     private void Start()
@@ -124,12 +128,14 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                     if (PhotonNetwork.CurrentRoom.Players[/*crown.Num-*/1] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
-                        Debug.Log("승리");
+                        Debug.Log("승리"); 
+                        winUI.SetActive(true);
                     }
                     else
                     {
                         // TODO : 패배 연출
                         Debug.Log("패배");
+                        loseUI.SetActive(true);
                     }
                     yield break;
                 }
