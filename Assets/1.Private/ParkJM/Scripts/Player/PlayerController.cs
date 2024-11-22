@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] CamController _cam;
 
     // 임시 바닥 탐지
-    private float rayLength = 0.1f;
+    private float rayLength = 0.01f;
     public bool isGround;
 
 
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviourPun
         states[(int)E_PlayeState.Idle] = new IdleState(this);
         states[(int)E_PlayeState.Run] = new RunState(this);
         states[(int)E_PlayeState.Jump] = new JumpState(this);
+        states[(int)E_PlayeState.Fall] = new FallState(this);
     }
 
     private void Start()
@@ -74,10 +75,10 @@ public class PlayerController : MonoBehaviourPun
     {
         if (!photonView.IsMine)
             return;
-
+        states[(int)curState].FixedUpdate();
         CheckGround();
 
-        states[(int)curState].FixedUpdate();
+        
 
         //moveDir = RemoteInput.inputs[playerNumber].MoveDir;
         //rotVec = RemoteInput.inputs[playerNumber].RotVec;
@@ -97,16 +98,16 @@ public class PlayerController : MonoBehaviourPun
         states[(int)curState].Enter();
     }
 
-    private void JumpTemp()
-    {
-        if (RemoteInput.inputs[model.playerNumber].jumpInput)
-        {
-            Debug.Log("점프 입력됨");
-            rb.AddForce(Vector3.up * model.jumpForce, ForceMode.Impulse);
-            RemoteInput.inputs[model.playerNumber].jumpInput = false;
-        }
+    //private void JumpTemp()
+    //{
+    //    if (RemoteInput.inputs[model.playerNumber].jumpInput)
+    //    {
+    //        Debug.Log("점프 입력됨");
+    //        rb.AddForce(Vector3.up * model.jumpForce, ForceMode.Impulse);
+    //        RemoteInput.inputs[model.playerNumber].jumpInput = false;
+    //    }
         
-    }
+    //}
 
     public void HandleMoveInputs()
     {
@@ -122,4 +123,14 @@ public class PlayerController : MonoBehaviourPun
     {
         isGround = Physics.Raycast(transform.position, Vector3.down,out RaycastHit hitInfo, rayLength);
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    isGround = true;
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    isGround = false;
+    //}
 }

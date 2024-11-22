@@ -18,8 +18,8 @@ public enum E_PlayeState
     Idle,
     Run,
     Jump,
-    Diving,
     Fall,
+    Diving,
     Grab,
     Size
 }
