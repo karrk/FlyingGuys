@@ -96,8 +96,11 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         }
 
         countText.text = "Go!";
+        //NetWorkManager.IsPlay = true;
         yield return new WaitForSeconds(1f);
         countText.gameObject.SetActive(false);
     }
+
+    // TODO : 마스터 클라이언트가 변경되었을 때 현재 존재하는 플레이어의 권한 받기
 }
 
