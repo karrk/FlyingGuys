@@ -14,7 +14,7 @@ public class OBJ_Hurdle_Hammer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("망치 강타!");
+            Debug.Log("망치 피격당함!");
         }        
     }
 }
