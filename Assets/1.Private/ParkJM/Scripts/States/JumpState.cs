@@ -24,6 +24,11 @@ public class JumpState : PlayerState
             player.ChangeState(E_PlayeState.Fall);
         }
 
+        if (RemoteInput.inputs[player.model.playerNumber].divingInput)
+        {
+            player.ChangeState(E_PlayeState.Diving);
+        }
+
         //if (player.isGround)
         //{
         //    player.ChangeState(E_PlayeState.Idle);

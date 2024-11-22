@@ -12,19 +12,31 @@ public class DivingState : PlayerState
     {
         Debug.Log("Diving 진입");
         player.isDiving = true;
-        player.rb.AddForce(player.moveDir * player.model.divingForce, ForceMode.Impulse);
+
+        // Todo : 다이빙 구현
+        // 점프를 하지않고도 다이빙을 할 수 있음
+        // 기본적으로 y축으로도 힘을 가해줘야함
+        // 이동 방향이 있었을 경우 그쪽으로도 약간의 힘을 가해주어야 함
+        Vector3 diveSpeed = player.moveDir * player.model.divingForce;
+        diveSpeed.y = 1.0f; // 임시 y축 힘
+
+        player.rb.AddForce(diveSpeed, ForceMode.Impulse);
     }
 
     public override void Update()
     {
         // Todo : 다이빙 애니메이션이 끝나면 Fall로 전환
-        if(player.rb.velocity.y  == 0.1f)
+        if( player.isGrounded) // player.rb.velocity.y  < 0.1f ||
             player.ChangeState(E_PlayeState.Fall);
     }
 
     public override void FixedUpdate()
     {
-        
+        // 다이빙중 감속
+        Vector3 velocity = player.rb.velocity;
+        velocity.x *= 0.98f; // X축 감속
+        velocity.z *= 0.98f; // Z축 감속
+        player.rb.velocity = velocity;
     }
 
     public override void Exit()

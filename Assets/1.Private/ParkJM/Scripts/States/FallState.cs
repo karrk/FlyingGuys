@@ -21,6 +21,11 @@ public class FallState : PlayerState
             player.ChangeState(E_PlayeState.Idle);
         }
 
+        if (RemoteInput.inputs[player.model.playerNumber].divingInput)
+        {
+            player.ChangeState(E_PlayeState.Diving);
+        }
+
         // Todo : 점핑 발판을 받았을 때 어떻게 할것인지 처리
     }
 
