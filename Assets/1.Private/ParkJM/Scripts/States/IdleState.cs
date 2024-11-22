@@ -32,6 +32,11 @@ public class IdleState : PlayerState
             player.ChangeState(E_PlayeState.Fall);
         }
 
+        if(RemoteInput.inputs[player.model.playerNumber].divingInput)
+        {
+            player.ChangeState(E_PlayeState.Diving);
+        }
+
 
                 
 
