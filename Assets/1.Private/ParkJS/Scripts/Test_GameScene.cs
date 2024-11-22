@@ -2,7 +2,6 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +10,12 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
     [SerializeField] TMP_Text countText;
+    [SerializeField] OBJ_Crown crown;
+
+    private void Awake()
+    {
+        crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+    }
 
     private void Start()
     {
@@ -41,12 +46,12 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
         PhotonNetwork.LocalPlayer.SetLoad(true);
+        StartCoroutine(ClearRoutine());
 
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
         // TODO : 마스터 클라이언트만 실행 하는 곳
-
     }
 
     [PunRPC]
@@ -102,5 +107,35 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     }
 
     // TODO : 마스터 클라이언트가 변경되었을 때 현재 존재하는 플레이어의 권한 받기
+
+    IEnumerator ClearRoutine()
+    {
+        while (true)
+        {
+            foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
+            {
+                //Debug.Log(item == (crown.Num - 1));
+                //Debug.Log($"{item} / {crown.Num}");
+
+                if (NetWorkManager.IsTriggerCrown )//&& item == (crown.Num - 1))
+                {
+                    //Debug.Log($"{PhotonNetwork.CurrentRoom.Players[crown.Num - 1]}. ");
+
+                    if (PhotonNetwork.CurrentRoom.Players[/*crown.Num-*/1] == PhotonNetwork.LocalPlayer)
+                    {
+                        // TODO : 승리 연출
+                        Debug.Log("승리");
+                    }
+                    else
+                    {
+                        // TODO : 패배 연출
+                        Debug.Log("패배");
+                    }
+                    yield break;
+                }
+            }
+            yield return null;
+        }
+    }
 }
 
