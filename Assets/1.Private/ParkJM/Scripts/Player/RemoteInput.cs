@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using System.Collections;
@@ -16,6 +17,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public Vector3 RotVec { get { return rotVec; } }
 
     public bool jumpInput; // rpc 구현
+    public bool divingInput;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         InputMoving();
         InputJump();
         InputRot();
+        InputDiving();
     }
 
     private void InputMoving()
@@ -51,13 +54,26 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         {
             inputs[playerNumber].jumpInput = false;
         }
-            
+    }
+
+    private void InputDiving()
+    {
+        if(Input.GetButtonDown("Diving"))
+        {
+            photonView.RPC(nameof(Diving_RPC), RpcTarget.MasterClient, playerNumber);
+        }
+        else
+        {
+            inputs[playerNumber].divingInput = false;
+        }
     }
 
     private void InputRot()
     {
         rotVec.y = Input.GetAxisRaw("Mouse Y");
     }
+
+    // Rpc 메서드들
 
     [PunRPC]
     private void Jump_RPC(int playerNum)
@@ -68,6 +84,14 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         }
     }
 
+    [PunRPC]
+    private void Diving_RPC(int playerNum)
+    {
+        if (inputs[playerNum] != null)
+        {
+            inputs[playerNum].divingInput = true;
+        }
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
