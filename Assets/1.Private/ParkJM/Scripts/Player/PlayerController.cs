@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] CamController _cam;
 
     // 임시 바닥 탐지
-    private float rayLength = 0.01f;
-    public bool isGround;
+    private float rayLength = 0.1f;
+    public bool isGrounded;
 
 
     // 상태
@@ -82,10 +82,11 @@ public class PlayerController : MonoBehaviourPun
     {
         if (!photonView.IsMine)
             return;
+        
         states[(int)curState].FixedUpdate();
         CheckGround();
 
-        
+
 
         //moveDir = RemoteInput.inputs[playerNumber].MoveDir;
         //rotVec = RemoteInput.inputs[playerNumber].RotVec;
@@ -123,12 +124,14 @@ public class PlayerController : MonoBehaviourPun
 
     private void HandleCamInput()
     {
+        Debug.Log(_cam.gameObject.name);
         rotVec = RemoteInput.inputs[model.playerNumber].RotVec;
     }
 
     private void CheckGround()
     {
-        isGround = Physics.Raycast(transform.position, Vector3.down,out RaycastHit hitInfo, rayLength);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, rayLength);
+        Debug.Log(hitInfo.collider.gameObject.name);
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -140,4 +143,10 @@ public class PlayerController : MonoBehaviourPun
     //{
     //    isGround = false;
     //}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
+    }
 }

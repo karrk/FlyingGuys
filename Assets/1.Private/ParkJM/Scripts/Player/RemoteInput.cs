@@ -19,6 +19,11 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public bool jumpInput; // rpc 구현
     public bool divingInput;
 
+    Vector3 moveInput;
+
+    private Vector3 camForward;
+    private Vector3 camRight;
+
     private void Awake()
     {
         playerNumber = photonView.Owner.GetPlayerNumber();
@@ -39,8 +44,16 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     private void InputMoving()
     {
-        moveDir.x = Input.GetAxisRaw("Horizontal");
-        moveDir.z = Input.GetAxisRaw("Vertical");
+        camForward = Camera.main.transform.forward;
+        camRight = Camera.main.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+
+        moveInput.x = Input.GetAxisRaw("Horizontal");
+        moveInput.z = Input.GetAxisRaw("Vertical");
+
+        moveDir = (moveInput.z * camForward + moveInput.x * camRight).normalized;
     }
 
     private void InputJump()
@@ -70,7 +83,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     private void InputRot()
     {
-        rotVec.y = Input.GetAxisRaw("Mouse Y");
+        inputs[playerNumber].rotVec.y = Input.GetAxisRaw("Mouse Y");
     }
 
     // Rpc 메서드들
@@ -96,5 +109,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Util.SendAndReceiveStruct(stream , ref moveDir);
+        Util.SendAndReceiveStruct(stream , ref rotVec);
     }
 }

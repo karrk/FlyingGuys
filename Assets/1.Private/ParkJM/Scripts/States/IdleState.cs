@@ -27,7 +27,7 @@ public class IdleState : PlayerState
             player.ChangeState(E_PlayeState.Run);
         }
 
-        if(!player.isGround && player.rb.velocity.y != 0)
+        if(!player.isGrounded && player.rb.velocity.y != 0)
         {
             player.ChangeState(E_PlayeState.Fall);
         }

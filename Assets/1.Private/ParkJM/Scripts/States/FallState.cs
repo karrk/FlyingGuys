@@ -16,7 +16,7 @@ public class FallState : PlayerState
 
     public override void Update()
     {
-        if (player.isGround)
+        if (player.isGrounded)
         {
             player.ChangeState(E_PlayeState.Idle);
         }
