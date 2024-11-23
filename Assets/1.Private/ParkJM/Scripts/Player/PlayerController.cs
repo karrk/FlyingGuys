@@ -104,17 +104,14 @@ public class PlayerController : MonoBehaviourPun
     private void LateUpdate()
     {
         _cam.RotY(rotVec.y);
-        states[(int)curState].LateUpdate();
+        //states[(int)curState].LateUpdate();
     }
 
 
     public void ChangeState(E_PlayeState newState)
     {
-        Debug.Log($"이전상태 : {curState}");
-        Debug.Log($"바꿀상태 : {newState}");
         states[(int)curState].Exit();
         curState = newState;
-        Debug.Log($"현재상태 : {curState}");
         states[(int)curState].Enter();
         
     }
