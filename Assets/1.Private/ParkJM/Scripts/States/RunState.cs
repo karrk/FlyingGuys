@@ -16,10 +16,16 @@ public class RunState : PlayerState
 
     public override void Update()
     {
-        if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
+        if (player.jumpBufferCounter > 0f && player.isJumpable)
         {
             player.ChangeState(E_PlayeState.Jump);
         }
+
+
+        //if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
+        //{
+        //    player.ChangeState(E_PlayeState.Jump);
+        //}
 
         else if (player.moveDir == Vector3.zero)
         {

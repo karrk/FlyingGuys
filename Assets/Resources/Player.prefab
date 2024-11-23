@@ -571,5 +571,7 @@ MonoBehaviour:
     jumpForce: 10
     divingForce: 0
   _cam: {fileID: 1268251635224441391}
+  jumpBufferTime: 0.2
+  jumpBufferCounter: 0
   isGrounded: 0
   curState: 0

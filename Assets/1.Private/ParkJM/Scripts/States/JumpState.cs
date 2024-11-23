@@ -12,9 +12,9 @@ public class JumpState : PlayerState
     public override void Enter()
     {
         Debug.Log("Jump 진입");
-        
-        player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
-        player.isJumpable = false;
+        Jump();
+
+
     }
 
     public override void Update()
@@ -22,6 +22,7 @@ public class JumpState : PlayerState
         // 임시
         if (player.rb.velocity.y < 0f && !player.isGrounded)
         {
+            Debug.Log("jump에서 Fall로 전환");
             player.ChangeState(E_PlayeState.Fall);
         }
 
@@ -30,6 +31,7 @@ public class JumpState : PlayerState
             player.ChangeState(E_PlayeState.Diving);
         }
 
+        //Debug.Log($"점프 velocity: {player.rb.velocity.y}");
 
 
         // Todo : fall 상태 전환
@@ -50,6 +52,15 @@ public class JumpState : PlayerState
         //    player.isJumpable = true;
         //    player.ChangeState(E_PlayeState.Idle);
         //}
+    }
+
+    private void Jump()
+    {
+        player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
+        Debug.Log("점프 힘을 줌");
+        
+        player.isJumpable = false;
+        Debug.Log("isJumpable을 false로 바꿈");
     }
 
     public override void Exit()

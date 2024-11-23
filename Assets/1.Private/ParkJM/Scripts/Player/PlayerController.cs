@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviourPun
 
     [SerializeField] CamController _cam;
 
+
+    // 버퍼
+    public float jumpBufferTime = 0.2f;
+    public float jumpBufferCounter;
+
+
     // 임시 바닥 탐지
     private float rayLength = 0.5f;
     public bool isGrounded;
@@ -64,7 +70,8 @@ public class PlayerController : MonoBehaviourPun
             return;
 
         HandleMoveInputs();
-        
+        ControlJumpBuffer();
+
         states[(int)curState].Update();
 
         //if (RemoteInput.inputs[model.playerNumber].jumpInput && !isJumping)
@@ -75,6 +82,8 @@ public class PlayerController : MonoBehaviourPun
         //    //JumpTemp();
         //    //RemoteInput.inputs[model.playerNumber].jumpInput = false;
         //}
+
+
     }
 
     private void FixedUpdate()
@@ -122,6 +131,17 @@ public class PlayerController : MonoBehaviourPun
         moveDir = RemoteInput.inputs[model.playerNumber].MoveDir;
     }
 
+    private void ControlJumpBuffer()
+    {
+        //점프 인풋이 들어왔으면
+        if (RemoteInput.inputs[model.playerNumber].jumpInput)
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+            jumpBufferCounter -= Time.deltaTime;
+    }
+
     private void HandleCamInput()
     {
         //Debug.Log(_cam.gameObject.name);
@@ -138,7 +158,7 @@ public class PlayerController : MonoBehaviourPun
         isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
         if (hitInfo.collider != null)
         {
-            Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
+            //Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
         }
         
         return isGrounded;

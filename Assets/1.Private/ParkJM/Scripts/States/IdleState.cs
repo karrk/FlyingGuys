@@ -12,15 +12,14 @@ public class IdleState : PlayerState
     public override void Enter()
     {
         Debug.Log("Idle 진입");
+        player.rb.velocity = Vector3.zero;
         player.isJumpable = true; // 임시, spawn 상태에서 해주는것이 좋을듯
     }
 
     public override void Update()
     {
-
-        if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
+        if (player.jumpBufferCounter > 0f && player.isJumpable)
         {
-            Debug.Log("점프 input 들어옴");
             player.ChangeState(E_PlayeState.Jump);
         }
         else
@@ -29,7 +28,7 @@ public class IdleState : PlayerState
             //Debug.Log($"player.isJumping : {player.isJumping}");
         }
 
-        if (player.moveDir != Vector3.zero)
+        if (player.moveDir != Vector3.zero && player.isGrounded)
         {
             player.ChangeState(E_PlayeState.Run);
         }

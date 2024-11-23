@@ -17,6 +17,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public Vector3 RotVec { get { return rotVec; } }
 
     public bool jumpInput; // rpc 구현
+    
     public bool divingInput;
 
     Vector3 moveInput;
@@ -37,7 +38,8 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             return;
 
         InputMoving();
-        InputJump();
+        InputJumpBuffer();
+        //InputJump();
         InputRot();
         InputDiving();
     }
@@ -66,21 +68,23 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
             preJumpInput = curJumpInput;
         }
-
-
-
-
-        //if (curJumpInput != preJumpInput)
-        //{
-        //    //photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-        //    photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, true);
-        //}
-        //else
-        //{
-        //    photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
-        //    //inputs[playerNumber].jumpInput = false;
-        //}
     }
+
+    private Queue<bool> jumpBuffer = new Queue<bool>();
+    private void InputJumpBuffer()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBuffer.Enqueue(true);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, true);
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            jumpBuffer.Enqueue(false);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
+        }
+    }
+
 
     [PunRPC]
     private void Jump_RPC(int playerNum, bool isJumping)
@@ -94,7 +98,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             // 아래 로그가 마스터의 콘솔창에서만 출력됨
             // rpc를 마스터클라이언트에만 보내니까 그럼
             inputs[playerNum].jumpInput = isJumping;
-            Debug.Log("점프 input 들어감");
+            //Debug.Log("점프 input 들어감");
         }
     }
 
