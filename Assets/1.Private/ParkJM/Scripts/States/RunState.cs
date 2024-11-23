@@ -27,7 +27,7 @@ public class RunState : PlayerState
         //    player.ChangeState(E_PlayeState.Jump);
         //}
 
-        else if (player.moveDir == Vector3.zero)
+        else if (player.moveDir.sqrMagnitude < 0.1f) //== Vector3.zero)
         {
             player.ChangeState(E_PlayeState.Idle);
         }
@@ -51,7 +51,12 @@ public class RunState : PlayerState
 
     private void Run()
     {
-        player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
+        Vector3 targetVelocity = player.moveDir * player.model.moveSpeed;
+        targetVelocity.y = player.rb.velocity.y;
+
+        player.rb.velocity = targetVelocity;
+
+        //player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
     }
 
     private void LookForward()
@@ -64,7 +69,7 @@ public class RunState : PlayerState
             player.transform.rotation = Quaternion.Slerp(
                 player.transform.rotation,
                 targetRotation,
-                Time.deltaTime * 15 // 수정필요
+                Time.fixedDeltaTime * 15 // 수정필요
             );
         }
     }

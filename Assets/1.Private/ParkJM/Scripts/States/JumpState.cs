@@ -25,8 +25,7 @@ public class JumpState : PlayerState
             Debug.Log("jump에서 Fall로 전환");
             player.ChangeState(E_PlayeState.Fall);
         }
-
-        if (RemoteInput.inputs[player.model.playerNumber].divingInput)
+        else if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
             player.ChangeState(E_PlayeState.Diving);
         }

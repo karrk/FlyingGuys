@@ -110,9 +110,13 @@ public class PlayerController : MonoBehaviourPun
 
     public void ChangeState(E_PlayeState newState)
     {
+        Debug.Log($"이전상태 : {curState}");
+        Debug.Log($"바꿀상태 : {newState}");
         states[(int)curState].Exit();
         curState = newState;
+        Debug.Log($"현재상태 : {curState}");
         states[(int)curState].Enter();
+        
     }
 
     //private void JumpTemp()

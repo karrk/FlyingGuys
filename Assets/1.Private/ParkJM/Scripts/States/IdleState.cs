@@ -22,29 +22,26 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-        else
-        {
-            //Debug.Log($"점프 안됨 리모트 인풋 : {RemoteInput.inputs[player.model.playerNumber].jumpInput}");
-            //Debug.Log($"player.isJumping : {player.isJumping}");
-        }
-
-        if (player.moveDir != Vector3.zero && player.isGrounded)
+        else if (player.moveDir != Vector3.zero && player.isGrounded)
         {
             player.ChangeState(E_PlayeState.Run);
         }
-
-        if(!player.isGrounded && player.rb.velocity.y != 0)
+        else if(!player.isGrounded && player.rb.velocity.y != 0)
         {
             player.ChangeState(E_PlayeState.Fall);
         }
-
-        if(RemoteInput.inputs[player.model.playerNumber].divingInput)
+        else if(RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
             player.ChangeState(E_PlayeState.Diving);
         }
 
+        //else
+        //{
+        //    //Debug.Log($"점프 안됨 리모트 인풋 : {RemoteInput.inputs[player.model.playerNumber].jumpInput}");
+        //    //Debug.Log($"player.isJumping : {player.isJumping}");
+        //}
 
-                
+
 
         // Todo : fall 상태 전환
         //if(player.rb.velocity.y < 0)
