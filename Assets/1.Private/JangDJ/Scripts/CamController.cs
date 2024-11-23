@@ -5,7 +5,7 @@ public class CamController : MonoBehaviour
 {
     private CinemachineVirtualCamera _cam;
     private CinemachineOrbitalTransposer _tr;
-    private CinemachineComposer _aim;
+    //private CinemachineComposer _aim;
 
     [Header("Cam Y Clamp")]
     [SerializeField, Range(-10f, 10f)] private float _minRotY;
@@ -23,7 +23,7 @@ public class CamController : MonoBehaviour
     {
         _cam = GetComponent<CinemachineVirtualCamera>();
         _tr = _cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        _aim = _cam.GetCinemachineComponent<CinemachineComposer>();
+        //_aim = _cam.GetCinemachineComponent<CinemachineComposer>();
     }
 
     /// <summary>
