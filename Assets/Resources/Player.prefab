@@ -562,7 +562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
-  isJumping: 0
+  isJumpable: 0
   isDiving: 0
   rotVec: {x: 0, y: 0, z: 0}
   model:

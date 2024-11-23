@@ -16,10 +16,7 @@ public class FallState : PlayerState
 
     public override void Update()
     {
-        if (player.isGrounded)
-        {
-            player.ChangeState(E_PlayeState.Idle);
-        }
+
 
         if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
@@ -31,12 +28,15 @@ public class FallState : PlayerState
 
     public override void FixedUpdate()
     {
-
+        if (player.isGrounded)
+        {
+            player.ChangeState(E_PlayeState.Idle);
+        }
     }
 
     public override void Exit()
     {
         Debug.Log("Fall 종료");
-        player.isJumping = false;
+        player.isJumpable = true;
     }
 }

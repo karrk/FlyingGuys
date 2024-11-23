@@ -16,12 +16,12 @@ public class RunState : PlayerState
 
     public override void Update()
     {
-        if (RemoteInput.inputs[player.model.playerNumber].jumpInput && !player.isJumping)
+        if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
         {
             player.ChangeState(E_PlayeState.Jump);
         }
 
-        if (player.moveDir == Vector3.zero)
+        else if (player.moveDir == Vector3.zero)
         {
             player.ChangeState(E_PlayeState.Idle);
         }
@@ -31,6 +31,11 @@ public class RunState : PlayerState
     {
         Run();
         LookForward();
+    }
+
+    public override void LateUpdate()
+    {
+        //LookForward();
     }
 
     public override void Exit()
@@ -53,7 +58,7 @@ public class RunState : PlayerState
             player.transform.rotation = Quaternion.Slerp(
                 player.transform.rotation,
                 targetRotation,
-                Time.deltaTime * 15
+                Time.deltaTime * 15 // 수정필요
             );
         }
     }

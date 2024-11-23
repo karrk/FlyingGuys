@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviourPun
 {
     public Rigidbody rb;
     public Vector3 moveDir;
-    public bool isJumping;
+    public bool isJumpable;
     public bool isDiving;
     [SerializeField] Vector3 rotVec;
 
@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviourPun
     private void LateUpdate()
     {
         _cam.RotY(rotVec.y);
+        states[(int)curState].LateUpdate();
     }
 
 

@@ -12,8 +12,9 @@ public class JumpState : PlayerState
     public override void Enter()
     {
         Debug.Log("Jump 진입");
-        player.isJumping = true;
+        
         player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
+        player.isJumpable = false;
     }
 
     public override void Update()
@@ -29,10 +30,7 @@ public class JumpState : PlayerState
             player.ChangeState(E_PlayeState.Diving);
         }
 
-        //if (player.isGround)
-        //{
-        //    player.ChangeState(E_PlayeState.Idle);
-        //}
+
 
         // Todo : fall 상태 전환
         //if(player.rb.velocity.y < 0)
@@ -44,12 +42,15 @@ public class JumpState : PlayerState
 
     public override void FixedUpdate()
     {
-
+        if (player.isGrounded)
+        {
+            player.isJumpable = true;
+            player.ChangeState(E_PlayeState.Idle);
+        }
     }
 
     public override void Exit()
     {
-        
         Debug.Log("Jump 종료");
     }
 }

@@ -56,16 +56,45 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         moveDir = (moveInput.z * camForward + moveInput.x * camRight).normalized;
     }
 
+    private bool preJumpInput = false;
     private void InputJump()
     {
-        if(Input.GetButtonDown("Jump"))
+        bool curJumpInput = Input.GetButtonDown("Jump");
+
+        if(curJumpInput != preJumpInput)
         {
-            //photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
+            preJumpInput = curJumpInput;
         }
-        else
+
+
+
+
+        //if (curJumpInput != preJumpInput)
+        //{
+        //    //photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+        //    photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, true);
+        //}
+        //else
+        //{
+        //    photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
+        //    //inputs[playerNumber].jumpInput = false;
+        //}
+    }
+
+    [PunRPC]
+    private void Jump_RPC(int playerNum, bool isJumping)
+    {
+        //if (!PhotonNetwork.IsMasterClient)
+        //    return;
+
+        if (inputs[playerNum] != null)
         {
-            inputs[playerNumber].jumpInput = false;
+            // 지금 remoteInput 객체는 룸 오브젝트가 아니라 각 유저가 소유권을 가지는데 
+            // 아래 로그가 마스터의 콘솔창에서만 출력됨
+            // rpc를 마스터클라이언트에만 보내니까 그럼
+            inputs[playerNum].jumpInput = isJumping;
+            Debug.Log("점프 input 들어감");
         }
     }
 
@@ -88,14 +117,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     // Rpc 메서드들
 
-    [PunRPC]
-    private void Jump_RPC(int playerNum)
-    {
-        if (inputs[playerNum] != null)
-        {
-            inputs[playerNum].jumpInput = true;
-        }
-    }
+
 
     [PunRPC]
     private void Diving_RPC(int playerNum)
