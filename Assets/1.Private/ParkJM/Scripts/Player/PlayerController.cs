@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviourPun
 {
     public Rigidbody rb;
     public Vector3 moveDir;
-    public bool isJumping;
+    public bool isJumpable;
     public bool isDiving;
     [SerializeField] Vector3 rotVec;
 
@@ -21,6 +21,12 @@ public class PlayerController : MonoBehaviourPun
     //[SerializeField] float jumpForce;
 
     [SerializeField] CamController _cam;
+
+
+    // 버퍼
+    public float jumpBufferTime = 0.2f;
+    public float jumpBufferCounter;
+
 
     // 임시 바닥 탐지
     private float rayLength = 0.5f;
@@ -64,7 +70,8 @@ public class PlayerController : MonoBehaviourPun
             return;
 
         HandleMoveInputs();
-        
+        ControlJumpBuffer();
+
         states[(int)curState].Update();
 
         //if (RemoteInput.inputs[model.playerNumber].jumpInput && !isJumping)
@@ -75,6 +82,8 @@ public class PlayerController : MonoBehaviourPun
         //    //JumpTemp();
         //    //RemoteInput.inputs[model.playerNumber].jumpInput = false;
         //}
+
+
     }
 
     private void FixedUpdate()
@@ -95,6 +104,7 @@ public class PlayerController : MonoBehaviourPun
     private void LateUpdate()
     {
         _cam.RotY(rotVec.y);
+        //states[(int)curState].LateUpdate();
     }
 
 
@@ -103,6 +113,7 @@ public class PlayerController : MonoBehaviourPun
         states[(int)curState].Exit();
         curState = newState;
         states[(int)curState].Enter();
+        
     }
 
     //private void JumpTemp()
@@ -121,15 +132,37 @@ public class PlayerController : MonoBehaviourPun
         moveDir = RemoteInput.inputs[model.playerNumber].MoveDir;
     }
 
+    private void ControlJumpBuffer()
+    {
+        //점프 인풋이 들어왔으면
+        if (RemoteInput.inputs[model.playerNumber].jumpInput)
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+            jumpBufferCounter -= Time.deltaTime;
+    }
+
     private void HandleCamInput()
     {
-        Debug.Log(_cam.gameObject.name);
+        //Debug.Log(_cam.gameObject.name);
         rotVec = RemoteInput.inputs[model.playerNumber].RotVec;
     }
 
-    private void CheckGround()
+    private bool CheckGround()
     {
+        if (rb.velocity.y > 0)
+        {
+            return isGrounded = false;
+        }
+           
         isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
+        if (hitInfo.collider != null)
+        {
+            //Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
+        }
+        
+        return isGrounded;
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -145,6 +178,6 @@ public class PlayerController : MonoBehaviourPun
     private void OnDrawGizmos()
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
+        Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
     }
 }

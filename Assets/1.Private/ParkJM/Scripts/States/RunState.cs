@@ -16,12 +16,18 @@ public class RunState : PlayerState
 
     public override void Update()
     {
-        if (RemoteInput.inputs[player.model.playerNumber].jumpInput && !player.isJumping)
+        if (player.jumpBufferCounter > 0f && player.isJumpable)
         {
             player.ChangeState(E_PlayeState.Jump);
         }
 
-        if (player.moveDir == Vector3.zero)
+
+        //if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
+        //{
+        //    player.ChangeState(E_PlayeState.Jump);
+        //}
+
+        else if (player.moveDir.sqrMagnitude < 0.1f) //== Vector3.zero)
         {
             player.ChangeState(E_PlayeState.Idle);
         }
@@ -33,6 +39,11 @@ public class RunState : PlayerState
         LookForward();
     }
 
+    public override void LateUpdate()
+    {
+        //LookForward();
+    }
+
     public override void Exit()
     {
         Debug.Log("Run 종료");
@@ -40,7 +51,12 @@ public class RunState : PlayerState
 
     private void Run()
     {
-        player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
+        Vector3 targetVelocity = player.moveDir * player.model.moveSpeed;
+        targetVelocity.y = player.rb.velocity.y;
+
+        player.rb.velocity = targetVelocity;
+
+        //player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
     }
 
     private void LookForward()
@@ -53,7 +69,7 @@ public class RunState : PlayerState
             player.transform.rotation = Quaternion.Slerp(
                 player.transform.rotation,
                 targetRotation,
-                Time.deltaTime * 15
+                Time.fixedDeltaTime * 15 // 수정필요
             );
         }
     }

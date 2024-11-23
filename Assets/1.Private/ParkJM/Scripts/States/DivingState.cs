@@ -19,15 +19,20 @@ public class DivingState : PlayerState
         // 이동 방향이 있었을 경우 그쪽으로도 약간의 힘을 가해주어야 함
         Vector3 diveSpeed = player.moveDir * player.model.divingForce;
         diveSpeed.y = 1.0f; // 임시 y축 힘
-
+        player.transform.rotation = Quaternion.Euler(80f, player.transform.rotation.y, player.transform.rotation.z);
         player.rb.AddForce(diveSpeed, ForceMode.Impulse);
     }
 
     public override void Update()
     {
         // Todo : 다이빙 애니메이션이 끝나면 Fall로 전환
-        if( player.isGrounded) // player.rb.velocity.y  < 0.1f ||
+        if(player.isGrounded) // player.rb.velocity.y  < 0.1f ||
+        {
             player.ChangeState(E_PlayeState.Fall);
+            player.transform.rotation = Quaternion.Euler(0f, player.transform.rotation.y, player.transform.rotation.z);
+
+        }
+            
     }
 
     public override void FixedUpdate()
