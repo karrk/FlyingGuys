@@ -311,6 +311,7 @@ MonoBehaviour:
     moveSpeed: 5
     jumpForce: 10
     divingForce: 0
+
   _cam: {fileID: 8211866637519942805}
   jumpBufferTime: 0.2
   jumpBufferCounter: 0

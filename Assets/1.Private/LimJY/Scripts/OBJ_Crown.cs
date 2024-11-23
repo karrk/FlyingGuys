@@ -1,9 +1,12 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OBJ_Crown : MonoBehaviour
 {
+    public int Num;
+
     // -------------------------------------------------------------------------
 
     private void OnEnable()
@@ -21,6 +24,11 @@ public class OBJ_Crown : MonoBehaviour
             //    // TODO : 닿은 플레이어 내부의 bool형 변수를 true로 변경한다.
             //    IsGrabEnable = true;
             //}
+
+            Num = other.transform.GetComponent<PhotonView>().ViewID;
+            Debug.Log(other.transform.GetComponent<PhotonView>().ViewID);
+            NetWorkManager.IsTriggerCrown = true;
+
             CrownDisable(other.gameObject.GetComponent<PlayerController>());
         }
     }
