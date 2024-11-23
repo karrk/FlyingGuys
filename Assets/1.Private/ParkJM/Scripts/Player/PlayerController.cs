@@ -124,13 +124,24 @@ public class PlayerController : MonoBehaviourPun
 
     private void HandleCamInput()
     {
-        Debug.Log(_cam.gameObject.name);
+        //Debug.Log(_cam.gameObject.name);
         rotVec = RemoteInput.inputs[model.playerNumber].RotVec;
     }
 
-    private void CheckGround()
+    private bool CheckGround()
     {
+        if (rb.velocity.y > 0)
+        {
+            return isGrounded = false;
+        }
+           
         isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
+        if (hitInfo.collider != null)
+        {
+            Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
+        }
+        
+        return isGrounded;
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -146,6 +157,6 @@ public class PlayerController : MonoBehaviourPun
     private void OnDrawGizmos()
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
+        Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
     }
 }

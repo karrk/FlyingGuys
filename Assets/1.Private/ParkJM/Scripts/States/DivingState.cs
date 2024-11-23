@@ -26,7 +26,7 @@ public class DivingState : PlayerState
     public override void Update()
     {
         // Todo : 다이빙 애니메이션이 끝나면 Fall로 전환
-        if( player.isGrounded) // player.rb.velocity.y  < 0.1f ||
+        if(player.isGrounded) // player.rb.velocity.y  < 0.1f ||
         {
             player.ChangeState(E_PlayeState.Fall);
             player.transform.rotation = Quaternion.Euler(0f, player.transform.rotation.y, player.transform.rotation.z);
