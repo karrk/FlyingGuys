@@ -19,11 +19,23 @@ public class CamController : MonoBehaviour
     private float _normalizeValue;
     private float _resultZ;
 
+    public int ID { get; private set; }
+
     private void Awake()
     {
         _cam = GetComponent<CinemachineVirtualCamera>();
         _tr = _cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
         //_aim = _cam.GetCinemachineComponent<CinemachineComposer>();
+    }
+
+    /// <summary>
+    /// 캐릭터의 시네머신카메라 오브젝트에 view ID를 전달합니다.
+    /// </summary>
+    public void SetID(int id)
+    {
+        this.ID = id;
+
+        Camera.main.GetComponent<MainCamController>().SetID(id);
     }
 
     /// <summary>

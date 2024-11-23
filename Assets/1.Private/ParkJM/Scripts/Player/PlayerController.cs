@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviourPun
     {
         if(player == PhotonNetwork.LocalPlayer)
         {
+            _cam.SetID(photonView.ViewID);
             _cam.SetForcePriority(10);
         }
 
