@@ -26,7 +26,7 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
         options.MaxPlayers = 2;
         options.IsVisible = false;
 
-        PhotonNetwork.JoinOrCreateRoom("Room", options, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom("Room11", options, TypedLobby.Default);
     }
 
     // TODO : 마스터 클라이언트가 변경되었을 때
