@@ -5,7 +5,7 @@ public enum E_PoolType
     Size
 }
 
-public enum E_ObjectType
+public enum E_NetworkType
 {
     Private,
     Public,
