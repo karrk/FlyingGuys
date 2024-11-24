@@ -20,21 +20,22 @@ public class ObjectPool
 
         foreach (var item in table)
         {
-            tempList = new List<GameObject>();
+            tempList = new List<GameObject>(ObjPoolManager.InitPoolCount);
 
             _directorys.Add(item.Key, new GameObject().transform);
             _pools.Add(item.Key, tempList);
 
             CreateDirectory(_typeDirectory, _directorys[item.Key], $"{item.Value.name} pool");
-            CreatePool(tempList, item.Value, _directorys[item.Key]);
+            CreateObject(tempList, item.Value, _directorys[item.Key]);
         }
     }
 
-    private void CreatePool(List<GameObject> poolList, GameObject prefab, Transform parent)
+    private void CreateObject(List<GameObject> poolList, GameObject prefab, Transform parent)
     {
         GameObject newObj;
+        int count = poolList.Capacity;
 
-        for (int i = 0; i < ObjPoolManager.InitPoolCount; i++)
+        for (int i = 0; i < count; i++)
         {
             newObj = GameObject.Instantiate(prefab);
             newObj.transform.SetParent(parent);
@@ -46,6 +47,13 @@ public class ObjectPool
     public GameObject GetObject(Enum type)
     {
         List<GameObject> pool = _pools[type];
+
+        if(pool.Count <= 2)
+        {
+            pool.Capacity *= 2;
+            CreateObject(pool, pool[0], _directorys[type]);
+            return GetObject(type);
+        }
 
         GameObject obj = pool[pool.Count - 1];
         pool.RemoveAt(pool.Count - 1);

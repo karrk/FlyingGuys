@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ObjPoolManager : MonoBehaviour, IManager
 {
-    public const int InitPoolCount = 10;
+    public const int InitPoolCount = 5;
     public static ObjPoolManager Instance { get; private set; }
 
     public Transform MainDirectory { get; private set; }
