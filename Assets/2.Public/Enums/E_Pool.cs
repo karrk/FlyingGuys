@@ -5,6 +5,12 @@ public enum E_PoolType
     Size
 }
 
+public enum E_ObjectType
+{
+    Private,
+    Public,
+}
+
 public enum E_VFX
 {
     Grab,
