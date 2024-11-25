@@ -9,12 +9,13 @@ public class BouncedState : PlayerState
     float bounceDelay = 0.03f;
     public BouncedState(PlayerController player) : base(player)
     {
-
+        animationIndex = (int)E_PlayeState.Bounced;
     }
 
     public override void Enter()
     {
         Debug.Log("Bounced 상태 진입");
+        player.view.PlayAnimation(animationIndex);
         bounceDelayCounter = 0;
         player.rb.velocity = Vector3.zero;
 
@@ -37,14 +38,7 @@ public class BouncedState : PlayerState
 
     public override void Update()
     {
-        
-    }
-
-    public override void FixedUpdate()
-    {
-        bounceDelayCounter += Time.fixedDeltaTime;
-
-        if(bounceDelayCounter < bounceDelay)
+        if (!player.view.IsAnimationFinished())
             return;
 
         if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
@@ -58,6 +52,29 @@ public class BouncedState : PlayerState
                 player.ChangeState(E_PlayeState.Fall);
             }
         }
+    }
+
+    public override void FixedUpdate()
+    {
+        //bounceDelayCounter += Time.fixedDeltaTime;
+
+        //if(bounceDelayCounter < bounceDelay)
+        //    return;
+
+        //if (!player.view.IsAnimationFinished())
+        //    return;
+
+        //if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
+        //{
+        //    if (player.isGrounded)
+        //    {
+        //        player.ChangeState(E_PlayeState.Idle);
+        //    }
+        //    else
+        //    {
+        //        player.ChangeState(E_PlayeState.Fall);
+        //    }
+        //}
     }
 
     public override void Exit()

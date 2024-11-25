@@ -13,6 +13,7 @@ public enum E_Scenes
     Size
 }
 
+// 플레이어 상태 관련 Enum type
 public enum E_PlayeState
 {
     Idle,
