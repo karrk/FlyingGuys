@@ -165,6 +165,8 @@ GameObject:
   - component: {fileID: 8245308308532583003}
   - component: {fileID: 8245308308532583012}
   - component: {fileID: 8245308308532583013}
+  - component: {fileID: 7766165703781086670}
+  - component: {fileID: 1307663830698734824}
   m_Layer: 12
   m_Name: Pink2Door
   m_TagString: Untagged
@@ -219,6 +221,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotateSpeed: {x: 0, y: 0.7, z: 0}
   _com: {fileID: 8245308309436075365}
+--- !u!114 &7766165703781086670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245308308532583014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1307663830698734824}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1307663830698734824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245308308532583014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 0
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8245308309436075366
 GameObject:
   m_ObjectHideFlags: 0

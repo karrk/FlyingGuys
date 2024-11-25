@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 1594659186501613892}
   - component: {fileID: 1594659186501613946}
   - component: {fileID: 1594659186501613893}
+  - component: {fileID: 7386010996183328870}
+  - component: {fileID: 3659714807528286669}
   m_Layer: 12
   m_Name: Sky2Roller
   m_TagString: Untagged
@@ -111,6 +113,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotateSpeed: {x: 0, y: 4, z: 0}
   _com: {fileID: 1594659185482979441}
+--- !u!114 &7386010996183328870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594659186501613895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3659714807528286669}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3659714807528286669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594659186501613895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 0
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &2002906364365849529
 GameObject:
   m_ObjectHideFlags: 0
