@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour, IManager
 {
@@ -12,12 +13,18 @@ public class SoundManager : MonoBehaviour, IManager
      * 아무래도 저작권 음원, 쓸것같네 = 리소스에 등록금지
      */
 
+    public const string MASTER_VOLUME_KEY = "Master";
+    public const string BGM_VOLUME_KEY = "BGM";
+    public const string SFX_VOLUME_KEY = "SFX";
+    public const float MAX_VOLUME_DB = 0f;
+    public const float MIN_VOLUME_DB = -60f;
     private const float FADE_DELAY = 0.1f;
-
+    
     public static SoundManager Instance { get; private set; }
 
-    [SerializeField] private AudioSource BGM;
-    [SerializeField] private AudioSource SFX;
+    [SerializeField] private AudioMixer _mixer;
+    [SerializeField] private AudioSource _BGM;
+    [SerializeField] private AudioSource _SFX;
 
     private BGMList _bgmList;
     private SFXList _sfxList;
@@ -28,10 +35,13 @@ public class SoundManager : MonoBehaviour, IManager
 
     private WaitForSeconds _delaySec = new WaitForSeconds(FADE_DELAY);
 
+    private SaveValues _soundValue = new SaveValues();
+    private string _tempKey;
+
     #region 임시
 
-    [SerializeField] private float MaxVolume;
-    [SerializeField] private float MinVolume;
+    [SerializeField] private float FadeMaxVolume;
+    [SerializeField] private float FadeMinVolume;
 
     #endregion
 
@@ -39,38 +49,100 @@ public class SoundManager : MonoBehaviour, IManager
     {
         Instance = this;
         ConnectSources();
-        SetForceVolume(E_SoundType.BGM , MinVolume);
+        LoadVolumes();
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(1))
-    //        Play(E_BGM.BG_Test_1,10f,0);
-    //}
+
+    private void Start()
+    {
+        LoadVolumes(); // mixer 초기화 버그로 인해 2번 호출
+    }
+
+    private void LoadVolumes()
+    {
+        float value;
+        
+        value = _soundValue.LoadData(MASTER_VOLUME_KEY);
+        if (MIN_VOLUME_DB <= value && value <= MAX_VOLUME_DB)
+            _mixer.SetFloat(MASTER_VOLUME_KEY, value);
+
+        value = _soundValue.LoadData(BGM_VOLUME_KEY);
+        if (MIN_VOLUME_DB <= value && value <= MAX_VOLUME_DB)
+            _mixer.SetFloat(BGM_VOLUME_KEY, value);
+
+        value = _soundValue.LoadData(SFX_VOLUME_KEY);
+        if (MIN_VOLUME_DB <= value && value <= MAX_VOLUME_DB)
+            _mixer.SetFloat(SFX_VOLUME_KEY, value);
+
+    }
+
+    private void SaveVolumes()
+    {
+        float value;
+
+        _mixer.GetFloat(MASTER_VOLUME_KEY,out value);
+        _soundValue.SaveData(MASTER_VOLUME_KEY, value);
+
+        _mixer.GetFloat(BGM_VOLUME_KEY, out value);
+        _soundValue.SaveData(BGM_VOLUME_KEY, value);
+
+        _mixer.GetFloat(SFX_VOLUME_KEY, out value);
+        _soundValue.SaveData(SFX_VOLUME_KEY, value);
+    }
 
     private void ConnectSources()
     {
         _bgmList = GetComponentInChildren<BGMList>();
         _sfxList = GetComponentInChildren<SFXList>();
 
-        BGM = _bgmList.Source;
-        SFX = _sfxList.Source;
+        _BGM = _bgmList.Source;
+        _SFX = _sfxList.Source;
     }
 
     /// <summary>
-    /// 해당 오디오소스의 볼륨을 설정합니다.
+    /// 해당 오디오믹서의 데시벨을 설정합니다.
     /// </summary>
-    public void SetForceVolume(E_SoundType type, float volume)
+    public void SetDBVolume(E_SoundType type, float value)
     {
         switch (type)
         {
+            case E_SoundType.Master:
+                _tempKey = MASTER_VOLUME_KEY;
+                break;
             case E_SoundType.BGM:
-                BGM.volume = volume;
+                _tempKey = BGM_VOLUME_KEY;
                 break;
             case E_SoundType.SFX:
-                SFX.volume = volume;
+                _tempKey = SFX_VOLUME_KEY;
+                break;
+            default:
+                _tempKey = "";
                 break;
         }
+
+        _mixer.SetFloat(_tempKey, value);
+    }
+
+    public float GetDBVolume(E_SoundType type)
+    {
+        float volume;
+
+        switch (type)
+        {
+            case E_SoundType.Master:
+                _mixer.GetFloat(MASTER_VOLUME_KEY,out volume);
+                return volume;
+
+            case E_SoundType.BGM:
+                _mixer.GetFloat(BGM_VOLUME_KEY, out volume);
+                return volume;
+                
+            case E_SoundType.SFX:
+                _mixer.GetFloat(SFX_VOLUME_KEY, out volume);
+                return volume;
+        }
+
+        return float.MinValue;
     }
 
     /// <summary>
@@ -78,7 +150,7 @@ public class SoundManager : MonoBehaviour, IManager
     /// </summary>
     public void Play(E_SFX sfxClip)
     {
-        SFX.PlayOneShot(_sfxList[sfxClip]);
+        _SFX.PlayOneShot(_sfxList[sfxClip]);
     }
 
     /// <summary>
@@ -109,14 +181,14 @@ public class SoundManager : MonoBehaviour, IManager
             return;
         }
 
-        BGM.PlayOneShot(clip);
+        _BGM.PlayOneShot(clip);
         _bgmCleaner = StartCoroutine(DelayClean(clip.length));
     }
 
     private IEnumerator DelayClean(float delay)
     {
         yield return new WaitForSeconds(delay);
-        BGM.clip = null;
+        _BGM.clip = null;
     }
 
     private IEnumerator ClipChange(AudioClip clip,float fadeInTime,float fadeOutTime)
@@ -125,7 +197,7 @@ public class SoundManager : MonoBehaviour, IManager
             StopCoroutine(_fadeRoutine);
 
         yield return  FadeRoutine(fadeOutTime,false);
-        BGM.PlayOneShot(clip);
+        _BGM.PlayOneShot(clip);
         _bgmCleaner = StartCoroutine(DelayClean(clip.length));
         _fadeRoutine = StartCoroutine(FadeRoutine(fadeInTime, true));
     }
@@ -141,17 +213,17 @@ public class SoundManager : MonoBehaviour, IManager
         {
             case true: // In
 
-                gap = (MaxVolume - BGM.volume) / duration;
+                gap = (FadeMaxVolume - _BGM.volume) / duration;
 
                 while (true)
                 {
-                    if (BGM.volume >= MaxVolume)
+                    if (_BGM.volume >= FadeMaxVolume)
                     {
-                        BGM.volume = MaxVolume;
+                        _BGM.volume = FadeMaxVolume;
                         break;
                     }
 
-                    BGM.volume += gap * FADE_DELAY;
+                    _BGM.volume += gap * FADE_DELAY;
 
                     yield return _delaySec;
                 }
@@ -160,22 +232,45 @@ public class SoundManager : MonoBehaviour, IManager
 
             case false: // Out
 
-                gap = (BGM.volume - MinVolume) / duration;
+                gap = (_BGM.volume - FadeMinVolume) / duration;
 
                 while (true)
                 {
-                    if (MinVolume >= BGM.volume)
+                    if (FadeMinVolume >= _BGM.volume)
                     {
-                        BGM.volume = MinVolume;
+                        _BGM.volume = FadeMinVolume;
                         break;
                     }
 
-                    BGM.volume -= gap * FADE_DELAY;
+                    _BGM.volume -= gap * FADE_DELAY;
 
                     yield return _delaySec;
                 }
 
                 break;
         }
+    }
+
+    private void OnDisable()
+    {
+        SaveVolumes();
+    }
+}
+
+public class SaveValues
+{
+    public float LoadData(string key)
+    {
+        if (PlayerPrefs.HasKey(key) == true)
+        {
+            return PlayerPrefs.GetFloat(key);
+        }
+
+        return float.MinValue;
+    }
+
+    public void SaveData(string key, float value)
+    {
+        PlayerPrefs.SetFloat(key, value);
     }
 }

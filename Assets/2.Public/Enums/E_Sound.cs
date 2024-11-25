@@ -1,5 +1,6 @@
 public enum E_SoundType
 {
+    Master,
     BGM,
     SFX,
 }

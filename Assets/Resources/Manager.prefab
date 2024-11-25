@@ -48,7 +48,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -390,10 +390,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca1ecaaaed495c43a60b1f0fb44300d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: {fileID: 0}
-  SFX: {fileID: 0}
-  MaxVolume: 0.2
-  MinVolume: 0.05
+  _mixer: {fileID: 24100000, guid: 680dbf789cad6c64bbbd9fc08f9723d2, type: 2}
+  _BGM: {fileID: 0}
+  _SFX: {fileID: 0}
+  FadeMaxVolume: 0
+  FadeMinVolume: 0
 --- !u!114 &-7453887786543783786
 MonoBehaviour:
   m_ObjectHideFlags: 0
