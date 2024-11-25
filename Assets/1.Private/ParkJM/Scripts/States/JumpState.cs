@@ -6,13 +6,14 @@ public class JumpState : PlayerState
 {
     public JumpState(PlayerController player) : base(player)
     {
-
+        animationIndex = (int)E_PlayeState.Jump;
     }
 
     public override void Enter()
     {
         Debug.Log("Jump 진입");
         Jump();
+        player.view.PlayAnimation(animationIndex);
 
 
     }

@@ -16,7 +16,11 @@ public class PlayerView : MonoBehaviourPun
     private int[] animationHash = new int[]
     {
         Animator.StringToHash("Idle"),
-        Animator.StringToHash("Running")
+        Animator.StringToHash("Running"),
+        Animator.StringToHash("JumpUp"),
+        Animator.StringToHash("Fall"),
+        Animator.StringToHash("Dive"),
+        Animator.StringToHash("Bounced"),
     };
 
     public void PlayAnimation(int _animationIndex)
