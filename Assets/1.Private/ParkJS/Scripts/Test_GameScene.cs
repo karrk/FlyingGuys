@@ -31,10 +31,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         countText.text = null;
-    }
-
-    public override void OnJoinedRoom()
-    {
         StartCoroutine(StartDelayRoutine());
     }
 
@@ -58,7 +54,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             return;
         
         // TODO : 마스터 클라이언트만 실행 하는 곳
-        count = PhotonNetwork.ViewCount - (PhotonNetwork.CurrentRoom.PlayerCount * 2);  // 마스터 기준
+        count = PhotonNetwork.ViewCount - 2;  // 마스터 기준
+        Debug.Log($"{count} / {PhotonNetwork.ViewCount} / {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
 
     [PunRPC]
@@ -153,6 +150,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Util.SendAndReceiveStruct(stream, ref count);
+        Debug.Log($"전달되는 {count}");
     }
 }
 

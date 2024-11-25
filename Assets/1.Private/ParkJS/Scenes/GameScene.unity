@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e403139e6d7ce45b602815caaf4d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inGamePlay: 1
+  inGamePlay: 0
   charSpawner: {fileID: 8279144717206486368}
   countText: {fileID: 338638370}
   winUI: {fileID: 4232937526321752173}
@@ -569,7 +569,8 @@ MonoBehaviour:
   Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1170083188}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
