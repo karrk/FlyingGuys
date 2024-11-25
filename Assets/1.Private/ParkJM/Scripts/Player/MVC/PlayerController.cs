@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviourPun
     private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
 
     // 물리 충돌 레이어
-    private int bouncingObstacleLayer;
+    private int obstacleLayer;
 
     // 임시 변수
     public float bouncedForce; // 충돌한 장애물에서 받아오는게 더 적합해보임
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviourPun
         states[(int)curState].Enter();
 
         // 레이어 미리 캐싱
-        bouncingObstacleLayer = LayerMask.NameToLayer("BouncingObstacle");
+        obstacleLayer = LayerMask.NameToLayer("Obstacle");
     }
 
     private void Update()
@@ -137,8 +137,9 @@ public class PlayerController : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == bouncingObstacleLayer)
+        if(collision.gameObject.layer == obstacleLayer)
         {
+            bouncedForce = collision.gameObject.GetComponent<BounceObject>().Power;
             bouncedDir = collision.contacts[0].normal.normalized;
             //bouncedDir = (transform.position - collision.contacts[0].point).normalized;
             ChangeState(E_PlayeState.Bounced);

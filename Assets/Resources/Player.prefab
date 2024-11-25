@@ -506,10 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsRunning
+  m_SynchronizeParameters: []
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -542,7 +539,7 @@ MonoBehaviour:
   jumpBufferCounter: 0
   isGrounded: 0
   curState: 0
-  bouncedForce: 10
+  bouncedForce: 0
   bouncedDir: {x: 0, y: 0, z: 0}
 --- !u!114 &5212827164425966037
 MonoBehaviour:
