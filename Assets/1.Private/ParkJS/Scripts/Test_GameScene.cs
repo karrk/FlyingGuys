@@ -19,6 +19,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+
         winUI.SetActive(false);
         loseUI.SetActive(false);
     }
@@ -31,6 +32,10 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         countText.text = null;
+    }
+
+    public override void OnJoinedRoom()
+    {
         StartCoroutine(StartDelayRoutine());
     }
 

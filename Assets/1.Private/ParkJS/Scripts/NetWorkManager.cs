@@ -27,7 +27,7 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
         options.MaxPlayers = 2;
         options.IsVisible = false;
 
-        PhotonNetwork.JoinOrCreateRoom("Room11", options, TypedLobby.Default);
+        Debug.Log($"방생성 {PhotonNetwork.JoinOrCreateRoom("Room", options, TypedLobby.Default)}");
     }
 
     public override void OnLeftRoom()

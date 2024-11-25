@@ -1089,6 +1089,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3335360712120098418, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3335360712130281432, guid: 85a606a478235fd44a0ace7714154da8,
         type: 3}
       propertyPath: m_RootOrder
@@ -1148,6 +1153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YellowTube
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335360712130281433, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85a606a478235fd44a0ace7714154da8, type: 3}
