@@ -14,6 +14,9 @@ public enum E_NetworkType
 public enum E_VFX
 {
     Grab,
+    Smoke,
+    Hit1,
+    Hit2,
 }
 
 //public enum E_MyType

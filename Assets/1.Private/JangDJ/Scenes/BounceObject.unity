@@ -395,13 +395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbf8f738c89e774e8e49f8e1a19b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pivot: {fileID: 0}
-  _player:
-    serializedVersion: 2
-    m_Bits: 0
-  _bouncePower: 0
-  _forceMode: 0
-  _isBounced: 0
 --- !u!65 &312502208
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -826,13 +819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbf8f738c89e774e8e49f8e1a19b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pivot: {fileID: 0}
-  _player:
-    serializedVersion: 2
-    m_Bits: 0
-  _bouncePower: 0
-  _forceMode: 0
-  _isBounced: 0
 --- !u!65 &1328087809
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -918,6 +904,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[1].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[2].Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[3].Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 7546794913876100377, guid: 546f9813ead788e4d8e39a9965eebe8a,
+        type: 3}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[2].Prefab
+      value: 
+      objectReference: {fileID: 3413426206372756255, guid: 53f695f2165e87c4cb1710ae12435346,
+        type: 3}
+    - target: {fileID: 7236397714073890814, guid: 167e66e61788d5048a1bb2b503477003,
+        type: 3}
+      propertyPath: vfxPrefabs._list.List.Array.data[3].Prefab
+      value: 
+      objectReference: {fileID: 7381055855893286726, guid: 5a87d9304d7919d46b4942e53d078e98,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 167e66e61788d5048a1bb2b503477003, type: 3}
 --- !u!1 &1434474986
@@ -1062,13 +1086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbf8f738c89e774e8e49f8e1a19b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pivot: {fileID: 0}
-  _player:
-    serializedVersion: 2
-    m_Bits: 0
-  _bouncePower: 0
-  _forceMode: 0
-  _isBounced: 0
 --- !u!65 &1649898339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1150,13 +1167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbf8f738c89e774e8e49f8e1a19b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pivot: {fileID: 0}
-  _player:
-    serializedVersion: 2
-    m_Bits: 0
-  _bouncePower: 0
-  _forceMode: 0
-  _isBounced: 0
 --- !u!1 &1860203634
 GameObject:
   m_ObjectHideFlags: 0
