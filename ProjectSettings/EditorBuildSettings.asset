@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/1.Private/ParkJS/Scenes/LobbyScene.unity
     guid: 6c17a9aa757ec5c41802051a4d98924d
-  - enabled: 0
+  - enabled: 1
     path: Assets/1.Private/ParkJS/Scenes/GameScene.unity
     guid: ed90ce268df51f04f8fcc217c97bf645
-  - enabled: 1
+  - enabled: 0
     path: Assets/1.Private/ParkJM/Scenes/PlayerTestScene.unity
     guid: f70dfa123e11bcf4fbcdb5e9dcdaeb90
+  - enabled: 1
+    path: Assets/1.Private/ParkJS/Scenes/ResertScene.unity
+    guid: 2842d646bcb4ab14db174e9154e4eb07
   m_configObjects: {}

@@ -5,7 +5,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Test_GameScene : MonoBehaviourPunCallbacks
+public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
@@ -14,9 +14,11 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     [SerializeField] GameObject loseUI;
     [SerializeField] OBJ_Crown crown;
 
+    private int count;
+
     private void Awake()
     {
-        //crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+        crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
     }
@@ -54,8 +56,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient == false)
             return;
-
+        
         // TODO : 마스터 클라이언트만 실행 하는 곳
+        count = PhotonNetwork.ViewCount - (PhotonNetwork.CurrentRoom.PlayerCount * 2);  // 마스터 기준
     }
 
     [PunRPC]
@@ -118,14 +121,14 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         {
             foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
             {
-                Debug.Log(item == (crown.Num - 1));
+                Debug.Log(item == (crown.Num - count));
                 Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - 1))//
+                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))//
                 {
                     //Debug.Log($"{PhotonNetwork.CurrentRoom.Players[crown.Num - 1]}. ");
 
-                    if (PhotonNetwork.CurrentRoom.Players[crown.Num-1] == PhotonNetwork.LocalPlayer)
+                    if (PhotonNetwork.CurrentRoom.Players[crown.Num- count] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
                         Debug.Log("승리"); 
@@ -137,11 +140,19 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                         Debug.Log("패배");
                         loseUI.SetActive(true);
                     }
+
+                    yield return new WaitForSeconds(1f);
+                    PhotonNetwork.LeaveRoom();
                     yield break;
                 }
             }
             yield return null;
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        Util.SendAndReceiveStruct(stream, ref count);
     }
 }
 
