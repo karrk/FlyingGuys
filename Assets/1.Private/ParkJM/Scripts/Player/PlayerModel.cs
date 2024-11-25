@@ -7,6 +7,7 @@ public class PlayerModel
 {
     public int playerNumber;
     public float moveSpeed;
+    public float moveSpeedInAir;
     public float jumpForce;
     public float divingForce;
 }

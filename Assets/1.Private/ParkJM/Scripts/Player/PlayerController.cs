@@ -37,6 +37,13 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] E_PlayeState curState;
     private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
 
+    // 물리 충돌 레이어
+    private int bouncingObstacleLayer;
+
+    // 임시 변수
+    public float bouncedForce; // 충돌한 장애물에서 받아오는게 더 적합해보임
+    public Vector3 bouncedDir;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,6 +56,7 @@ public class PlayerController : MonoBehaviourPun
         states[(int)E_PlayeState.Jump] = new JumpState(this);
         states[(int)E_PlayeState.Fall] = new FallState(this);
         states[(int)E_PlayeState.Diving] = new DivingState(this);
+        states[(int)E_PlayeState.Bounced] = new BouncedState(this);
     }
 
     private void Start()
@@ -60,6 +68,9 @@ public class PlayerController : MonoBehaviourPun
 
         curState = E_PlayeState.Idle;
         states[(int)curState].Enter();
+
+        // 레이어 미리 캐싱
+        bouncingObstacleLayer = LayerMask.NameToLayer("BouncingObstacle");
     }
 
     private void Update()
@@ -73,6 +84,8 @@ public class PlayerController : MonoBehaviourPun
         ControlJumpBuffer();
 
         states[(int)curState].Update();
+
+        //Debug.Log(rb.velocity);
 
         //if (RemoteInput.inputs[model.playerNumber].jumpInput && !isJumping)
         //{
@@ -94,7 +107,10 @@ public class PlayerController : MonoBehaviourPun
         states[(int)curState].FixedUpdate();
         CheckGround();
 
-
+        if(!isGrounded && curState != E_PlayeState.Bounced)
+        {
+            MoveInAir();
+        }
 
         //moveDir = RemoteInput.inputs[playerNumber].MoveDir;
         //rotVec = RemoteInput.inputs[playerNumber].RotVec;
@@ -116,6 +132,41 @@ public class PlayerController : MonoBehaviourPun
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == bouncingObstacleLayer)
+        {
+            bouncedDir = collision.contacts[0].normal.normalized;
+            //bouncedDir = (transform.position - collision.contacts[0].point).normalized;
+            ChangeState(E_PlayeState.Bounced);
+        }
+    }
+
+    public void MoveInAir()
+    {
+        // Run의 로직을 속도만 다르게한것 아마도 수정 필요
+
+        if (moveDir == Vector3.zero)
+            return;
+
+        Vector3 targetVelocity = moveDir * model.moveSpeedInAir;
+        targetVelocity.y = rb.velocity.y;
+
+        rb.velocity = targetVelocity;
+
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            Time.fixedDeltaTime * 15 // 수정필요
+        );
+
+
+
+    }
+
     //private void JumpTemp()
     //{
     //    if (RemoteInput.inputs[model.playerNumber].jumpInput)
@@ -124,7 +175,7 @@ public class PlayerController : MonoBehaviourPun
     //        rb.AddForce(Vector3.up * model.jumpForce, ForceMode.Impulse);
     //        RemoteInput.inputs[model.playerNumber].jumpInput = false;
     //    }
-        
+
     //}
 
     public void HandleMoveInputs()
