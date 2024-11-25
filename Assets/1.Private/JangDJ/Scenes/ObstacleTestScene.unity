@@ -854,6 +854,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3780146699934356757, guid: 0b6b4064c88653a4bb154fa18237c261,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b6b4064c88653a4bb154fa18237c261, type: 3}
 --- !u!33 &642597397693705980
@@ -871,11 +876,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 370905442}
     m_Modifications:
-    - target: {fileID: 769926045687428182, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 769926046105963554, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
         type: 3}
       propertyPath: m_RootOrder
@@ -936,15 +936,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue1Door
       objectReference: {fileID: 0}
-    - target: {fileID: 769926046105963555, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
+    - target: {fileID: 2448857626164577671, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
         type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1117030237801890899, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
+      propertyPath: sceneViewId
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79af1d8af3a5d294090b3b6cad5ab33c, type: 3}
@@ -1015,6 +1010,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pink4Roller
       objectReference: {fileID: 0}
+    - target: {fileID: 2810450148852678275, guid: 1c56df75581cf1c4490e3ad41c87dd7a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c56df75581cf1c4490e3ad41c87dd7a, type: 3}
 --- !u!1001 &1594659186971947866
@@ -1083,6 +1083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sky2Roller
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386010996183328870, guid: 7a8c2ba3111093c44a10e93a1a1c8241,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a8c2ba3111093c44a10e93a1a1c8241, type: 3}
@@ -1349,20 +1354,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 370905442}
     m_Modifications:
-    - target: {fileID: 4567623424411619372, guid: 5e89142e6f07291459e019ed96482890,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 5238067371517905465, guid: 5e89142e6f07291459e019ed96482890,
         type: 3}
       propertyPath: m_Name
       value: GreenSwingBall
-      objectReference: {fileID: 0}
-    - target: {fileID: 5238067371517905465, guid: 5e89142e6f07291459e019ed96482890,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5238067371517905468, guid: 5e89142e6f07291459e019ed96482890,
         type: 3}
@@ -1419,11 +1414,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5238067373166034158, guid: 5e89142e6f07291459e019ed96482890,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e89142e6f07291459e019ed96482890, type: 3}
 --- !u!65 &5410896562287858472
@@ -1465,11 +1455,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PinkVerticalHammer
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990808081329391730, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5990808081329391743, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
         type: 3}
@@ -1526,25 +1511,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5990808081377727704, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
+    - target: {fileID: 7384455956598942375, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
         type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990808081430474370, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990808081798902254, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990808082684733009, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea2b73cdb8e79b4ea4e729984f9df28, type: 3}
@@ -1814,10 +1784,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 370905442}
     m_Modifications:
-    - target: {fileID: 4944204031564476122, guid: c54f6f27f1143cf4f8f55f276700c4ce,
+    - target: {fileID: 7766165703781086670, guid: c54f6f27f1143cf4f8f55f276700c4ce,
         type: 3}
-      propertyPath: m_Layer
-      value: 12
+      propertyPath: sceneViewId
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8245308308532583003, guid: c54f6f27f1143cf4f8f55f276700c4ce,
         type: 3}
@@ -1879,16 +1849,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pink2Door
       objectReference: {fileID: 0}
-    - target: {fileID: 8245308308532583014, guid: c54f6f27f1143cf4f8f55f276700c4ce,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245308309436075366, guid: c54f6f27f1143cf4f8f55f276700c4ce,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54f6f27f1143cf4f8f55f276700c4ce, type: 3}
 --- !u!1001 &8251426454243477521
@@ -1898,25 +1858,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 370905442}
     m_Modifications:
-    - target: {fileID: 5408224205877058321, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+    - target: {fileID: 5730716103190236453, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7414807352408413807, guid: a8fcf9b0dc247294cb4d03c1e696406d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
+      propertyPath: sceneViewId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679056, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
       propertyPath: m_Name
       value: PinkHorizonHammer
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251426453583679056, guid: a8fcf9b0dc247294cb4d03c1e696406d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679061, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
@@ -1972,16 +1922,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251426453693106063, guid: a8fcf9b0dc247294cb4d03c1e696406d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 9098288800971637321, guid: a8fcf9b0dc247294cb4d03c1e696406d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8fcf9b0dc247294cb4d03c1e696406d, type: 3}
