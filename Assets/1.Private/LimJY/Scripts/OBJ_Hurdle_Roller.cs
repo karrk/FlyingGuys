@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class OBJ_Hurdle_Roller : MonoBehaviour
 {
-    [SerializeField] private Vector3 rotate;
+    protected Rigidbody _rb;
+    [SerializeField] protected Vector3 _rotateSpeed;
+    [SerializeField] private Transform _com;
 
-    private void FixedUpdate()
+    protected virtual void Start()
     {
-        transform.Rotate(rotate);
+        _rb = GetComponent<Rigidbody>();
+        _rb.centerOfMass = _com.position - transform.position;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("회전 장애물 피격당함!");
-        }
+        _rb.angularVelocity = _rotateSpeed;
     }
 }

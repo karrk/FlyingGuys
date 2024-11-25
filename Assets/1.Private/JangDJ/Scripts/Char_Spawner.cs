@@ -7,7 +7,7 @@ public class Char_Spawner : MonoBehaviour
 {
     public static Char_Spawner Instance { get; private set; }
 
-    [SerializeField] private int _testCount = 5;
+    //[SerializeField] private int _testCount = 5;
     [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger();
 
     // 생성된 플레이어 게임 오브젝트 목록 // Player 컴포넌트를 받아오는게 좋을것같음
