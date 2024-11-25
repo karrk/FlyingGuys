@@ -1,4 +1,4 @@
-using UnityEngine;
+sing UnityEngine;
 
 public class OBJ_Hurdle_UpDownHammer : MonoBehaviour
 {
