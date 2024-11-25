@@ -30,6 +30,6 @@ public class OBJ_SwingBall : OBJ_Hurdle_Roller
             }
         }
 
-        _rb.AddTorque(_rotateSpeed * _sign);
+        //_rb.AddTorque(_rotateSpeed * _sign);
     }
 }
