@@ -3,6 +3,7 @@ using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviourPun
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] Vector3 rotVec;
 
     public PlayerModel model;
+    public PlayerView view;
 
     private Player player;
     //[SerializeField] int playerNumber;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviourPun
         rb = GetComponent<Rigidbody>();
         player = (Player)photonView.InstantiationData[0];
         model.playerNumber = player.GetPlayerNumber();
+        view = GetComponent<PlayerView>();
 
         // 상태
         states[(int)E_PlayeState.Idle] = new IdleState(this);
