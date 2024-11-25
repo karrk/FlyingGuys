@@ -6,7 +6,7 @@ public class IdleState : PlayerState
 {
     public IdleState(PlayerController player) : base(player)
     {
-
+        animationIndex = (int)E_PlayeState.Idle;
     }
 
     public override void Enter()
@@ -14,6 +14,7 @@ public class IdleState : PlayerState
         Debug.Log("Idle 진입");
         player.rb.velocity = Vector3.zero;
         player.isJumpable = true; // 임시, spawn 상태에서 해주는것이 좋을듯
+        player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()

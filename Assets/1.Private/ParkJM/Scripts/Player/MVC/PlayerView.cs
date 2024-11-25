@@ -8,6 +8,11 @@ public class PlayerView : MonoBehaviourPun
     [HideInInspector] public AnimatorStateInfo stateInfo;
     private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private int[] animationHash = new int[]
     {
         Animator.StringToHash("Idle"),

@@ -6,12 +6,13 @@ public class RunState : PlayerState
 {
     public RunState(PlayerController player) : base(player)
     {
-
+        animationIndex = (int)E_PlayeState.Run;
     }
 
     public override void Enter()
     {
         Debug.Log("Run 진입");
+        player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
