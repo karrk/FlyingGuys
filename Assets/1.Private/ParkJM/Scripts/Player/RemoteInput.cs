@@ -17,6 +17,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public Vector3 RotVec { get { return rotVec; } }
 
     public bool jumpInput; // rpc 구현
+    
     public bool divingInput;
 
     Vector3 moveInput;
@@ -37,7 +38,8 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             return;
 
         InputMoving();
-        InputJump();
+        InputJumpBuffer();
+        //InputJump();
         InputRot();
         InputDiving();
     }
@@ -56,16 +58,47 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         moveDir = (moveInput.z * camForward + moveInput.x * camRight).normalized;
     }
 
+    private bool preJumpInput = false;
     private void InputJump()
     {
-        if(Input.GetButtonDown("Jump"))
+        bool curJumpInput = Input.GetButtonDown("Jump");
+
+        if(curJumpInput != preJumpInput)
         {
-            //photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
+            preJumpInput = curJumpInput;
         }
-        else
+    }
+
+    private Queue<bool> jumpBuffer = new Queue<bool>();
+    private void InputJumpBuffer()
+    {
+        if (Input.GetButtonDown("Jump"))
         {
-            inputs[playerNumber].jumpInput = false;
+            jumpBuffer.Enqueue(true);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, true);
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            jumpBuffer.Enqueue(false);
+            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
+        }
+    }
+
+
+    [PunRPC]
+    private void Jump_RPC(int playerNum, bool isJumping)
+    {
+        //if (!PhotonNetwork.IsMasterClient)
+        //    return;
+
+        if (inputs[playerNum] != null)
+        {
+            // 지금 remoteInput 객체는 룸 오브젝트가 아니라 각 유저가 소유권을 가지는데 
+            // 아래 로그가 마스터의 콘솔창에서만 출력됨
+            // rpc를 마스터클라이언트에만 보내니까 그럼
+            inputs[playerNum].jumpInput = isJumping;
+            //Debug.Log("점프 input 들어감");
         }
     }
 
@@ -88,14 +121,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
     // Rpc 메서드들
 
-    [PunRPC]
-    private void Jump_RPC(int playerNum)
-    {
-        if (inputs[playerNum] != null)
-        {
-            inputs[playerNum].jumpInput = true;
-        }
-    }
+
 
     [PunRPC]
     private void Diving_RPC(int playerNum)
