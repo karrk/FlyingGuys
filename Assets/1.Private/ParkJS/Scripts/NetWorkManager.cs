@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 {
@@ -27,6 +28,11 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
         options.IsVisible = false;
 
         PhotonNetwork.JoinOrCreateRoom("Room11", options, TypedLobby.Default);
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("ResertScene"); // 변경되는 씬의 넘버
     }
 
     // TODO : 마스터 클라이언트가 변경되었을 때

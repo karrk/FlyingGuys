@@ -370,7 +370,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 1
+    m_Style: 0
     m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e403139e6d7ce45b602815caaf4d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inGamePlay: 1
+  inGamePlay: 0
   charSpawner: {fileID: 8279144717206486368}
   countText: {fileID: 338638370}
   winUI: {fileID: 4232937526321752173}
@@ -569,7 +569,8 @@ MonoBehaviour:
   Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1170083188}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -788,7 +789,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5932643242022505077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 20}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -807,6 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b28cb75a657d94a866727e235d953d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Num: 0
 --- !u!1 &5932643242022505077
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +958,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c020b1325b2e61f4b97a9cce7206fdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testCount: 5
   _ranger:
     _start: {fileID: 8279144717161560662}
     _end: {fileID: 8279144715669206686}
