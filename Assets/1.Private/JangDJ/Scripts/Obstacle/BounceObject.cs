@@ -9,11 +9,10 @@ public class BounceObject : MonoBehaviour, IBounceable
     {
         get
         {
-            _anim.Play();
+            if(_anim != null)
+                _anim.Play();
 
             return _power;
         }
     }
-
-
 }
