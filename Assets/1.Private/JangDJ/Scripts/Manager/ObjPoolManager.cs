@@ -16,6 +16,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
 
     #region 등록 프리팹 목록 인스펙터를 통해 확인 가능
     [SerializeField] private Prefabs<E_VFX> vfxPrefabs;
+    [SerializeField] private Prefabs<E_Object> ObjectPrefabs;
     //[SerializeField] private Prefabs<E_MyType> testPrefabs;
 
     #endregion
