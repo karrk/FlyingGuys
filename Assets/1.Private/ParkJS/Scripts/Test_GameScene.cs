@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -15,27 +16,36 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] OBJ_Crown crown;
 
     private int count;
+    private Image winImage;
+    private Image loseImage;
 
     private void Awake()
     {
         crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
-
+        winImage = winUI.GetComponentInChildren<Image>();
+        loseImage = winUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
     }
 
     private void Start()
     {
+        countText.text = null;
+
         if (inGamePlay)
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
         }
-
-        countText.text = null;
+        else if (PhotonNetwork.InRoom)
+        {
+            StartCoroutine(StartDelayRoutine());
+        }
     }
 
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
         StartCoroutine(StartDelayRoutine());
     }
 
@@ -53,14 +63,14 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
         PhotonNetwork.LocalPlayer.SetLoad(true);
+        PhotonNetwork.LocalPlayer.SetWinner(false);
         StartCoroutine(ClearRoutine());
 
         if (PhotonNetwork.IsMasterClient == false)
             return;
-        
+
         // TODO : 마스터 클라이언트만 실행 하는 곳
         count = PhotonNetwork.ViewCount - 2;  // 마스터 기준
-        Debug.Log($"{count} / {PhotonNetwork.ViewCount} / {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
 
     [PunRPC]
@@ -105,14 +115,27 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
         for (int i = 3; i > 0; i--)
         {
-            countText.text = i.ToString();
+            photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
             yield return new WaitForSeconds(1f);
         }
 
-        countText.text = "Go!";
+
+        photonView.RPC(nameof(ShowCount), RpcTarget.All, 0);
         //NetWorkManager.IsPlay = true;
         yield return new WaitForSeconds(1f);
         countText.gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    private void ShowCount(int count)
+    {
+        if (count <= 0)
+        {
+            countText.text = "Go!";
+            return;
+        }
+
+        countText.text = count.ToString();
     }
 
     // TODO : 마스터 클라이언트가 변경되었을 때 현재 존재하는 플레이어의 권한 받기
@@ -123,32 +146,41 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
             {
-                Debug.Log(item == (crown.Num - count));
                 Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))//
+                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))
                 {
-                    //Debug.Log($"{PhotonNetwork.CurrentRoom.Players[crown.Num - 1]}. ");
-
-                    if (PhotonNetwork.CurrentRoom.Players[crown.Num- count] == PhotonNetwork.LocalPlayer)
+                    if (PhotonNetwork.CurrentRoom.Players[crown.Num - count] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
-                        Debug.Log("승리"); 
+                        Debug.Log("승리");
+                        PhotonNetwork.LocalPlayer.SetWinner(true);
                         winUI.SetActive(true);
+                        ShowImage(winImage);
                     }
                     else
                     {
                         // TODO : 패배 연출
                         Debug.Log("패배");
                         loseUI.SetActive(true);
+                        ShowImage(loseImage);
                     }
 
                     yield return new WaitForSeconds(1f);
-                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.LoadLevel("PJS_UI_End");  // 결과 씬으로 이동
                     yield break;
                 }
             }
             yield return null;
+        }
+    }
+
+    private void ShowImage(Image iamge)
+    {
+        iamge.fillAmount = 0;
+        while (iamge.fillAmount < 1.0f)
+        {
+            iamge.fillAmount += 2f * Time.deltaTime;
         }
     }
 
@@ -158,4 +190,3 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         Debug.Log($"전달되는 {count}");
     }
 }
-
