@@ -145,11 +145,6 @@ public class PlayerController : MonoBehaviourPun
                 bouncedDir = collision.contacts[0].normal.normalized;
                 ChangeState(E_PlayeState.Bounced);
             }
-
-            if(collision.gameObject.TryGetComponent<BounceObject>(out bouncedForce).Power;
-            bouncedDir = collision.contacts[0].normal.normalized;
-            //bouncedDir = (transform.position - collision.contacts[0].point).normalized;
-            ChangeState(E_PlayeState.Bounced);
         }
     }
 
