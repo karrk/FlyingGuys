@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: f2a61966-a330-4c98-abf0-f0c90489bbde
+    AppIdRealtime: 8ed0c04f-41e6-4842-b7cf-0aad696aa581
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -52,6 +52,8 @@ MonoBehaviour:
   - RemoteAction
   - PlayFXRPC
   - Grab_RPC
+  - ShowCount
+
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

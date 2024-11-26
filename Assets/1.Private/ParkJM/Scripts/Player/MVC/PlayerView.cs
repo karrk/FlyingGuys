@@ -35,6 +35,31 @@ public class PlayerView : MonoBehaviourPun
         }
     }
 
+    public void PlayerAnimation(E_PlayeState state)
+    {
+        animator.SetTrigger(animationHash[(int)state]);
+    }
+
+    public void PlayRun()
+    {
+        animator.SetBool(animationHash[(int)E_PlayeState.Run], true);
+    }
+
+    public void StopRun()
+    {
+        animator.SetBool(animationHash[(int)E_PlayeState.Run], false);
+    }
+
+    public void PlayDive()
+    {
+        animator.SetBool(animationHash[(int)E_PlayeState.Diving], true);
+    }
+
+    public void EndDive()
+    {
+        animator.SetBool(animationHash[(int)E_PlayeState.Diving], false);
+    }
+
     public bool IsAnimationFinished()
     {
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);

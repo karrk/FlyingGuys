@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -13,6 +11,7 @@ public class OBJ_Hurdle_Roller : MonoBehaviour
     [SerializeField] private Transform _com;
     private ConfigurableJoint _joint;
     private Vector3 _rotDir;
+
 
     protected virtual void Start()
     {
