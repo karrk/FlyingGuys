@@ -28,9 +28,9 @@ public class EffectManager : MonoBehaviour, IManager
 
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-            PlayFX(Vector3.up * 1, E_VFX.Grab,E_NetworkType.Public);
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //        PlayFX(Vector3.up * 1, E_VFX.Grab,E_NetworkType.Public);
+    //}
 }
