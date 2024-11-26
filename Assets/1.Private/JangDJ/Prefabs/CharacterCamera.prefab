@@ -117,9 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minRotY: 1
-  _maxRotY: 10
-  _minTrZ: 6
-  _maxTrZ: 10
+  _maxRotY: 4
+  _minTrZ: 1
+  _maxTrZ: 4
 --- !u!135 &467358769759244457
 SphereCollider:
   m_ObjectHideFlags: 0
