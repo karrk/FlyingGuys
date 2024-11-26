@@ -56,6 +56,9 @@ public class PlayerController : MonoBehaviourPun
 
     // 물리 충돌 레이어
     private int obstacleLayer;
+    private int playerLayer; //grab에 사용할것
+
+    [SerializeField] private Transform grabPoint;
 
     // 임시 변수
     public float bouncedForce = float.MinValue; // 충돌한 장애물에서 받아오는게 더 적합해보임
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviourPun
         rayPoint1 = transform.Find("RayPoints/rayPointForward");
         rayPoint2 = transform.Find("RayPoints/rayPointLeft");
         rayPoint3 = transform.Find("RayPoints/rayPointRight");
+        grabPoint = transform.Find("GrabPoint");
 
         // 상태
         states[(int)E_PlayeState.Idle] = new IdleState(this);
@@ -78,6 +82,8 @@ public class PlayerController : MonoBehaviourPun
         states[(int)E_PlayeState.Fall] = new FallState(this);
         states[(int)E_PlayeState.Diving] = new DivingState(this);
         states[(int)E_PlayeState.Bounced] = new BouncedState(this);
+        states[(int)E_PlayeState.Grabbing] = new GrabbingState(this);
+        states[(int) E_PlayeState.Grabbed] = new GrabbedState(this);
     }
 
     private void Start()
@@ -92,6 +98,7 @@ public class PlayerController : MonoBehaviourPun
 
         // 레이어 미리 캐싱
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
+        playerLayer = LayerMask.NameToLayer("Player");
     }
 
     private void Update()
@@ -259,31 +266,37 @@ public class PlayerController : MonoBehaviourPun
             Debug.DrawLine(chosenHit.point, chosenHit.point + chosenHit.normal, Color.blue); // 법선 벡터
             Debug.DrawLine(chosenHit.point, chosenHit.point + perpAngle, Color.red);        // 법선 벡터와 수직인 벡터
         }
-
-
-
-        //isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
-        //if (hitInfo.collider != null)
-        //{
-        //    //Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
-        //}
-        
-        
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    isGround = true;
-    //}
+    public GameObject CheckGrabPoint()
+    {
+        Collider[] grabbedColliders;
+        PlayerController grabbedPlayer;
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    isGround = false;
-    //}
+        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius, playerLayer);
+
+        if(grabbedColliders.Length > 0 )
+        {
+            Debug.Log("뭔가 잡음");
+            if (grabbedColliders[0].TryGetComponent(out grabbedPlayer))
+            {
+                if (grabbedPlayer.states[(int)curState] is IGrabbable grabbable)
+                    grabbable.OnGrabbedEnter();
+                return grabbedPlayer.gameObject;
+            }
+        }
+
+        return null;
+
+    }
+
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
+        Gizmos.color = Color.green; // 기즈모 색상을 설정 (예: 녹색)
+        Gizmos.DrawWireSphere(grabPoint.position, model.grabRadius);
+
+        //Gizmos.color = isGrounded ? Color.green : Color.red;
+        //Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
     }
 }
