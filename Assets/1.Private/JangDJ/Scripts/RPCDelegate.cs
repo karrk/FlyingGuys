@@ -30,13 +30,17 @@ public class RPCDelegate : MonoBehaviourPun
         EffectManager.Instance.Del = null;
     }
 
-    public void DeadPlayer(GameObject obj)
+    public void DeadPlayer(int viewId)
     {
-        photonView.RPC(nameof(DestroyPlayer), RpcTarget.All, obj);
+        if (PhotonNetwork.IsMasterClient == false)
+            return;
+
+        photonView.RPC(nameof(DestroyPlayer), RpcTarget.All, viewId);
     }
 
-    private void DestroyPlayer(GameObject obj)
+    [PunRPC]
+    private void DestroyPlayer(int viewId)
     {
-        Destroy(obj);
+        PhotonNetwork.Destroy(PhotonNetwork.GetPhotonView(viewId).gameObject);
     }
 }

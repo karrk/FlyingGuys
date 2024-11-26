@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,10 @@ public class DeadZone : MonoBehaviour
                     = FindClosetPoint(other.transform.position);
             else
             {
-                DeadLogic(other.gameObject);
+                if(other.TryGetComponent<PhotonView>(out PhotonView view))
+                {
+                    DeadLogic(view.ViewID);
+                }
             }
         }
     }
@@ -45,9 +49,9 @@ public class DeadZone : MonoBehaviour
         return _recoverPoints[idx].position;
     }
 
-    private void DeadLogic(GameObject player)
+    private void DeadLogic(int playerNumber)
     {
         // 임시
-        Del.DeadPlayer(player);
+        Del.DeadPlayer(playerNumber);
     }
 }
