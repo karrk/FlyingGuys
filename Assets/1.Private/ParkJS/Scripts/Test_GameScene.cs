@@ -34,6 +34,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
         if (inGamePlay)
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (PhotonNetwork.InRoom)
@@ -166,7 +167,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     yield return new WaitForSeconds(1f);
-                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.LoadLevel("PJS_UI_End");  // 결과 씬으로 이동
                     yield break;
                 }
             }
