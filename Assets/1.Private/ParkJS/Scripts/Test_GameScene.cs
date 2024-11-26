@@ -147,7 +147,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             {
                 Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))//
+                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))
                 {
                     if (PhotonNetwork.CurrentRoom.Players[crown.Num - count] == PhotonNetwork.LocalPlayer)
                     {
@@ -189,4 +189,3 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         Debug.Log($"전달되는 {count}");
     }
 }
-
