@@ -9,11 +9,11 @@ public class CamController : MonoBehaviour
 
     [Header("Cam Y Clamp")]
     [SerializeField, Range(-10f, 10f)] private float _minRotY;
-    [SerializeField, Range(10f, 60f)] private float _maxRotY;
+    [SerializeField, Range(0, 60f)] private float _maxRotY;
 
     [Header("Cam Z Clamp")]
-    [SerializeField, Range(10, 5)] private float _minTrZ;
-    [SerializeField, Range(20, 5)] private float _maxTrZ;
+    [SerializeField, Range(10, 0)] private float _minTrZ;
+    [SerializeField, Range(20, 0)] private float _maxTrZ;
 
     private float _clampValue;
     private float _normalizeValue;
