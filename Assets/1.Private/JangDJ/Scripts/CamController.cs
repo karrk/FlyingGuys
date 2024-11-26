@@ -8,7 +8,7 @@ public class CamController : MonoBehaviour
     //private CinemachineComposer _aim;
 
     [Header("Cam Y Clamp")]
-    [SerializeField, Range(-10f, 10f)] private float _minRotY;
+    [SerializeField, Range(-30f, 10f)] private float _minRotY;
     [SerializeField, Range(0, 60f)] private float _maxRotY;
 
     [Header("Cam Z Clamp")]
