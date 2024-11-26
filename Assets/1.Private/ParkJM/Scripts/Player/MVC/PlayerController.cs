@@ -30,9 +30,24 @@ public class PlayerController : MonoBehaviourPun
     public float jumpBufferCounter;
 
 
-    // 임시 바닥 탐지
+    // 바닥 탐지
+    // 미리 계산한 값을 포인트로 잡아줬음, 캐릭터 스케일이 변한다면 트랜스폼을 계산해 재지정하는 코드를 넣어줘야할것
+    [SerializeField] private Transform rayPoint1;
+    [SerializeField] private Transform rayPoint2;
+    [SerializeField] private Transform rayPoint3;
+
+    private RaycastHit groundhit1;
+    private RaycastHit groundhit2;
+    private RaycastHit groundhit3;
+
+    public RaycastHit chosenHit;
+
     private float rayLength = 0.5f;
+
     public bool isGrounded;
+    public bool isSlope;
+    public float groundAngleValue;
+    public Vector3 perpAngle;
 
 
     // 상태
@@ -43,7 +58,7 @@ public class PlayerController : MonoBehaviourPun
     private int obstacleLayer;
 
     // 임시 변수
-    public float bouncedForce; // 충돌한 장애물에서 받아오는게 더 적합해보임
+    public float bouncedForce = float.MinValue; // 충돌한 장애물에서 받아오는게 더 적합해보임
     public Vector3 bouncedDir;
 
     private void Awake()
@@ -52,6 +67,9 @@ public class PlayerController : MonoBehaviourPun
         player = (Player)photonView.InstantiationData[0];
         model.playerNumber = player.GetPlayerNumber();
         view = GetComponent<PlayerView>();
+        rayPoint1 = transform.Find("RayPoints/rayPointForward");
+        rayPoint2 = transform.Find("RayPoints/rayPointLeft");
+        rayPoint3 = transform.Find("RayPoints/rayPointRight");
 
         // 상태
         states[(int)E_PlayeState.Idle] = new IdleState(this);
@@ -139,10 +157,12 @@ public class PlayerController : MonoBehaviourPun
     {
         if(collision.gameObject.layer == obstacleLayer)
         {
-            bouncedForce = collision.gameObject.GetComponent<BounceObject>().Power;
-            bouncedDir = collision.contacts[0].normal.normalized;
-            //bouncedDir = (transform.position - collision.contacts[0].point).normalized;
-            ChangeState(E_PlayeState.Bounced);
+            if(collision.gameObject.TryGetComponent<BounceObject>(out BounceObject bounceObject))
+            {
+                bouncedForce = bounceObject.Power;
+                bouncedDir = collision.contacts[0].normal.normalized;
+                ChangeState(E_PlayeState.Bounced);
+            }
         }
     }
 
@@ -204,20 +224,51 @@ public class PlayerController : MonoBehaviourPun
         rotVec = RemoteInput.inputs[model.playerNumber].RotVec;
     }
 
-    private bool CheckGround()
+    private void CheckGround()
     {
-        if (rb.velocity.y > 0)
+        //if (rb.velocity.y > 0)
+        //{
+        //    return isGrounded = false;
+        //}
+
+        bool rayhit1 = Physics.Raycast(rayPoint1.position, Vector3.down, out groundhit1, rayLength);
+        bool rayhit2 = Physics.Raycast(rayPoint2.position, Vector3.down, out groundhit2, rayLength);
+        bool rayhit3 = Physics.Raycast(rayPoint3.position, Vector3.down, out groundhit3, rayLength);
+
+        isGrounded = rayhit1 || rayhit2 || rayhit3;
+
+        if(isGrounded)
         {
-            return isGrounded = false;
+            // isGrounded가 true라면 셋중 어느 하나는 히트됐다는 뜻
+            chosenHit = rayhit1 ? groundhit1 : (rayhit2 ? groundhit2 : groundhit3);
+
+            // chosenHit 선정, distance가 더 짧은 hit를 선정
+            if(rayhit1 && rayhit2)
+                chosenHit = groundhit1.distance <= groundhit2.distance ? groundhit1 : groundhit2;
+            if (rayhit3 && chosenHit.distance > groundhit3.distance)
+            {
+                chosenHit = groundhit3;
+            }
+
+            // 각도 계산
+            perpAngle = Vector3.Cross(chosenHit.normal,Vector3.up).normalized; //3D는 Perpendicular가 아닌 cross를 써야함, 외적을 계산해 수직벡터를 구하는 방식
+            groundAngleValue = Vector3.Angle(chosenHit.normal, Vector3.up);
+
+            isSlope = groundAngleValue > 0;
+
+            Debug.DrawLine(chosenHit.point, chosenHit.point + chosenHit.normal, Color.blue); // 법선 벡터
+            Debug.DrawLine(chosenHit.point, chosenHit.point + perpAngle, Color.red);        // 법선 벡터와 수직인 벡터
         }
-           
-        isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
-        if (hitInfo.collider != null)
-        {
-            //Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
-        }
+
+
+
+        //isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.12f, Vector3.down, out RaycastHit hitInfo, rayLength);
+        //if (hitInfo.collider != null)
+        //{
+        //    //Debug.Log($"현재 검출된 것 : {hitInfo.collider.gameObject.name}");
+        //}
         
-        return isGrounded;
+        
     }
 
     //private void OnCollisionEnter(Collision collision)

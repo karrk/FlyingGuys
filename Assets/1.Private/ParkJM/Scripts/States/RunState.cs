@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RunState : PlayerState
 {
+    Vector3 targetVelocity;
     public RunState(PlayerController player) : base(player)
     {
         animationIndex = (int)E_PlayeState.Run;
@@ -21,8 +22,10 @@ public class RunState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-
-
+        else if(!player.isGrounded)
+        {
+            player.ChangeState(E_PlayeState.Fall);
+        }
         //if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
         //{
         //    player.ChangeState(E_PlayeState.Jump);
@@ -52,10 +55,24 @@ public class RunState : PlayerState
 
     private void Run()
     {
-        Vector3 targetVelocity = player.moveDir * player.model.moveSpeed;
-        targetVelocity.y = player.rb.velocity.y;
+        if (player.isSlope) // 오를 수 있는 maxAngle 설정을 할지는 추후에
+        {
+            Vector3 slopeDirection = Vector3.ProjectOnPlane(player.moveDir, player.chosenHit.normal).normalized;
 
-        player.rb.velocity = targetVelocity;
+            targetVelocity = slopeDirection * player.model.moveSpeed;
+            player.rb.velocity = targetVelocity;
+
+            //targetVelocity = player.moveDir * player.perpAngle * player.model.moveSpeed;
+        }
+        else
+        {
+            targetVelocity = player.moveDir * player.model.moveSpeed;
+            targetVelocity.y = player.rb.velocity.y;
+
+            player.rb.velocity = targetVelocity;
+        }
+
+
 
         //player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
     }
