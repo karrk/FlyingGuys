@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HexGenerator : MonoBehaviour
@@ -26,7 +24,6 @@ public class HexGenerator : MonoBehaviour
         _zOffset *= _scaleRatio;
 
         Destroy(_tilePrefab.gameObject);
-
         Create();
     }
 
@@ -68,8 +65,4 @@ public class HexGenerator : MonoBehaviour
             }
         }
     }
-
-
-
-
 }

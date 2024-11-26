@@ -7,7 +7,6 @@ public class DeadZone : MonoBehaviour
 {
     [SerializeField] private bool _isRecoveryMode;
     [SerializeField] private Transform[] _recoverPoints;
-    [HideInInspector] public RPCDelegate Del;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -51,7 +50,6 @@ public class DeadZone : MonoBehaviour
 
     private void DeadLogic(int playerNumber)
     {
-        // 임시
-        Del.DeadPlayer(playerNumber);
+        RPCDelegate.Instance.DeadPlayer(playerNumber);
     }
 }

@@ -55,6 +55,9 @@ MonoBehaviour:
   - ShowCount
   - 
   - DestroyPlayer
+  - DestoryTest
+  - DeadPlayerRPC
+  - DestroyDropFloorRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
