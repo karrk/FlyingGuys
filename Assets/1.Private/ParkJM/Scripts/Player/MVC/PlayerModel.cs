@@ -10,4 +10,5 @@ public class PlayerModel
     public float moveSpeedInAir;
     public float jumpForce;
     public float divingForce;
+    public float grabRadius;
 }

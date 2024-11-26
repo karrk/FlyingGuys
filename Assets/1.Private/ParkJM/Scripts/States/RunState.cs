@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunState : PlayerState
+public class RunState : PlayerState, IGrabbable
 {
     Vector3 targetVelocity;
     public RunState(PlayerController player) : base(player)
@@ -35,6 +35,11 @@ public class RunState : PlayerState
         {
             player.ChangeState(E_PlayeState.Idle);
         }
+        else if (RemoteInput.inputs[player.model.playerNumber].grabInput)
+        {
+            player.ChangeState(E_PlayeState.Grabbing);
+        }
+
     }
 
     public override void FixedUpdate()
@@ -51,6 +56,7 @@ public class RunState : PlayerState
     public override void Exit()
     {
         Debug.Log("Run 종료");
+        targetVelocity = Vector3.zero;
     }
 
     private void Run()
@@ -91,4 +97,10 @@ public class RunState : PlayerState
             );
         }
     }
+
+    public void OnGrabbedEnter()
+    {
+        player.ChangeState(E_PlayeState.Grabbed);
+    }
+
 }

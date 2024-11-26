@@ -16,9 +16,12 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public Vector3 MoveDir { get { return moveDir; } }
     public Vector3 RotVec { get { return rotVec; } }
 
-    public bool jumpInput; // rpc 구현
-    
+    // rpc 구현
+    public bool jumpInput; 
     public bool divingInput;
+    public bool grabInput;
+
+    
 
     Vector3 moveInput;
 
@@ -42,6 +45,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         //InputJump();
         InputRot();
         InputDiving();
+        InputGrab();
     }
 
     private void InputMoving()
@@ -70,7 +74,7 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private Queue<bool> jumpBuffer = new Queue<bool>();
+    private Queue<bool> jumpBuffer = new Queue<bool>(); // 현재 안씀
     private void InputJumpBuffer()
     {
         if (Input.GetButtonDown("Jump"))
@@ -102,6 +106,8 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         }
     }
 
+    // 여기서부터 입력 바꿔야함 현재 임시
+
     private void InputDiving()
     {
         if(Input.GetButtonDown("Diving"))
@@ -114,22 +120,41 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private void InputRot()
-    {
-        inputs[playerNumber].rotVec.y = Input.GetAxisRaw("Mouse Y");
-    }
-
-    // Rpc 메서드들
-
-
-
     [PunRPC]
-    private void Diving_RPC(int playerNum)
+    private void Diving_RPC(int playerNum) 
     {
         if (inputs[playerNum] != null)
         {
             inputs[playerNum].divingInput = true;
         }
+    }
+    
+    private void InputGrab()
+    {
+        if(Input.GetButtonDown("Grab"))
+        {
+            Debug.Log("그랩 버튼눌림");
+            photonView.RPC(nameof(Grab_RPC), RpcTarget.MasterClient, playerNumber);
+        }
+        else
+        {
+            inputs[playerNumber].grabInput = false;
+        }
+    }
+
+    [PunRPC]
+    private void Grab_RPC(int playerNum)
+    {
+        if(inputs[playerNum] != null)
+        {
+            inputs[playerNum].grabInput = true;
+        }
+    }
+
+
+    private void InputRot()
+    {
+        inputs[playerNumber].rotVec.y = Input.GetAxisRaw("Mouse Y");
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

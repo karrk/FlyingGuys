@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : PlayerState
+public class IdleState : PlayerState, IGrabbable
 {
     public IdleState(PlayerController player) : base(player)
     {
@@ -35,6 +35,10 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Diving);
         }
+        else if (RemoteInput.inputs[player.model.playerNumber].grabInput)
+        {
+            player.ChangeState(E_PlayeState.Grabbing);
+        }
 
         //else
         //{
@@ -62,5 +66,10 @@ public class IdleState : PlayerState
     public override void Exit()
     {
         Debug.Log("Idle 종료");
+    }
+
+    public void OnGrabbedEnter()
+    {
+        player.ChangeState(E_PlayeState.Grabbed);
     }
 }
