@@ -22,8 +22,10 @@ public class RunState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-
-
+        else if(!player.isGrounded)
+        {
+            player.ChangeState(E_PlayeState.Fall);
+        }
         //if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
         //{
         //    player.ChangeState(E_PlayeState.Jump);
