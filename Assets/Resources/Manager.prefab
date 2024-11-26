@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 6786545618379175664}
   - component: {fileID: 2650018816140623996}
   - component: {fileID: 2464368413404186717}
-  - component: {fileID: -7453887786543783786}
+  - component: {fileID: 6973538971089105155}
   - component: {fileID: -7549020815837305389}
   - component: {fileID: -2595746052055625177}
   - component: {fileID: 7236397714073890814}
@@ -395,7 +395,7 @@ MonoBehaviour:
   _SFX: {fileID: 0}
   FadeMaxVolume: 0
   FadeMinVolume: 0
---- !u!114 &-7453887786543783786
+--- !u!114 &6973538971089105155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,6 +458,15 @@ MonoBehaviour:
           type: 3}
       - Type: 3
         Prefab: {fileID: 7381055855893286726, guid: 5a87d9304d7919d46b4942e53d078e98,
+          type: 3}
+  objectPrefabs:
+    _list:
+      List:
+      - Type: 0
+        Prefab: {fileID: 1366246946237898425, guid: 604a6767c5175b34a88c5d67d8ecaa0b,
+          type: 3}
+      - Type: 1
+        Prefab: {fileID: 793995880387650790, guid: f4fb1835bbd381a4b95fe7e8f2bef95f,
           type: 3}
 --- !u!114 &807464459930342589
 MonoBehaviour:
