@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviourPun
     private int obstacleLayer;
 
     // 임시 변수
-    public float bouncedForce; // 충돌한 장애물에서 받아오는게 더 적합해보임
+    public float bouncedForce = float.MinValue; // 충돌한 장애물에서 받아오는게 더 적합해보임
     public Vector3 bouncedDir;
 
     private void Awake()
@@ -139,7 +139,14 @@ public class PlayerController : MonoBehaviourPun
     {
         if(collision.gameObject.layer == obstacleLayer)
         {
-            bouncedForce = collision.gameObject.GetComponent<BounceObject>().Power;
+            if(collision.gameObject.TryGetComponent<BounceObject>(out BounceObject bounceObject))
+            {
+                bouncedForce = bounceObject.Power;
+                bouncedDir = collision.contacts[0].normal.normalized;
+                ChangeState(E_PlayeState.Bounced);
+            }
+
+            if(collision.gameObject.TryGetComponent<BounceObject>(out bouncedForce).Power;
             bouncedDir = collision.contacts[0].normal.normalized;
             //bouncedDir = (transform.position - collision.contacts[0].point).normalized;
             ChangeState(E_PlayeState.Bounced);
