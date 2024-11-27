@@ -12,7 +12,7 @@ public class GrabbedState : PlayerState
     public override void Enter()
     {
         Debug.Log("잡힘 상태 진입");
-        // Todo : 잡혔을때 해줄 동작
+        // Todo : 잡혔을때 해줄 동작 : 바둥거리는 애니메이션 재생?
         player.rb.velocity = Vector3.zero;
     }
 
@@ -34,5 +34,4 @@ public class GrabbedState : PlayerState
     {
 
     }
-
 }

@@ -3,10 +3,11 @@ using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun, IGrabbable
 {
     public Rigidbody rb;
     public Vector3 moveDir;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviourPun
     //[SerializeField] float jumpForce;
 
     [SerializeField] CamController _cam;
+    [SerializeField] public Transform camTransform;
 
 
     // 버퍼
@@ -275,28 +277,18 @@ public class PlayerController : MonoBehaviourPun
     public GameObject CheckGrabPoint()
     {
         Collider[] grabbedColliders;
-        //PlayerController grabbedPlayer;
 
         grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
 
         if (grabbedColliders.Length > 0)
         {
-            Debug.Log("뭔가 잡음");
-            if (grabbedColliders[0].TryGetComponent(out PlayerController grabbedPlayer))
-            {
-                Debug.Log("플레이어를 잡음");
-                if (grabbedPlayer.states[(int)curState] is IGrabbable grabbable)
-                    grabbable.OnGrabbedEnter();
-                return grabbedPlayer.gameObject;
-            }
-            else
-            {
-                return grabbedColliders[0].gameObject;
-            }
+            IGrabbable grabbableObject = grabbedColliders[0].GetComponent<IGrabbable>();
+            Debug.Log("grabbable 오브젝트 잡음");
+            grabbableObject.OnGrabbedEnter();
+            return grabbedColliders[0].gameObject;
         }
 
         return null;
-
     }
 
 
@@ -307,5 +299,24 @@ public class PlayerController : MonoBehaviourPun
 
         //Gizmos.color = isGrounded ? Color.green : Color.red;
         //Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
+    }
+
+    public void OnGrabbedEnter()
+    {
+        if(curState != E_PlayeState.Grabbed)
+        {
+            Debug.Log($"OnGrabbedEnter 실행");
+            ChangeState(E_PlayeState.Grabbed);
+        }
+    }
+
+    public void OnGrabbedLeave()
+    {
+        if(curState == E_PlayeState.Grabbed)
+        {
+            Debug.Log($"OnGrabbedLeave 실행");
+            ChangeState(E_PlayeState.Idle);
+        }
+        
     }
 }

@@ -662,9 +662,10 @@ MonoBehaviour:
     jumpForce: 20
     divingForce: 0
     grabRadius: 0.2
-    grabForce: 100
+    grabForce: 5
   view: {fileID: 0}
   _cam: {fileID: 3270130517049065077}
+  camTransform: {fileID: 1324314045750503273}
   jumpBufferTime: 0.2
   jumpBufferCounter: 0
   rayPoint1: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunState : PlayerState, IGrabbable
+public class RunState : PlayerState
 {
     Vector3 targetVelocity;
     public RunState(PlayerController player) : base(player)
@@ -97,10 +97,4 @@ public class RunState : PlayerState, IGrabbable
             );
         }
     }
-
-    public void OnGrabbedEnter()
-    {
-        player.ChangeState(E_PlayeState.Grabbed);
-    }
-
 }
