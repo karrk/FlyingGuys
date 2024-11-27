@@ -27,8 +27,6 @@ public class ResultScene : MonoBehaviour
 
     public void SceneChange()
     {
-        Debug.Log(PhotonNetwork.InRoom);
-        Debug.Log(PhotonNetwork.CurrentRoom.Name);
         PhotonNetwork.Disconnect();
     }
 }

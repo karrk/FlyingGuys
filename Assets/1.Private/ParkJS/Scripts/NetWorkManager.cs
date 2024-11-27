@@ -28,6 +28,7 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     public override void OnConnectedToMaster()
     {
         Debug.Log("Master Server Connect");
+        IsTriggerCrown = false;
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 2;
         options.IsVisible = false;

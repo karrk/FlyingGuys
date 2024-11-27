@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
+public class Test_GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
@@ -69,7 +69,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         // 마스터 클라이언트만 실행 하는 곳
-        count = PhotonNetwork.ViewCount - 2;  // 마스터 기준
     }
 
     [PunRPC]
@@ -140,9 +139,10 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             {
                 //Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))
+                if (NetWorkManager.IsTriggerCrown)
                 {
-                    if (PhotonNetwork.CurrentRoom.Players[crown.Num - count] == PhotonNetwork.LocalPlayer)
+                    // crown.player
+                    if (PhotonNetwork.CurrentRoom.Players[item] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
                         Debug.Log("승리");
@@ -159,7 +159,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     yield return new WaitForSeconds(1f);
-                    PhotonNetwork.LoadLevel("PJS_UI_End");  // 결과 씬으로 이동
+                    PhotonNetwork.LoadLevel("UI_End");  // 결과 씬으로 이동
                     yield break;
                 }
             }
@@ -174,10 +174,5 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             iamge.fillAmount += 2f * Time.deltaTime;
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Util.SendAndReceiveStruct(stream, ref count);
     }
 }
