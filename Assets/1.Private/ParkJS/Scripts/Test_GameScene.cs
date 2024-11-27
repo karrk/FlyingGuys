@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
+public class Test_GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
@@ -21,7 +21,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+        crown = GameObject.FindGameObjectWithTag("Target")?.GetComponent<OBJ_Crown>();
         winImage = winUI.GetComponentInChildren<Image>();
         loseImage = winUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
@@ -35,17 +35,18 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         if (inGamePlay)
         {
             PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (PhotonNetwork.InRoom)
         {
+            Debug.Log("In Game View");
             StartCoroutine(StartDelayRoutine());
         }
     }
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
         StartCoroutine(StartDelayRoutine());
     }
 
@@ -57,9 +58,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
     private void GameStart()
     {
-        Debug.Log("게임 시작");
-
-        // TODO : 모든 클라이언트가 실행 하는 곳
+        // 모든 클라이언트가 실행 하는 곳
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
         PhotonNetwork.LocalPlayer.SetLoad(true);
@@ -69,8 +68,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
-        // TODO : 마스터 클라이언트만 실행 하는 곳
-        count = PhotonNetwork.ViewCount - 2;  // 마스터 기준
+        // 마스터 클라이언트만 실행 하는 곳
     }
 
     [PunRPC]
@@ -83,12 +81,10 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (changedProps.ContainsKey(CustomProperty.LOAD))
         {
-            Debug.Log($"{targetPlayer.GetPlayerNumber()} 번 플레이 로딩 완료");
             bool allLoad = CheckAllLoad();
             Debug.Log($"모든 플레이어 준비 : {allLoad}");
             if (allLoad)
             {
-                Debug.Log("모든 플레이어 준비 완료");
                 StartCoroutine(CountDownRoutine());
             }
         }
@@ -100,8 +96,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (player.GetLoad() == false || PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                Debug.Log($"1. {player.GetLoad() == false}");
-                Debug.Log($"2. {PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.MaxPlayers}");
                 return false;
             }
         }
@@ -118,7 +112,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
             yield return new WaitForSeconds(1f);
         }
-
 
         photonView.RPC(nameof(ShowCount), RpcTarget.All, 0);
         //NetWorkManager.IsPlay = true;
@@ -138,19 +131,18 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         countText.text = count.ToString();
     }
 
-    // TODO : 마스터 클라이언트가 변경되었을 때 현재 존재하는 플레이어의 권한 받기
-
     IEnumerator ClearRoutine()
     {
         while (true)
         {
             foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
             {
-                Debug.Log($"{item} / {crown.Num}");
+                //Debug.Log($"{item} / {crown.Num}");
 
-                if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))
+                if (NetWorkManager.IsTriggerCrown)
                 {
-                    if (PhotonNetwork.CurrentRoom.Players[crown.Num - count] == PhotonNetwork.LocalPlayer)
+                    // crown.player
+                    if (PhotonNetwork.CurrentRoom.Players[item] == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
                         Debug.Log("승리");
@@ -167,7 +159,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     yield return new WaitForSeconds(1f);
-                    PhotonNetwork.LoadLevel("PJS_UI_End");  // 결과 씬으로 이동
+                    PhotonNetwork.LoadLevel("UI_End");  // 결과 씬으로 이동
                     yield break;
                 }
             }
@@ -182,11 +174,5 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             iamge.fillAmount += 2f * Time.deltaTime;
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Util.SendAndReceiveStruct(stream, ref count);
-        Debug.Log($"전달되는 {count}");
     }
 }
