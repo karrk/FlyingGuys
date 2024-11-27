@@ -317,6 +317,5 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
             Debug.Log($"OnGrabbedLeave 실행");
             ChangeState(E_PlayeState.Idle);
         }
-        
     }
 }

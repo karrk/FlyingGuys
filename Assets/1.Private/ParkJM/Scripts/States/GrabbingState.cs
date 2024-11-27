@@ -59,63 +59,12 @@ public class GrabbingState : PlayerState
 
     public override void FixedUpdate()
     {
-
         ApplyMovement();
 
         if(grabbedObject != null)
         {
             PushOrPullGrabbedObject(grabbedObject);
         }
-
-
-        //if (player.isSlope)
-        //{
-        //    Vector3 slopeDirection = Vector3.ProjectOnPlane(player.moveDir, player.chosenHit.normal).normalized;
-
-        //    targetVelocity = slopeDirection * moveSpeedOnGrab;
-        //    player.rb.velocity = targetVelocity;
-        //}
-        //else
-        //{
-        //    targetVelocity = player.moveDir * moveSpeedOnGrab;
-        //    targetVelocity.y = player.rb.velocity.y;
-
-        //    player.rb.velocity = targetVelocity;
-        //}
-
-        //if (grabbedObject == null)
-        //{
-        //    grabbedObject = player.CheckGrabPoint();
-
-        //    if(grabbedObject != null)
-        //    {
-        //        PushOrPullGrabbedObject(grabbedObject);
-        //    }
-        //}
-
-        //if(grabbedObject == null)
-
-        //curGrabbedObject = player.CheckGrabPoint();
-
-        //if (grabbedObject != null && curGrabbedObject == null)
-        //{
-        //    Debug.Log("잡은 물체가 범위를 벗어나서 Idle 상태로 전환");
-        //    if (grabbedObject is IGrabbable)
-        //        grabbedObject.OnGrabbedLeave();
-
-        //        grabbedObject.gameObject
-        //    player.ChangeState(E_PlayeState.Idle);
-        //    return;
-        //}
-
-        //grabbedObject = curGrabbedObject;
-
-
-        //if (grabbedObject != null)
-        //{
-        //    Debug.Log(" 잡음");
-        //    PushOrPullGrabbedObject(grabbedObject);
-        //}
     }
 
     public override void Exit()
@@ -152,20 +101,45 @@ public class GrabbingState : PlayerState
         while (true)
         {
             GameObject detectedObject = player.CheckGrabPoint();
-            if (detectedObject != null && detectedObject != grabbedObject)
+            //if (detectedObject != null && detectedObject != grabbedObject)
+            //{
+            //    if(grabbedObject != null)
+            //    {
+            //        grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+            //    }
+
+            //    grabbedObject = detectedObject;
+            //    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+            //}
+            //else if (detectedObject == null)
+            //{
+            //    grabbedObject = detectedObject;
+            //}
+
+
+            if (detectedObject != grabbedObject)
             {
-                if(grabbedObject != null)
+                // 잡힌 오브젝트가 바뀌거나, 잡힌 오브젝트가 범위를 벗어났을 때
+                if (grabbedObject != null) 
                 {
+                    // 이전에 잡힌 오브젝트가 있을 경우
                     grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+                    Debug.Log($"GrabbedObject 해제: {grabbedObject.name}");
                 }
-                
+
                 grabbedObject = detectedObject;
-                Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+
+                if (grabbedObject != null) 
+                {
+                    // 새롭게 잡힌 오브젝트가 있을 경우
+                    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+                }
             }
-            else if (detectedObject == null)
-            {
-                grabbedObject = detectedObject;
-            }
+
+
+
+
+
 
             yield return new WaitForSeconds(0.1f);
         }
