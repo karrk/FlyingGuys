@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrabbingState : PlayerState
 {
-    GameObject grabbedPlayer;
+    GameObject grabbedObject;
     float moveSpeedOnGrab;
     Vector3 targetVelocity;
     public GrabbingState(PlayerController player) : base(player)
@@ -14,6 +14,7 @@ public class GrabbingState : PlayerState
     public override void Enter()
     {
         Debug.Log("Grab 상태 진입");
+        grabbedObject = player.CheckGrabPoint();
     }
 
     public override void Update()
@@ -29,38 +30,12 @@ public class GrabbingState : PlayerState
 
     public override void FixedUpdate()
     {
-        if (grabbedPlayer == null)
-        {
-            Debug.Log("잡을 플레이어 없음");
-            grabbedPlayer = player.CheckGrabPoint();
-            Debug.Log("잡기시도");
-            if (grabbedPlayer != null)
-            {
-                Debug.Log("플레이어 잡음");
-                PushorPullGrabbedObject(grabbedPlayer);
-            }
-            else
-            {
-                Debug.Log("플레이어 잡지못함");
-            }
-        }
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Grab 상태 해제");
-    }
-    
-    private void PushorPullGrabbedObject(GameObject grabbedObject)
-    {
-        if (player.isSlope) // 오를 수 있는 maxAngle 설정을 할지는 추후에
+        if (player.isSlope)
         {
             Vector3 slopeDirection = Vector3.ProjectOnPlane(player.moveDir, player.chosenHit.normal).normalized;
 
             targetVelocity = slopeDirection * moveSpeedOnGrab;
             player.rb.velocity = targetVelocity;
-
-            //targetVelocity = player.moveDir * player.perpAngle * player.model.moveSpeed;
         }
         else
         {
@@ -70,18 +45,45 @@ public class GrabbingState : PlayerState
             player.rb.velocity = targetVelocity;
         }
 
-        grabbedObject.gameObject.GetComponent<Rigidbody>().velocity = targetVelocity;
+        grabbedObject = player.CheckGrabPoint();
 
-        if (player.moveDir != Vector3.zero)
+        if (grabbedObject != null)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(player.moveDir);
-            targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
-
-            player.transform.rotation = Quaternion.Slerp(
-                player.transform.rotation,
-                targetRotation,
-                Time.fixedDeltaTime * 15 // 수정필요
-            );
+            Debug.Log(" 잡음");
+            PushorPullGrabbedObject(grabbedObject);
         }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Grab 상태 해제");
+        grabbedObject = null;
+    }
+    
+    private void PushorPullGrabbedObject(GameObject grabbedObject)
+    {
+        Rigidbody grabbedObjectRb = grabbedObject.gameObject.GetComponent<Rigidbody>();
+        if (grabbedObjectRb == null)
+            return;
+        Debug.Log("물건 움직임");
+        grabbedObjectRb.velocity = player.moveDir * 2f;
+
+
+        //grabbedObject.gameObject.GetComponent<Rigidbody>().velocity = targetVelocity;
+        //Debug.Log($"TargetVelocity : {targetVelocity}");
+        //Debug.Log($"잡힌 오브젝트 이름 : {grabbedObject.gameObject.name}");
+
+
+        //if (player.moveDir != Vector3.zero)
+        //{
+        //    Quaternion targetRotation = Quaternion.LookRotation(player.moveDir);
+        //    targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+        //    player.transform.rotation = Quaternion.Slerp(
+        //        player.transform.rotation,
+        //        targetRotation,
+        //        Time.fixedDeltaTime * 15 // 수정필요
+        //    );
+        //}
     }
 }
