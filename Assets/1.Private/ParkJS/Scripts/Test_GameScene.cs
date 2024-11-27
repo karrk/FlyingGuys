@@ -35,17 +35,18 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         if (inGamePlay)
         {
             PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (PhotonNetwork.InRoom)
         {
+            Debug.Log("In Game View");
             StartCoroutine(StartDelayRoutine());
         }
     }
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
         StartCoroutine(StartDelayRoutine());
     }
 
@@ -57,9 +58,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
     private void GameStart()
     {
-        Debug.Log("게임 시작");
-
-        // TODO : 모든 클라이언트가 실행 하는 곳
+        // 모든 클라이언트가 실행 하는 곳
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
         PhotonNetwork.LocalPlayer.SetLoad(true);
@@ -69,7 +68,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
-        // TODO : 마스터 클라이언트만 실행 하는 곳
+        // 마스터 클라이언트만 실행 하는 곳
         count = PhotonNetwork.ViewCount - 2;  // 마스터 기준
     }
 
@@ -83,12 +82,10 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (changedProps.ContainsKey(CustomProperty.LOAD))
         {
-            Debug.Log($"{targetPlayer.GetPlayerNumber()} 번 플레이 로딩 완료");
             bool allLoad = CheckAllLoad();
             Debug.Log($"모든 플레이어 준비 : {allLoad}");
             if (allLoad)
             {
-                Debug.Log("모든 플레이어 준비 완료");
                 StartCoroutine(CountDownRoutine());
             }
         }
@@ -100,8 +97,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (player.GetLoad() == false || PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                Debug.Log($"1. {player.GetLoad() == false}");
-                Debug.Log($"2. {PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.MaxPlayers}");
                 return false;
             }
         }
@@ -136,8 +131,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
         countText.text = count.ToString();
     }
-
-    // TODO : 마스터 클라이언트가 변경되었을 때 현재 존재하는 플레이어의 권한 받기
 
     IEnumerator ClearRoutine()
     {

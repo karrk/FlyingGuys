@@ -2,7 +2,6 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         SetDescriptionText("Server connecting...");
     }
 
@@ -25,23 +25,6 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         Debug.Log("방 진입");
         SetDescriptionText("Wait for Players...");
         PhotonNetwork.LocalPlayer.SetReady(true);
-        StartCoroutine(WaitPlayerRoutin());
-    }
-
-    IEnumerator WaitPlayerRoutin()
-    {
-        while (true)
-        {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
-            {
-                Debug.Log("충족함");
-                SetDescriptionText("Game Loading...");
-                yield return new WaitForSeconds(3f);
-                PhotonNetwork.LoadLevel("PJS_TestSecne 1.3");
-                yield break;
-            }
-            yield return null;
-        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -53,13 +36,11 @@ public class PlayMatch : MonoBehaviourPunCallbacks
     {
         if (changedProps.ContainsKey(CustomProperty.READY))
         {
-            Debug.Log($"{targetPlayer.GetPlayerNumber()} 번 플레이 로딩 완료");
             bool allReady = CheckAllReady();
             Debug.Log($"모든 플레이어 준비 : {allReady}");
-            if (allReady)
+            if (allReady && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                Debug.Log("모든 플레이어 준비 완료");
-                // TODO : Player All Ready... 
+                StartCoroutine(WaitPlayerRoutin());
             }
         }
     }
@@ -68,13 +49,20 @@ public class PlayMatch : MonoBehaviourPunCallbacks
     {
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            if (player.GetLoad() == false)
+            if (player.GetReady() == false)
             {
-                Debug.Log($"1. {player.GetLoad() == false}");
+                Debug.Log($"{player.GetPlayerNumber()}. {player.GetReady()}");
                 return false;
             }
         }
 
         return true;
+    }
+
+    IEnumerator WaitPlayerRoutin()
+    {
+        SetDescriptionText("Game Loading...");
+        yield return new WaitForSeconds(3f);
+        PhotonNetwork.LoadLevel("PJS_TestSecne 1.3");
     }
 }

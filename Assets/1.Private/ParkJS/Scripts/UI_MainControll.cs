@@ -14,12 +14,13 @@ public class UI_MainControll : MonoBehaviour
 
     private void Awake()
     {
-        userNameText.text = NetWorkManager.NickName;
+        userNameText.text = NetWorkManager.NickName ?? $"Player {Random.Range(100, 1000)}";
         panel.SetActive(false);
     }
 
     public void RandomMatch()
     {
+        PhotonNetwork.LocalPlayer.NickName = userNameText.text;
         PhotonNetwork.ConnectUsingSettings();
         panel.SetActive(true);
     }
