@@ -266,6 +266,10 @@ public class PlayerController : MonoBehaviourPun
             Debug.DrawLine(chosenHit.point, chosenHit.point + chosenHit.normal, Color.blue); // 법선 벡터
             Debug.DrawLine(chosenHit.point, chosenHit.point + perpAngle, Color.red);        // 법선 벡터와 수직인 벡터
         }
+        else
+        {
+            isSlope = false;
+        }
     }
 
     public GameObject CheckGrabPoint()
