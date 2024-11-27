@@ -1,17 +1,19 @@
 using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class RPCDelegate : MonoBehaviourPun
 {
-    [SerializeField] private DeadZone _deadZone;
+    public static RPCDelegate Instance;
 
-    private void Awake()
+    private void OnEnable()
     {
-        EffectManager.Instance.Del = this;
-        _deadZone.Del = this;
+        Instance = this;
+    }
+
+    private void OnDisable()
+    {
+        Instance = null;
     }
 
     public void PlayFX(Vector3 requestPos, E_VFX vfxType)
@@ -22,21 +24,42 @@ public class RPCDelegate : MonoBehaviourPun
     [PunRPC]
     private void PlayFXRPC(Vector3 requestPos, E_VFX vfxType)
     {
-        EffectManager.Instance.PlayFX(requestPos, vfxType,E_NetworkType.Private);
+        EffectManager.Instance.PlayFX(requestPos, vfxType, E_NetworkType.Private);
     }
 
-    private void OnDisable()
+    public void DeadPlayer(int viewId)
     {
-        EffectManager.Instance.Del = null;
+        if (PhotonNetwork.IsMasterClient == false)
+            return;
+
+        photonView.RPC(nameof(DeadPlayerRPC), RpcTarget.All, viewId);
     }
 
-    public void DeadPlayer(GameObject obj)
+    [PunRPC]
+    private void DeadPlayerRPC(int viewId)
     {
-        photonView.RPC(nameof(DestroyPlayer), RpcTarget.All, obj);
+        PhotonNetwork.Destroy(PhotonNetwork.GetPhotonView(viewId).gameObject);
     }
 
-    private void DestroyPlayer(GameObject obj)
+    public void DestroyDropFloor(Vector3 targetPos)
     {
-        Destroy(obj);
+        photonView.RPC(nameof(DestroyDropFloorRPC), RpcTarget.All, targetPos);
+    }
+
+    [PunRPC]
+    private void DestroyDropFloorRPC(Vector3 targetpos)
+    {
+        float upOffset = 0.5f;
+        int groundLayer = 1 << 6;
+        RaycastHit hit;
+
+        if(Physics.Raycast(targetpos + Vector3.up * upOffset,
+            Vector3.down, out hit, 1f,groundLayer))
+        {
+            Destroy(hit.collider.gameObject);
+        }
+
+        Debug.DrawRay(targetpos + Vector3.up * upOffset,
+            Vector3.down * 1f, Color.red, 5f);
     }
 }

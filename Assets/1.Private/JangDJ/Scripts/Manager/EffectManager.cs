@@ -4,7 +4,6 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour, IManager
 {
     public static EffectManager Instance { get; private set; }
-    [SerializeField] public RPCDelegate Del;
 
     public void Init()
     {
@@ -17,7 +16,7 @@ public class EffectManager : MonoBehaviour, IManager
     {
         if(networkType == E_NetworkType.Public)
         {
-            Del.PlayFX(requestPos, vfxType);
+            RPCDelegate.Instance.PlayFX(requestPos, vfxType);
             return;
         }
 
