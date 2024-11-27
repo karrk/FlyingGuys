@@ -271,18 +271,23 @@ public class PlayerController : MonoBehaviourPun
     public GameObject CheckGrabPoint()
     {
         Collider[] grabbedColliders;
-        PlayerController grabbedPlayer;
+        //PlayerController grabbedPlayer;
 
-        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius, playerLayer);
+        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
 
-        if(grabbedColliders.Length > 0 )
+        if (grabbedColliders.Length > 0)
         {
             Debug.Log("뭔가 잡음");
-            if (grabbedColliders[0].TryGetComponent(out grabbedPlayer))
+            if (grabbedColliders[0].TryGetComponent(out PlayerController grabbedPlayer))
             {
+                Debug.Log("플레이어를 잡음");
                 if (grabbedPlayer.states[(int)curState] is IGrabbable grabbable)
                     grabbable.OnGrabbedEnter();
                 return grabbedPlayer.gameObject;
+            }
+            else
+            {
+                return grabbedColliders[0].gameObject;
             }
         }
 
