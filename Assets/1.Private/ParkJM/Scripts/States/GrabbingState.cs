@@ -6,10 +6,10 @@ using UnityEngine;
 public class GrabbingState : PlayerState
 {
     private GameObject grabbedObject;
-    private GameObject curGrabbedObject;
+    //private GameObject curGrabbedObject;
     private float moveSpeedOnGrab;
     private Vector3 targetVelocity;
-    private float grabSearchTime = 2f;
+    private float grabSearchTime = 1.0f;
     private float grabSearchCounter;
     private Coroutine grabCheckRoutine;
 
@@ -33,6 +33,11 @@ public class GrabbingState : PlayerState
     {
         if (RemoteInput.inputs[player.model.playerNumber].grabInput)
         {
+            if (grabbedObject != null)
+            {
+                grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+            }
+
             player.ChangeState(E_PlayeState.Idle);
             return;
         }
@@ -149,6 +154,11 @@ public class GrabbingState : PlayerState
             GameObject detectedObject = player.CheckGrabPoint();
             if (detectedObject != null && detectedObject != grabbedObject)
             {
+                if(grabbedObject != null)
+                {
+                    grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+                }
+                
                 grabbedObject = detectedObject;
                 Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
             }
@@ -184,7 +194,7 @@ public class GrabbingState : PlayerState
         {
             // 밀기
             Debug.Log("밀기");
-            grabbedObjectRb.velocity = camForward * player.model.grabForce;
+            grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             // 밀기 애니메이션 재생
             // 이미 재생중이라면 애니메이션 재생x 밀기 당기기 바꿀때만 재생
             //grabbedObjectRb.AddForce(moveDir * player.model.grabForce, ForceMode.Force);
@@ -193,7 +203,7 @@ public class GrabbingState : PlayerState
         {
             // 당기기
             Debug.Log("당기기");
-            grabbedObjectRb.velocity = -camForward * player.model.grabForce;
+            grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             //grabbedObjectRb.AddForce(-moveDir * player.model.grabForce, ForceMode.Force);
         }
 

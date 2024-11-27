@@ -32,6 +32,6 @@ public class GrabbedState : PlayerState
 
     public override void Exit()
     {
-
+        Debug.Log("잡힘 상태 해제");
     }
 }
