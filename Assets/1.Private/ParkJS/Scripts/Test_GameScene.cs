@@ -141,8 +141,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
                 if (NetWorkManager.IsTriggerCrown)
                 {
-                    // crown.player
-                    if (PhotonNetwork.CurrentRoom.Players[item] == PhotonNetwork.LocalPlayer)
+                    if (crown.player == PhotonNetwork.LocalPlayer)
                     {
                         // TODO : 승리 연출
                         Debug.Log("승리");

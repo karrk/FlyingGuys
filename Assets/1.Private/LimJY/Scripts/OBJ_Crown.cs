@@ -1,11 +1,12 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OBJ_Crown : MonoBehaviour
 {
-    public int Num;
+    public Player player;
 
     // -------------------------------------------------------------------------
 
@@ -25,8 +26,7 @@ public class OBJ_Crown : MonoBehaviour
             //    IsGrabEnable = true;
             //}
 
-            Num = other.transform.GetComponent<PhotonView>().ViewID;
-            Debug.Log(other.transform.GetComponent<PhotonView>().ViewID);
+            player = (Player)other.transform.GetComponent<PhotonView>().InstantiationData[0];
             NetWorkManager.IsTriggerCrown = true;
 
             CrownDisable(other.gameObject.GetComponent<PlayerController>());
