@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IGrabbable 
 {
     public void OnGrabbedEnter();
-    
+    public void OnGrabbedLeave();
 }

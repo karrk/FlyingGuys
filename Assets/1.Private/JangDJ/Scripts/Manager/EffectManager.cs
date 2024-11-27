@@ -33,3 +33,4 @@ public class EffectManager : MonoBehaviour, IManager
     //        PlayFX(Vector3.up * 1, E_VFX.Grab,E_NetworkType.Public);
     //}
 }
+ 
