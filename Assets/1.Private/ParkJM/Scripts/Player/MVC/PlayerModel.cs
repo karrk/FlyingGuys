@@ -11,4 +11,5 @@ public class PlayerModel
     public float jumpForce;
     public float divingForce;
     public float grabRadius;
+    public float grabForce;
 }
