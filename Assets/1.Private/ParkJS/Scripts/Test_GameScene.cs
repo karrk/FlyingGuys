@@ -21,7 +21,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        crown = GameObject.FindGameObjectWithTag("Target").GetComponent<OBJ_Crown>();
+        crown = GameObject.FindGameObjectWithTag("Target")?.GetComponent<OBJ_Crown>();
         winImage = winUI.GetComponentInChildren<Image>();
         loseImage = winUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
@@ -119,7 +119,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
             yield return new WaitForSeconds(1f);
         }
 
-
         photonView.RPC(nameof(ShowCount), RpcTarget.All, 0);
         //NetWorkManager.IsPlay = true;
         yield return new WaitForSeconds(1f);
@@ -146,7 +145,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             foreach (var item in PhotonNetwork.CurrentRoom.Players.Keys)
             {
-                Debug.Log($"{item} / {crown.Num}");
+                //Debug.Log($"{item} / {crown.Num}");
 
                 if (NetWorkManager.IsTriggerCrown && item == (crown.Num - count))
                 {
@@ -187,6 +186,5 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Util.SendAndReceiveStruct(stream, ref count);
-        Debug.Log($"전달되는 {count}");
     }
 }
