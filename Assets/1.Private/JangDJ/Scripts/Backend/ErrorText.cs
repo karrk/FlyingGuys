@@ -4,17 +4,22 @@ using TMPro;
 using UnityEngine;
 using WebSocketSharp;
 
-public class ErrorText : TMP_Text
+[RequireComponent(typeof(TMP_Text))]
+public class ErrorText : MonoBehaviour
 {
     private StringBuilder _sb;
     private TMP_Text _tmp;
     private Coroutine _routine;
     private float _clearTime = 2f;
 
-    protected override void Awake()
+    protected void Awake()
     {
         _sb = new StringBuilder();
-        _tmp = this;
+    }
+
+    private void OnEnable()
+    {
+        _tmp = GetComponent<TMP_Text>();
     }
 
     public void ChangeText(string message, bool isAutoClear = true)
@@ -58,5 +63,7 @@ public class ErrorText : TMP_Text
     {
         if (_routine != null)
             StopCoroutine(_routine);
+
+        _tmp = null;
     }
 }
