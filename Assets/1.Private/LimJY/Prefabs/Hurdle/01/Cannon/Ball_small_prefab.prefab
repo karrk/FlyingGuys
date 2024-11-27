@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 717512889280724844}
   - component: {fileID: 3707111888941009988}
   - component: {fileID: 7446554108209588283}
-  - component: {fileID: 3382991083167715325}
+  - component: {fileID: -3931113515943315570}
   - component: {fileID: 4112903340549381704}
   - component: {fileID: 3988741826987504556}
   m_Layer: 0
@@ -117,7 +117,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3382991083167715325
+--- !u!114 &-3931113515943315570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1366246946237898425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16a9695da690ea4288c7a603dbffef3, type: 3}
+  m_Script: {fileID: 11500000, guid: be2d0b93acc901a4ba905b4869fa054f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   returnTime: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3988741826987504556}
+  - {fileID: -3931113515943315570}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -166,6 +167,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3

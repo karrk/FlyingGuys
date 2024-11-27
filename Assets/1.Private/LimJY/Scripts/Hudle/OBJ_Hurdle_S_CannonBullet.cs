@@ -2,13 +2,13 @@ using Photon.Pun;
 using System;
 using UnityEngine;
 
-public class OBJ_Hurdle_CannonBullet : MonoBehaviourPun, IPooledObject, IPunObservable
+public class OBJ_Hurdle_S_CannonBullet : MonoBehaviourPun, IPooledObject, IPunObservable
 {
     public float returnTime;
     private float remainTime;
     private Rigidbody rb;
 
-    public Enum MyType => E_Object.Cannon;
+    public Enum MyType => E_Object.Cannon_Small;
     public GameObject MyObject => gameObject;
 
 
