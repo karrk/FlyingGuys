@@ -1855,7 +1855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44750ec12ed89c4181970b96010f2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadZone: {fileID: 8718010368636446407}
 --- !u!4 &5205573108489689117
 Transform:
   m_ObjectHideFlags: 0
@@ -1942,10 +1941,10 @@ RectTransform:
   m_Father: {fileID: 8886318394654123022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1920}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5812558585641829871
 MonoBehaviour:
@@ -3231,10 +3230,10 @@ RectTransform:
   m_Father: {fileID: 2453693393197869371}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1920}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8718010368636446407
 MonoBehaviour:
@@ -3250,7 +3249,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isRecoveryMode: 0
   _recoverPoints: []
-  Del: {fileID: 0}
 --- !u!23 &8729756183884442382
 MeshRenderer:
   m_ObjectHideFlags: 0

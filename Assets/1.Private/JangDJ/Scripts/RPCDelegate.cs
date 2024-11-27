@@ -59,7 +59,18 @@ public class RPCDelegate : MonoBehaviourPun
             Destroy(hit.collider.gameObject);
         }
 
-        Debug.DrawRay(targetpos + Vector3.up * upOffset,
-            Vector3.down * 1f, Color.red, 5f);
+        //Debug.DrawRay(targetpos + Vector3.up * upOffset,
+        //    Vector3.down * 1f, Color.red, 5f);
+    }
+
+    public void PlayStartFX(StageFXs component)
+    {
+        photonView.RPC(nameof(PlayStartFXRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void PlayStartFXRPC()
+    {
+        
     }
 }
