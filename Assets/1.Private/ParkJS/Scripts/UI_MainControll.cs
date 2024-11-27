@@ -3,49 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UI_NamePanel : MonoBehaviour
+public class UI_MainControll : MonoBehaviour
 {
-    [SerializeField] TMP_InputField nameInput;
+    [SerializeField] TMP_Text userNameText;
     [SerializeField] TMP_Text playerCount;
     [SerializeField] GameObject panel;
     [SerializeField] GameObject matchPlayer;
 
     private void Awake()
     {
+        userNameText.text = NetWorkManager.NickName;
         panel.SetActive(false);
-    }
-
-    public void JoinInGame()
-    {
-        if(nameInput.text =="")
-        {
-            Debug.LogWarning("닉네임을 정하십시오.");
-            return;
-        }
-
-        PhotonNetwork.LocalPlayer.NickName = nameInput.text;
-        PhotonNetwork.ConnectUsingSettings();
-
-        PhotonNetwork.LoadLevel("GameScene");
     }
 
     public void RandomMatch()
     {
-        if (nameInput.text == "")
-        {
-            Debug.LogWarning("닉네임을 정하십시오.");
-            return;
-        }
-
-        PhotonNetwork.LocalPlayer.NickName = nameInput.text;
         PhotonNetwork.ConnectUsingSettings();
         panel.SetActive(true);
     }
 
     private void LateUpdate()
     {
-        if(PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom)
             UpdateCurRoom();
     }
 

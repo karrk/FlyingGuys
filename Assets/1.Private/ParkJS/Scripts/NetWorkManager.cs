@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,9 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 
     private bool isTriggerCrown;
     public static bool IsTriggerCrown { get { return Instance.isTriggerCrown; } set { Instance.isTriggerCrown = value; } }
+
+    private string nickName;
+    public static string NickName { get { return Instance.nickName; } set { Instance.nickName = value; } }
 
     public void Init()
     {

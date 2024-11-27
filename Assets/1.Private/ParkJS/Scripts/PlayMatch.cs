@@ -37,7 +37,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
                 Debug.Log("충족함");
                 SetDescriptionText("Game Loading...");
                 yield return new WaitForSeconds(3f);
-                PhotonNetwork.LoadLevel("GameScene");
+                PhotonNetwork.LoadLevel("PJS_TestSecne 1.3");
                 yield break;
             }
             yield return null;
