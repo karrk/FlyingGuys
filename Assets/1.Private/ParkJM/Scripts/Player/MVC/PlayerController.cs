@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         states[(int)E_PlayeState.Jump] = new JumpState(this);
         states[(int)E_PlayeState.Fall] = new FallState(this);
         states[(int)E_PlayeState.Diving] = new DivingState(this);
+        states[(int)E_PlayeState.FallingImpact] = new FallingImpact(this);
+        states[(int)E_PlayeState.StandUp] = new StandUpState(this);
         states[(int)E_PlayeState.Bounced] = new BouncedState(this);
         states[(int)E_PlayeState.Grabbing] = new GrabbingState(this);
         states[(int) E_PlayeState.Grabbed] = new GrabbedState(this);
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private void LateUpdate()
     {
         _cam.RotY(rotVec.y);
-        //states[(int)curState].LateUpdate();
+        states[(int)curState].LateUpdate();
     }
 
 

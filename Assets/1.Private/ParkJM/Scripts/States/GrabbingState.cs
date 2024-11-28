@@ -13,6 +13,8 @@ public class GrabbingState : PlayerState
     private float grabSearchCounter;
     private Coroutine grabCheckRoutine;
 
+    // 애니메이션 인덱스
+    // push : 0, pull : 1
     public GrabbingState(PlayerController player) : base(player)
     {
         moveSpeedOnGrab = player.model.moveSpeed * 0.2f;
@@ -22,6 +24,8 @@ public class GrabbingState : PlayerState
         Debug.Log("Grab 상태 진입");
         grabbedObject = null;
         grabSearchCounter = 0;
+        player.view.SetBoolInGrabAnimation(0, true);
+        //player.view.UpSpine();
 
         if(grabCheckRoutine == null)
         {
@@ -67,13 +71,21 @@ public class GrabbingState : PlayerState
         }
     }
 
+    public override void LateUpdate()
+    {
+        player.view.UpSpine();
+    }
+
     public override void Exit()
     {
         Debug.Log("Grab 상태 해제");
         grabbedObject = null;
         grabSearchCounter = 0f;
 
-        if(grabCheckRoutine != null)
+        player.view.SetBoolInGrabAnimation(0, false);
+        player.view.SetBoolInGrabAnimation(1, false);
+
+        if (grabCheckRoutine != null)
         {
             player.StopCoroutine(grabCheckRoutine);
             grabCheckRoutine = null;
@@ -170,7 +182,14 @@ public class GrabbingState : PlayerState
             Debug.Log("밀기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             // 밀기 애니메이션 재생
-            // 이미 재생중이라면 애니메이션 재생x 밀기 당기기 바꿀때만 재생
+            // 이미 재생중이라면 애니메이션 중복 재생x 밀기 당기기 바꿀때만 재생
+            if(!player.view.GetBoolInGrabAnimation(1))
+            {
+                player.view.SetBoolInGrabAnimation(0, false);
+                player.view.SetBoolInGrabAnimation(1, true);
+                
+            }
+
             //grabbedObjectRb.AddForce(moveDir * player.model.grabForce, ForceMode.Force);
         }
         else if(dotProduct < 0f)
@@ -178,6 +197,11 @@ public class GrabbingState : PlayerState
             // 당기기
             Debug.Log("당기기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
+            if (!player.view.GetBoolInGrabAnimation(0)) // 나중에 열거형으로?
+            {
+                player.view.SetBoolInGrabAnimation(1, false); // pull 종료
+                player.view.SetBoolInGrabAnimation(0, true); // push 시작
+            }
             //grabbedObjectRb.AddForce(-moveDir * player.model.grabForce, ForceMode.Force);
         }
 

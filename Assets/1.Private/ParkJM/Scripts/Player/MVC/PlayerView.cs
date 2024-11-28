@@ -1,33 +1,85 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerView : MonoBehaviourPun
 {
     [HideInInspector] public AnimatorStateInfo stateInfo;
     private Animator animator;
-
+    private Transform playerChestTr;
+    private float offsetX;
+    private float offsetY = -120f;
+    private float offsetZ;
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        playerChestTr = animator.GetBoneTransform(HumanBodyBones.Chest);
     }
 
-    private int[] animationHash = new int[]
+    private int[] animationHashes = new int[]
     {
         Animator.StringToHash("Idle"),
-        Animator.StringToHash("Running"),
+        Animator.StringToHash("Run"),
         Animator.StringToHash("JumpUp"),
         Animator.StringToHash("Fall"),
         Animator.StringToHash("Dive"),
-        Animator.StringToHash("Bounced"),
+        Animator.StringToHash("FallImpact"),
+        Animator.StringToHash("StandUp"),
+        Animator.StringToHash("Bounced")
     };
+
+    private int[] grabAnimationHashes = new int[]
+    {
+        Animator.StringToHash("Pushing"),
+        Animator.StringToHash("Pulling"),
+        Animator.StringToHash("Struggling"),
+    };
+
+    public void UpSpine()
+    {
+        playerChestTr.rotation = Quaternion.Euler(offsetX, offsetY, offsetZ);
+    }
+
+    //private int[] animationStateHashes = new int[]
+    //{
+    //    Animator.StringToHash("Idle"),
+    //    Animator.StringToHash("Running"),
+    //    Animator.StringToHash("Jumping"),
+    //    Animator.StringToHash("Falling"),
+    //    Animator.StringToHash("Diving"),
+    //    Animator.StringToHash("FallingImpact"),
+    //    Animator.StringToHash("StandingUp"),
+    //    Animator.StringToHash("Bouncing")
+    //};
+
+    //public void SetAnimationTrigger(E_PlayeState state)
+    //{
+    //    animator.SetTrigger(animationStateHashes[(int)state]);
+    //}
+
+    //public void SetAnimationTrigger(string tirggerName)
+    //{
+    //    animator.SetTrigger(tirggerName);
+    //}
+
+    //public void SetAnimationBoolTrue(E_PlayeState state)
+    //{
+    //    animator.SetBool(animationStateHashes[(int)state], true);
+    //}
+
+    //public void SetAnimationBoolFalse(E_PlayeState state)
+    //{
+    //    animator.SetBool(animationStateHashes[(int)state], false);
+    //}
+
 
     public void PlayAnimation(int _animationIndex)
     {
-        if (_animationIndex >= 0 && _animationIndex < animationHash.Length)
+        if (_animationIndex >= 0 && _animationIndex < animationHashes.Length)
         {
-            animator.Play(animationHash[_animationIndex], 0, 0);
+            animator.Play(animationHashes[_animationIndex], 0, 0);
         }
         else
         {
@@ -35,29 +87,41 @@ public class PlayerView : MonoBehaviourPun
         }
     }
 
-    public void PlayerAnimation(E_PlayeState state)
+    public void SetBoolInGrabAnimation(int _animationIndex, bool playing)
     {
-        animator.SetTrigger(animationHash[(int)state]);
+        animator.SetBool(grabAnimationHashes[_animationIndex], playing);
+    }
+
+    public bool GetBoolInGrabAnimation(int _animationIndex)
+    {
+        return animator.GetBool(grabAnimationHashes[_animationIndex]);
+    }
+
+
+    public void ToggleRun()
+    {
+        bool isRunning = animator.GetBool(animationHashes[(int)E_PlayeState.Run]);
+        animator.SetBool(animationHashes[(int)E_PlayeState.Run], !isRunning);
     }
 
     public void PlayRun()
     {
-        animator.SetBool(animationHash[(int)E_PlayeState.Run], true);
+        animator.SetBool(animationHashes[(int)E_PlayeState.Run], true);
     }
 
     public void StopRun()
     {
-        animator.SetBool(animationHash[(int)E_PlayeState.Run], false);
+        animator.SetBool(animationHashes[(int)E_PlayeState.Run], false);
     }
 
     public void PlayDive()
     {
-        animator.SetBool(animationHash[(int)E_PlayeState.Diving], true);
+        animator.SetBool(animationHashes[(int)E_PlayeState.Diving], true);
     }
 
     public void EndDive()
     {
-        animator.SetBool(animationHash[(int)E_PlayeState.Diving], false);
+        animator.SetBool(animationHashes[(int)E_PlayeState.Diving], false);
     }
 
     public bool IsAnimationFinished()

@@ -12,8 +12,9 @@ public class DivingState : PlayerState
     public override void Enter()
     {
         Debug.Log("Diving 진입");
+        //player.view.SetAnimationTrigger(E_PlayeState.Diving);
         player.view.PlayAnimation(animationIndex);
-        player.isDiving = true;
+        // player.isDiving = true;
 
         // Todo : 다이빙 구현
         // 점프를 하지않고도 다이빙을 할 수 있음
@@ -32,9 +33,10 @@ public class DivingState : PlayerState
         if (!player.view.IsAnimationFinished())
             return;
 
-        if(player.isGrounded) // player.rb.velocity.y  < 0.1f ||
+        if (player.isGrounded) // player.rb.velocity.y  < 0.1f ||
         {
-            player.ChangeState(E_PlayeState.Idle);
+            player.ChangeState(E_PlayeState.FallingImpact);
+            return;
             //player.transform.rotation = Quaternion.Euler(0f, player.transform.rotation.y, player.transform.rotation.z);
 
         }
@@ -53,5 +55,6 @@ public class DivingState : PlayerState
     public override void Exit()
     {
         Debug.Log("Diving 종료");
+        //player.view.isAniFinished = false;
     }
 }

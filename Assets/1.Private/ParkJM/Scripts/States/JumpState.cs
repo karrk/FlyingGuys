@@ -12,8 +12,11 @@ public class JumpState : PlayerState
     public override void Enter()
     {
         Debug.Log("Jump 진입");
-        Jump();
+        //player.view.SetAnimationTrigger(E_PlayeState.Jump);
         player.view.PlayAnimation(animationIndex);
+
+        Jump();
+
 
 
     }
