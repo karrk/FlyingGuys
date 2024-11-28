@@ -39,8 +39,6 @@ public class StageFXs : MonoBehaviour
             {
                 _particles[i].Play();
 
-                Debug.Log(i);
-
                 if (tempIdx <= _stepPoints.Length -1 && _stepPoints[tempIdx] == i)
                 {
                     tempIdx++;
