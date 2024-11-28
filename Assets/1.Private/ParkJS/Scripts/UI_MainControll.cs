@@ -16,6 +16,11 @@ public class UI_MainControll : MonoBehaviour
         matchPlayer.SetActive(false);
     }
 
+    private void Start()
+    {
+        RandomMatch();
+    }
+
     public void RandomMatch()
     {
         PhotonNetwork.ConnectUsingSettings();

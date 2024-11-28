@@ -30,6 +30,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         PhotonNetwork.CreateRoom("Room", new RoomOptions { MaxPlayers = 2, IsVisible = false });
+        // 2명이 입장상태가 확인되면, 5초?? 더 기다리고 그냥 시작 => 가능??
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -63,6 +64,6 @@ public class PlayMatch : MonoBehaviourPunCallbacks
     {
         SetDescriptionText("Game Loading...");
         yield return new WaitForSeconds(3f);
-        PhotonNetwork.LoadLevel("PJS_TestSecne 1.3");
+        PhotonNetwork.LoadLevel("TestSecne 1.4");
     }
 }

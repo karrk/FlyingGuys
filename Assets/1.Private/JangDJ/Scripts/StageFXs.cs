@@ -26,7 +26,7 @@ public class StageFXs : MonoBehaviour
     public IEnumerator PlayStartFX()
     {
         yield return StartCountDown();
-        //NetWorkManager.IsPlay = true;
+        NetWorkManager.IsPlay = true;
         StartCoroutine(StepPlayFX());
         StartCoroutine(Shutdown());
     }

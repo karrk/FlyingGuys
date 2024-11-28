@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,40 @@ public class DeadZone : MonoBehaviour
 {
     [SerializeField] private bool _isRecoveryMode;
     [SerializeField] private Transform[] _recoverPoints;
+    public Player player;
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("Player"))
+    //    {
+    //        if(_isRecoveryMode)
+    //            other.transform.position 
+    //                = FindClosetPoint(other.transform.position);
+    //        else
+    //        {
+    //            if(other.TryGetComponent<PhotonView>(out PhotonView view))
+    //            {
+    //                DeadLogic(view.ViewID);
+    //            }
+    //        }
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            if(_isRecoveryMode)
-                other.transform.position 
+            if (_isRecoveryMode)
+                other.transform.position
                     = FindClosetPoint(other.transform.position);
             else
             {
-                if(other.TryGetComponent<PhotonView>(out PhotonView view))
+                if (other.TryGetComponent<PhotonView>(out PhotonView view))
                 {
                     DeadLogic(view.ViewID);
+                    player = (Player)view.InstantiationData[0];
+                    Debug.Log(player);
+                    player.SetLife(false);
                 }
             }
         }

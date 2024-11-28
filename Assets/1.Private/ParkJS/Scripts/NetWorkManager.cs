@@ -10,8 +10,8 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 {
     public static NetWorkManager Instance { get; private set; }
 
-    //private bool isPlay;
-    //public static bool IsPlay { get { return Instance.isPlay; } set { Instance.isPlay = value; } }
+    private bool isPlay;
+    public static bool IsPlay { get { return Instance.isPlay; } set { Instance.isPlay = value; } }
 
     private bool isTriggerCrown;
     public static bool IsTriggerCrown { get { return Instance.isTriggerCrown; } set { Instance.isTriggerCrown = value; } }
