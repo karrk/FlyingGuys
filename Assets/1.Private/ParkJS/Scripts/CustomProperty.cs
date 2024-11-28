@@ -9,6 +9,7 @@ public static class CustomProperty
     public const string LOAD = "Load";
     public const string READY = "Ready";
     public const string WINNER = "Winner";
+    public const string LIFE = "Life";
 
     private static PhotonHashtable customProperty = new PhotonHashtable();
 
@@ -58,6 +59,23 @@ public static class CustomProperty
         if (customProperty.ContainsKey(WINNER))
         {
             return (bool)customProperty[WINNER];
+        }
+        else
+            return false;
+    }
+
+    public static void SetLife(this Player player, bool result)
+    {
+        customProperty[LIFE] = result;
+        player.SetCustomProperties(customProperty);
+    }
+
+    public static bool GetLife(this Player player)
+    {
+        PhotonHashtable customProperty = player.CustomProperties;
+        if (customProperty.ContainsKey(LIFE))
+        {
+            return (bool)customProperty[LIFE];
         }
         else
             return false;

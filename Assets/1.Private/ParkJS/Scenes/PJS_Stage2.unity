@@ -775,7 +775,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 1
+    m_Style: 0
     m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
@@ -840,6 +840,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108727431341614723, guid: b31406488f64373488ac20cab7a06760,
+        type: 3}
+      propertyPath: m_TagString
+      value: Target
       objectReference: {fileID: 0}
     - target: {fileID: 108727431341614727, guid: b31406488f64373488ac20cab7a06760,
         type: 3}
@@ -1824,6 +1829,7 @@ MonoBehaviour:
   winUI: {fileID: 5812766152558587569}
   loseUI: {fileID: 5943851421166133697}
   crown: {fileID: 0}
+  deadZone: {fileID: 0}
 --- !u!4 &8334606517271333257
 Transform:
   m_ObjectHideFlags: 0
@@ -1857,8 +1863,7 @@ MonoBehaviour:
   Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8334606517271333256}
+  ObservedComponents: []
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
