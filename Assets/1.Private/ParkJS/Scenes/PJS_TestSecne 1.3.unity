@@ -301,8 +301,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 307347252}
+  ObservedComponents: []
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2352,7 +2351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b28cb75a657d94a866727e235d953d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Num: 0
 --- !u!4 &1469732698663678850
 Transform:
   m_ObjectHideFlags: 0
