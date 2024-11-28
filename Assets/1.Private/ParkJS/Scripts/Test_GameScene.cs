@@ -23,6 +23,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
+        if (PhotonNetwork.InRoom)
+            inGamePlay = false;
+
         crown = GameObject.FindGameObjectWithTag("Target")?.GetComponent<OBJ_Crown>();
         deadZone = GameObject.FindGameObjectWithTag("Target")?.GetComponent<DeadZone>();
 
@@ -30,13 +33,15 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         loseImage = winUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
+
+        NetWorkManager.IsPlay = false;
     }
 
     private void Start()
     {
         countText.text = null;
 
-        if (inGamePlay)
+        if (inGamePlay) // 내일 주석 예정
         {
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.LocalPlayer.NickName = NetWorkManager.NickName ?? $"Player {Random.Range(100, 1000)}";
@@ -113,14 +118,16 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     {
         yield return new WaitForSeconds(1f);
 
-        for (int i = 3; i >= 0; i--)
-        {
-            photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
-            yield return new WaitForSeconds(1f);
-        }
+        RPCDelegate.Instance.PlayStartFX();
 
-        //NetWorkManager.IsPlay = true;
-        photonView.RPC(nameof(HideText), RpcTarget.All, false);
+        //for (int i = 3; i >= 0; i--)
+        //{
+        //    photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
+        //    yield return new WaitForSeconds(1f);
+        //}
+
+        ////NetWorkManager.IsPlay = true;
+        //photonView.RPC(nameof(HideText), RpcTarget.All, false);
     }
 
     [PunRPC]
