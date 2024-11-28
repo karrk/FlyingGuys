@@ -12,13 +12,12 @@ public class FallState : PlayerState
     public override void Enter()
     {
         Debug.Log("Fall 진입");
+        //player.view.SetAnimationTrigger(E_PlayeState.Fall);
         player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
     {
-
-
         if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
             player.ChangeState(E_PlayeState.Diving);

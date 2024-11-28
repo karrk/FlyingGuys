@@ -21,6 +21,8 @@ public enum E_PlayeState
     Jump,
     Fall,
     Diving,
+    FallingImpact,
+    StandUp,
     Bounced,
     Grabbing,
     Grabbed,

@@ -13,6 +13,8 @@ public class RunState : PlayerState
     public override void Enter()
     {
         Debug.Log("Run 진입");
+        //player.view.SetAnimationBoolTrue(E_PlayeState.Run);
+        //player.view.PlayRun();
         player.view.PlayAnimation(animationIndex);
     }
 
@@ -56,6 +58,8 @@ public class RunState : PlayerState
     public override void Exit()
     {
         Debug.Log("Run 종료");
+        //player.view.SetAnimationBoolFalse(E_PlayeState.Run);
+        //player.view.StopRun();
         targetVelocity = Vector3.zero;
     }
 

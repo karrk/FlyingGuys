@@ -9,13 +9,14 @@ public class BouncedState : PlayerState
     float bounceDelay = 0.03f;
     public BouncedState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.Bounced;
+        //animationIndex = (int)E_PlayeState.Bounced;
     }
 
     public override void Enter()
     {
         Debug.Log("Bounced 상태 진입");
-        player.view.PlayAnimation(animationIndex);
+        //player.view.SetAnimationTrigger(E_PlayeState.Bounced);
+        player.view.PlayAnimation((int)E_PlayeState.Bounced);
         bounceDelayCounter = 0;
         player.rb.velocity = Vector3.zero;
 
@@ -38,8 +39,11 @@ public class BouncedState : PlayerState
 
     public override void Update()
     {
-        if (!player.view.IsAnimationFinished())
+        if (!player.view.IsAnimationFinished())// && player.rb.velocity.y > 0.1f ) // 무한 콩콩이 고쳐야함
+        {
             return;
+        }
+            
 
         if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
         {

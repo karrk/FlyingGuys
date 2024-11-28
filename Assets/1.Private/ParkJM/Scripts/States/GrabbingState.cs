@@ -13,6 +13,8 @@ public class GrabbingState : PlayerState
     private float grabSearchCounter;
     private Coroutine grabCheckRoutine;
 
+    // 애니메이션 인덱스
+    // push : 0, pull : 1
     public GrabbingState(PlayerController player) : base(player)
     {
         moveSpeedOnGrab = player.model.moveSpeed * 0.2f;
@@ -22,6 +24,8 @@ public class GrabbingState : PlayerState
         Debug.Log("Grab 상태 진입");
         grabbedObject = null;
         grabSearchCounter = 0;
+        player.view.SetBoolInGrabAnimation(0, true);
+        //player.view.UpSpine();
 
         if(grabCheckRoutine == null)
         {
@@ -59,63 +63,17 @@ public class GrabbingState : PlayerState
 
     public override void FixedUpdate()
     {
-
         ApplyMovement();
 
         if(grabbedObject != null)
         {
             PushOrPullGrabbedObject(grabbedObject);
         }
+    }
 
-
-        //if (player.isSlope)
-        //{
-        //    Vector3 slopeDirection = Vector3.ProjectOnPlane(player.moveDir, player.chosenHit.normal).normalized;
-
-        //    targetVelocity = slopeDirection * moveSpeedOnGrab;
-        //    player.rb.velocity = targetVelocity;
-        //}
-        //else
-        //{
-        //    targetVelocity = player.moveDir * moveSpeedOnGrab;
-        //    targetVelocity.y = player.rb.velocity.y;
-
-        //    player.rb.velocity = targetVelocity;
-        //}
-
-        //if (grabbedObject == null)
-        //{
-        //    grabbedObject = player.CheckGrabPoint();
-
-        //    if(grabbedObject != null)
-        //    {
-        //        PushOrPullGrabbedObject(grabbedObject);
-        //    }
-        //}
-
-        //if(grabbedObject == null)
-
-        //curGrabbedObject = player.CheckGrabPoint();
-
-        //if (grabbedObject != null && curGrabbedObject == null)
-        //{
-        //    Debug.Log("잡은 물체가 범위를 벗어나서 Idle 상태로 전환");
-        //    if (grabbedObject is IGrabbable)
-        //        grabbedObject.OnGrabbedLeave();
-
-        //        grabbedObject.gameObject
-        //    player.ChangeState(E_PlayeState.Idle);
-        //    return;
-        //}
-
-        //grabbedObject = curGrabbedObject;
-
-
-        //if (grabbedObject != null)
-        //{
-        //    Debug.Log(" 잡음");
-        //    PushOrPullGrabbedObject(grabbedObject);
-        //}
+    public override void LateUpdate()
+    {
+        player.view.UpSpine();
     }
 
     public override void Exit()
@@ -124,7 +82,10 @@ public class GrabbingState : PlayerState
         grabbedObject = null;
         grabSearchCounter = 0f;
 
-        if(grabCheckRoutine != null)
+        player.view.SetBoolInGrabAnimation(0, false);
+        player.view.SetBoolInGrabAnimation(1, false);
+
+        if (grabCheckRoutine != null)
         {
             player.StopCoroutine(grabCheckRoutine);
             grabCheckRoutine = null;
@@ -152,20 +113,45 @@ public class GrabbingState : PlayerState
         while (true)
         {
             GameObject detectedObject = player.CheckGrabPoint();
-            if (detectedObject != null && detectedObject != grabbedObject)
+            //if (detectedObject != null && detectedObject != grabbedObject)
+            //{
+            //    if(grabbedObject != null)
+            //    {
+            //        grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+            //    }
+
+            //    grabbedObject = detectedObject;
+            //    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+            //}
+            //else if (detectedObject == null)
+            //{
+            //    grabbedObject = detectedObject;
+            //}
+
+
+            if (detectedObject != grabbedObject)
             {
-                if(grabbedObject != null)
+                // 잡힌 오브젝트가 바뀌거나, 잡힌 오브젝트가 범위를 벗어났을 때
+                if (grabbedObject != null) 
                 {
+                    // 이전에 잡힌 오브젝트가 있을 경우
                     grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+                    Debug.Log($"GrabbedObject 해제: {grabbedObject.name}");
                 }
-                
+
                 grabbedObject = detectedObject;
-                Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+
+                if (grabbedObject != null) 
+                {
+                    // 새롭게 잡힌 오브젝트가 있을 경우
+                    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+                }
             }
-            else if (detectedObject == null)
-            {
-                grabbedObject = detectedObject;
-            }
+
+
+
+
+
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -196,7 +182,14 @@ public class GrabbingState : PlayerState
             Debug.Log("밀기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             // 밀기 애니메이션 재생
-            // 이미 재생중이라면 애니메이션 재생x 밀기 당기기 바꿀때만 재생
+            // 이미 재생중이라면 애니메이션 중복 재생x 밀기 당기기 바꿀때만 재생
+            if(!player.view.GetBoolInGrabAnimation(1))
+            {
+                player.view.SetBoolInGrabAnimation(0, false);
+                player.view.SetBoolInGrabAnimation(1, true);
+                
+            }
+
             //grabbedObjectRb.AddForce(moveDir * player.model.grabForce, ForceMode.Force);
         }
         else if(dotProduct < 0f)
@@ -204,6 +197,11 @@ public class GrabbingState : PlayerState
             // 당기기
             Debug.Log("당기기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
+            if (!player.view.GetBoolInGrabAnimation(0)) // 나중에 열거형으로?
+            {
+                player.view.SetBoolInGrabAnimation(1, false); // pull 종료
+                player.view.SetBoolInGrabAnimation(0, true); // push 시작
+            }
             //grabbedObjectRb.AddForce(-moveDir * player.model.grabForce, ForceMode.Force);
         }
 
