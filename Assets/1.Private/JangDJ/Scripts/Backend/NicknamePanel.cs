@@ -13,6 +13,13 @@ public class NicknamePanel : MonoBehaviour
     [SerializeField] private ErrorText _error;
     public LoginPanel LoginPanel;
 
+    private bool IsError;
+
+    private void OnEnable()
+    {
+        IsError = _error.gameObject.activeSelf;
+    }
+
     public async void Regist()
     {
         DataSnapshot snapshot = await GetSnapShot();
@@ -20,6 +27,7 @@ public class NicknamePanel : MonoBehaviour
 
         if(result == true)
         {
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("중복된 닉네임입니다");
         }
         else

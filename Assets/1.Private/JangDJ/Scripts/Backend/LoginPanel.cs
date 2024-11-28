@@ -7,6 +7,7 @@ using UnityEngine;
 using WebSocketSharp;
 using Firebase.Database;
 using System.Threading.Tasks;
+using Photon.Pun;
 
 public class LoginPanel : MonoBehaviour
 {
@@ -16,9 +17,13 @@ public class LoginPanel : MonoBehaviour
 
     [SerializeField] private NicknamePanel _nickPanel;
 
+    private bool IsError;
+
+
     private void OnEnable()
     {
         _email.onEndEdit.AddListener(CheckEmailpattern);
+        IsError = _error.gameObject.activeSelf;
     }
 
     private void OnDisable()
@@ -36,7 +41,8 @@ public class LoginPanel : MonoBehaviour
         else if (!text.Contains('.') || !text.Contains('@'))
         {
             _email.text = "";
-            _error.ChangeText("옳바른 이메일을 입력해주세요");
+            if (IsError != true) _error.gameObject.SetActive(true);
+            _error.ChangeText("올바른 이메일을 입력해주세요");
         }
     }
 
@@ -60,10 +66,12 @@ public class LoginPanel : MonoBehaviour
                         switch (errorCode)
                         {
                             case AuthError.InvalidEmail:
+                                if (IsError != true) _error.gameObject.SetActive(true);
                                 _error.ChangeText("유효하지 않은 이메일입니다");
                                 break;
 
                             case AuthError.WrongPassword:
+                                if (IsError != true) _error.gameObject.SetActive(true);
                                 _error.ChangeText("비밀번호를 확인해주세요");
                                 break;
 
@@ -268,6 +276,7 @@ public class LoginPanel : MonoBehaviour
 
                 if (isUsing == true)
                 {
+                    if (IsError != true) _error.gameObject.SetActive(true);
                     _error.ChangeText("사용중인 계정입니다");
                 }
 
@@ -284,7 +293,6 @@ public class LoginPanel : MonoBehaviour
     public void LoadNextScene()
     {
         _nickPanel.gameObject.SetActive(false);
-
-        // TODO 다음씬
+        PhotonNetwork.LoadLevel("Public_Menu");
     }
 }

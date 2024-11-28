@@ -7,22 +7,19 @@ using UnityEngine.EventSystems;
 
 public class UI_MainControll : MonoBehaviour
 {
-    [SerializeField] TMP_Text userNameText;
     [SerializeField] TMP_Text playerCount;
-    [SerializeField] GameObject panel;
+    //[SerializeField] GameObject panel;
     [SerializeField] GameObject matchPlayer;
 
     private void Awake()
     {
-        userNameText.text = NetWorkManager.NickName ?? $"Player {Random.Range(100, 1000)}";
-        panel.SetActive(false);
+        matchPlayer.SetActive(false);
     }
 
     public void RandomMatch()
     {
-        PhotonNetwork.LocalPlayer.NickName = userNameText.text;
         PhotonNetwork.ConnectUsingSettings();
-        panel.SetActive(true);
+        matchPlayer.SetActive(true);
     }
 
     private void LateUpdate()
@@ -33,7 +30,7 @@ public class UI_MainControll : MonoBehaviour
 
     private void UpdateCurRoom()
     {
-        matchPlayer.SetActive(true);
+        playerCount.gameObject.SetActive(true);
         playerCount.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
 }
