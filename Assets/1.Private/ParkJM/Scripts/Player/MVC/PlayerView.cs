@@ -6,16 +6,21 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviourPun
 {
+    PlayerController player;
     [HideInInspector] public AnimatorStateInfo stateInfo;
     private Animator animator;
     private Transform playerChestTr;
-    private float offsetX;
-    private float offsetY = -120f;
-    private float offsetZ;
+    [SerializeField] float offsetX;
+    [SerializeField] float offsetY;
+    [SerializeField] float offsetZ;
     private void Awake()
     {
+        player = GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
-        playerChestTr = animator.GetBoneTransform(HumanBodyBones.Chest);
+        playerChestTr = animator.GetBoneTransform(HumanBodyBones.UpperChest);
+        offsetX = 0;
+        offsetY = 0;
+        offsetZ = 42.5f;
     }
 
     private int[] animationHashes = new int[]
@@ -39,7 +44,11 @@ public class PlayerView : MonoBehaviourPun
 
     public void UpSpine()
     {
-        playerChestTr.rotation = Quaternion.Euler(offsetX, offsetY, offsetZ);
+        
+        Vector3 chestDir = player.camTransform.forward;
+        playerChestTr.LookAt(chestDir);
+        playerChestTr.localRotation = Quaternion.Euler(offsetX, offsetY, offsetZ);
+
     }
 
     //private int[] animationStateHashes = new int[]

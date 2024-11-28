@@ -148,11 +148,6 @@ public class GrabbingState : PlayerState
                 }
             }
 
-
-
-
-
-
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -167,10 +162,10 @@ public class GrabbingState : PlayerState
             return;
         }
 
-        Vector3 camForward = player.camTransform.forward.normalized;
+        Vector3 camForward = player.camTransform.forward;
         camForward.y = 0f;
-        camForward.Normalize();
-        Vector3 moveDir = player.moveDir; //moveDir은 이미 정규화된 값
+        //camForward.Normalize();
+        Vector3 moveDir = player.moveDir;
 
         // 내적 계산 후 push인지 pull인지 결정
         float dotProduct = Vector3.Dot(camForward, moveDir);

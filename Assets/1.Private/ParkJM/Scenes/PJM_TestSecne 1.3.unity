@@ -1380,6 +1380,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3335360710682042739, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: _power
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335360711260967189, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: _power
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335360711343092397, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: _power
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335360711528678832, guid: 85a606a478235fd44a0ace7714154da8,
+        type: 3}
+      propertyPath: _power
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3335360712120098418, guid: 85a606a478235fd44a0ace7714154da8,
         type: 3}
       propertyPath: m_Enabled
@@ -1776,7 +1796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1955252883}
   m_LocalRotation: {x: 0.4589523, y: 0, z: 0, w: 0.88846093}
-  m_LocalPosition: {x: -10.7139225, y: 11.1, z: -3.4086452}
+  m_LocalPosition: {x: 0, y: 10.900002, z: -6.422222}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3343,7 +3363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b28cb75a657d94a866727e235d953d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Num: 0
 --- !u!4 &1469732698663678850
 Transform:
   m_ObjectHideFlags: 0
