@@ -168,6 +168,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         if(collision.gameObject.layer == obstacleLayer)
         {
+            if (curState == E_PlayeState.Bounced)
+                return;
+
             if(collision.gameObject.TryGetComponent<BounceObject>(out BounceObject bounceObject))
             {
                 bouncedForce = bounceObject.Power;
