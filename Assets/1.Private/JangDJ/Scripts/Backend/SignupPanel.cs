@@ -3,6 +3,7 @@ using Firebase.Auth;
 using Firebase.Extensions;
 using System;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using WebSocketSharp;
 
@@ -13,10 +14,13 @@ public class SignupPanel : MonoBehaviour
     [SerializeField] private TMP_InputField _confirm;
     [SerializeField] private ErrorText _error;
 
+    private bool IsError;
     private bool _isUnmatchPwd = false;
 
     private void OnEnable()
     {
+        IsError = _error.gameObject.activeSelf;
+
         _email.onEndEdit.AddListener(CheckEmailpattern);
         _pwd.onEndEdit.AddListener(Checkpwds);
         _confirm.onEndEdit.AddListener(CheckConfirm);
@@ -26,11 +30,13 @@ public class SignupPanel : MonoBehaviour
     {
         if(_email.text.IsNullOrEmpty() == true)
         {
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("이메일을 입력해주세요");
             return;
         }
         else if(_isUnmatchPwd == true)
         {
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("비밀번호가 서로 다릅니다");
             return;
         }
@@ -57,6 +63,7 @@ public class SignupPanel : MonoBehaviour
                     switch (errorCode)
                     {
                         case AuthError.EmailAlreadyInUse:
+                            if (IsError != true) _error.gameObject.SetActive(true);
                             _error.ChangeText("이미 사용중인 계정입니다");
                             _email.text = "";
                             _pwd.text = "";
@@ -239,6 +246,7 @@ public class SignupPanel : MonoBehaviour
         else if (!text.Contains('.') || !text.Contains('@'))
         {
             _email.text = "";
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("옳바른 이메일을 입력해주세요");
         }
     }
@@ -251,6 +259,7 @@ public class SignupPanel : MonoBehaviour
         else if(text.Length <= 6)
         {
             _pwd.text = "";
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("비밀번호가 너무 짧습니다");
         }
 
@@ -258,6 +267,7 @@ public class SignupPanel : MonoBehaviour
         {
             if(_pwd.text != _confirm.text)
             {
+                if (IsError != true) _error.gameObject.SetActive(true);
                 _error.ChangeText("재확인 비밀번호와 다릅니다",false);
                 _isUnmatchPwd = true;
             }
@@ -276,6 +286,7 @@ public class SignupPanel : MonoBehaviour
         else if (text.Length <= 6)
         {
             _confirm.text = "";
+            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("비밀번호가 너무 짧습니다");
         }
 
@@ -283,6 +294,7 @@ public class SignupPanel : MonoBehaviour
         {
             if (_pwd.text != _confirm.text)
             {
+                if (IsError != true) _error.gameObject.SetActive(true);
                 _error.ChangeText("재확인 비밀번호와 다릅니다", false);
                 _isUnmatchPwd = true;
             }
