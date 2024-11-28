@@ -1,8 +1,9 @@
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using Firebase.Extensions;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class BackendManager : MonoBehaviour, IManager
@@ -14,6 +15,11 @@ public class BackendManager : MonoBehaviour, IManager
 
     private FirebaseAuth _auth;
     public static FirebaseAuth Auth => Instance._auth;
+
+    private FirebaseDatabase _db;
+    public static FirebaseDatabase DataBase => Instance._db;
+
+    public static bool RealUsing = false;
 
     public void Init()
     {
@@ -31,6 +37,7 @@ public class BackendManager : MonoBehaviour, IManager
                 // where app is a Firebase.FirebaseApp property of your application class.
                 _app = FirebaseApp.DefaultInstance;
                 _auth = FirebaseAuth.DefaultInstance;
+                _db = FirebaseDatabase.DefaultInstance;
 
                 // Set a flag here to indicate whether Firebase is ready to use by your app.
                 Debug.Log("Firebase dependencies check success");
@@ -41,7 +48,44 @@ public class BackendManager : MonoBehaviour, IManager
                 // Firebase Unity SDK is not safe to use here.
                 _app = null;
                 _auth = null;
+                _db = null;
             }
         });
+    }
+
+    public async Task ConvertUseState(bool used)
+    {
+        DatabaseReference user = _db.RootReference.Child("Users").Child(Auth.CurrentUser.UserId);
+
+        Dictionary<string, object> dic = new Dictionary<string, object>();
+        dic["/used"] = used;
+
+        await user.UpdateChildrenAsync(dic);
+    }
+
+    public async void Logout()
+    {
+        await ConvertUseState(false);
+    }
+
+    public class User
+    {
+        public string nickname;
+        public string email;
+        public bool used;
+
+        public User(string name, string email)
+        {
+            this.nickname = name;
+            this.email = email;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(Auth.CurrentUser != null && RealUsing == true)
+        {
+            Logout();
+        }
     }
 }
