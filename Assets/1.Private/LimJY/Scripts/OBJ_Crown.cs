@@ -17,6 +17,11 @@ public class OBJ_Crown : MonoBehaviour
 
     // -------------------------------------------------------------------------
 
+    private void FixedUpdate()
+    {
+        transform.Rotate(Vector3.up, 0.5f);
+    }
+
     // Trigger는 추후 Player에서 구현할 예정이므로, 왕관 오브젝트가 잡혓을 때 사용될 public 함수만 구성해둘 것.
     private void OnTriggerEnter(Collider other)
     {
