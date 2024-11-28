@@ -6,13 +6,14 @@ public class FallingImpact : PlayerState
 {
     public FallingImpact(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.FallingImpact;
+        //animationIndex = (int)E_PlayeState.FallingImpact;
     }
 
     public override void Enter()
     {
         Debug.Log("FallingImpact 진입");
-        player.view.PlayAnimation(animationIndex);
+        player.view.SetTriggerParameter(E_AniParameters.FallingImpact);
+        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()

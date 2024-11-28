@@ -6,16 +6,20 @@ public class IdleState : PlayerState
 {
     public IdleState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.Idle;
+        //animationIndex = (int)E_PlayeState.Idle;
     }
 
     public override void Enter()
     {
         Debug.Log("Idle 진입");
+
+        player.view.SetBoolParameter(E_AniParameters.Idling, true);
+
+
         player.rb.velocity = Vector3.zero;
         player.isJumpable = true; // 임시, spawn 상태에서 해주는것이 좋을듯
         //player.view.SetAnimationTrigger(E_PlayeState.Idle);  
-        player.view.PlayAnimation(animationIndex);
+        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
@@ -26,6 +30,7 @@ public class IdleState : PlayerState
         }
         else if (player.moveDir != Vector3.zero && player.isGrounded)
         {
+            Debug.Log("이동 입력 idle 상태에 들어옴");
             player.ChangeState(E_PlayeState.Run);
         }
         else if(!player.isGrounded && player.rb.velocity.y != 0)
@@ -72,6 +77,7 @@ public class IdleState : PlayerState
     public override void Exit()
     {
         Debug.Log("Idle 종료");
+        player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }
 
 }

@@ -6,14 +6,15 @@ public class DivingState : PlayerState
 {
     public DivingState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.Diving;
+        //animationIndex = (int)E_PlayeState.Diving;
     }
 
     public override void Enter()
     {
         Debug.Log("Diving 진입");
+        player.view.SetTriggerParameter(E_AniParameters.Diving);
         //player.view.SetAnimationTrigger(E_PlayeState.Diving);
-        player.view.PlayAnimation(animationIndex);
+        //player.view.PlayAnimation(animationIndex);
         // player.isDiving = true;
 
         // Todo : 다이빙 구현

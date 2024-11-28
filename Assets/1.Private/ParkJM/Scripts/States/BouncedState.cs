@@ -16,7 +16,8 @@ public class BouncedState : PlayerState
     {
         Debug.Log("Bounced 상태 진입");
         //player.view.SetAnimationTrigger(E_PlayeState.Bounced);
-        player.view.PlayAnimation((int)E_PlayeState.Bounced);
+        //player.view.PlayAnimation((int)E_PlayeState.Bounced);
+        player.view.SetTriggerParameter(E_AniParameters.Bouncing);
         bounceDelayCounter = 0;
         player.rb.velocity = Vector3.zero;
 

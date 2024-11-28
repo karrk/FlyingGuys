@@ -27,7 +27,7 @@ public class PlayerView : MonoBehaviourPun
     {
         Animator.StringToHash("Idle"),
         Animator.StringToHash("Run"),
-        Animator.StringToHash("JumpUp"),
+        Animator.StringToHash("Jump"),
         Animator.StringToHash("Fall"),
         Animator.StringToHash("Dive"),
         Animator.StringToHash("FallImpact"),
@@ -51,37 +51,32 @@ public class PlayerView : MonoBehaviourPun
 
     }
 
-    //private int[] animationStateHashes = new int[]
-    //{
-    //    Animator.StringToHash("Idle"),
-    //    Animator.StringToHash("Running"),
-    //    Animator.StringToHash("Jumping"),
-    //    Animator.StringToHash("Falling"),
-    //    Animator.StringToHash("Diving"),
-    //    Animator.StringToHash("FallingImpact"),
-    //    Animator.StringToHash("StandingUp"),
-    //    Animator.StringToHash("Bouncing")
-    //};
+    private int[] animationStateHashes = new int[]
+    {
+        Animator.StringToHash("Idling"),
+        Animator.StringToHash("Running"),
+        Animator.StringToHash("Jumping"),
+        Animator.StringToHash("Falling"),
+        Animator.StringToHash("Diving"),
+        Animator.StringToHash("FallingImpact"),
+        Animator.StringToHash("StandingUp"),
+        Animator.StringToHash("Bouncing")
+    };
 
-    //public void SetAnimationTrigger(E_PlayeState state)
-    //{
-    //    animator.SetTrigger(animationStateHashes[(int)state]);
-    //}
+    public void SetTriggerParameter(E_AniParameters _parameter)
+    {
+        animator.SetTrigger(animationStateHashes[(int)_parameter]);
+    }
 
     //public void SetAnimationTrigger(string tirggerName)
     //{
     //    animator.SetTrigger(tirggerName);
     //}
 
-    //public void SetAnimationBoolTrue(E_PlayeState state)
-    //{
-    //    animator.SetBool(animationStateHashes[(int)state], true);
-    //}
-
-    //public void SetAnimationBoolFalse(E_PlayeState state)
-    //{
-    //    animator.SetBool(animationStateHashes[(int)state], false);
-    //}
+    public void SetBoolParameter(E_AniParameters _parameter, bool _bool)
+    {
+        animator.SetBool(animationStateHashes[(int)_parameter], _bool);
+    }
 
 
     public void PlayAnimation(int _animationIndex)

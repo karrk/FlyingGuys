@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         HandleMoveInputs();
         ControlJumpBuffer();
 
+
         states[(int)curState].Update();
 
         //Debug.Log(rb.velocity);
@@ -226,6 +227,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         //점프 인풋이 들어왔으면
         if (RemoteInput.inputs[model.playerNumber].jumpInput)
         {
+            Debug.Log("점프 인풋 들어옴");
             jumpBufferCounter = jumpBufferTime;
         }
         else
