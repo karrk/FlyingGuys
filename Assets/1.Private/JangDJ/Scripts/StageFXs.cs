@@ -9,7 +9,7 @@ public class StageFXs : MonoBehaviour
     [SerializeField] private float _delay;
     [SerializeField] private int[] _stepPoints;
     [SerializeField] private ParticleSystem[] _particles;
-    
+
     private void OnEnable()
     {
         Instance = this;
