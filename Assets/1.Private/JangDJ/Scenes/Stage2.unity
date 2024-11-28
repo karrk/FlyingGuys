@@ -446,7 +446,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1159112474
 Transform:
@@ -138828,7 +138828,7 @@ GameObject:
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &7072532195518739538
 GameObject:
@@ -138847,7 +138847,7 @@ GameObject:
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &7072532195628910190
 GameObject:
@@ -138866,7 +138866,7 @@ GameObject:
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &7072532196088027271
 GameObject:
@@ -138885,7 +138885,7 @@ GameObject:
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &7130701060466583426
 MonoBehaviour:
@@ -139119,8 +139119,7 @@ MonoBehaviour:
   Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8334606517271333256}
+  ObservedComponents: []
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
