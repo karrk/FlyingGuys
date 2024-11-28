@@ -63,7 +63,7 @@ public class RPCDelegate : MonoBehaviourPun
         //    Vector3.down * 1f, Color.red, 5f);
     }
 
-    public void PlayStartFX(StageFXs component)
+    public void PlayStartFX()
     {
         photonView.RPC(nameof(PlayStartFXRPC), RpcTarget.All);
     }
@@ -71,6 +71,6 @@ public class RPCDelegate : MonoBehaviourPun
     [PunRPC]
     private void PlayStartFXRPC()
     {
-        
+        StartCoroutine(StageFXs.Instance.PlayStartFX());
     }
 }
