@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/0.Scenes/Public_Login.unity
+    guid: 2a2e53944bbbd6e4b897efa4cb4547d6
+  - enabled: 1
+    path: Assets/0.Scenes/Public_Menu.unity
+    guid: 4c295335f1a1b6d499cac70d1c10720e
+  - enabled: 1
+    path: Assets/0.Scenes/Public_Loading.unity
+    guid: 2a738f31c60641c40acf6fa8fe31724a
+  - enabled: 1
+    path: Assets/0.Scenes/Public_Game.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/0.Scenes/Public_Result.unity
+    guid: b908904aac9e05944a90eee6394aced2
+  - enabled: 1
     path: Assets/1.Private/ParkJS/Scenes/UIScene/UI_Start.unity
     guid: 93676d6e3e77d124aac7daf55b05e928
   - enabled: 1

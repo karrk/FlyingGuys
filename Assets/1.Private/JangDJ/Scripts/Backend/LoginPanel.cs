@@ -7,6 +7,7 @@ using UnityEngine;
 using WebSocketSharp;
 using Firebase.Database;
 using System.Threading.Tasks;
+using Photon.Pun;
 
 public class LoginPanel : MonoBehaviour
 {
@@ -284,7 +285,6 @@ public class LoginPanel : MonoBehaviour
     public void LoadNextScene()
     {
         _nickPanel.gameObject.SetActive(false);
-
-        // TODO 다음씬
+        PhotonNetwork.LoadLevel("Public_Menu");
     }
 }
