@@ -9,6 +9,7 @@ public class JumpStarter : MonoBehaviour, IStarter
     private const int REMAIN_GROUNDS = 2;
     private const float FALL_TIME_INTERVAL = 3f;
 
+    [SerializeField] private Animation _anim;
     [SerializeField] private List<JumpSpeed> _speeds;
 
     [SerializeField] private OBJ_Hurdle_Roller _r1;
@@ -30,6 +31,7 @@ public class JumpStarter : MonoBehaviour, IStarter
 
     private IEnumerator JumpStart()
     {
+        _anim.Play();
         yield return StageFXs.Instance.StartCountDown();
         NetWorkManager.IsPlay = true;
         StartCoroutine(StageFXs.Instance.StepPlayFX());
