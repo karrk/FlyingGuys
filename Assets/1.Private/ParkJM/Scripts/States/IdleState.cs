@@ -14,15 +14,11 @@ public class IdleState : PlayerState
     {
         Debug.Log("Idle 진입");
 
-        player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
-
-        //if (!player.photonView.IsMine)
-        //    return;
+        //player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
+        player.view.SetBoolParameter(E_AniParameters.Idling, true);
 
         player.rb.velocity = Vector3.zero;
         player.isJumpable = true;
-        //player.view.SetAnimationTrigger(E_PlayeState.Idle);  
-        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
@@ -53,23 +49,6 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Grabbed);
         }
-
-        //else
-        //{
-        //    //Debug.Log($"점프 안됨 리모트 인풋 : {RemoteInput.inputs[player.model.playerNumber].jumpInput}");
-        //    //Debug.Log($"player.isJumping : {player.isJumping}");
-        //}
-
-
-
-        // Todo : fall 상태 전환
-        //if(player.rb.velocity.y < 0)
-        //{
-
-        //}
-
-        //moveDir = RemoteInput.inputs[playerNumber].MoveDir;
-        //rotVec = RemoteInput.inputs[playerNumber].RotVec;
     }
 
     public override void FixedUpdate()
@@ -80,8 +59,8 @@ public class IdleState : PlayerState
     public override void Exit()
     {
         Debug.Log("Idle 종료");
-        player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
-        //player.view.SetBoolParameter(E_AniParameters.Idling, false);
+        //player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
+        player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }
 
 }

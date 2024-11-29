@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public RaycastHit chosenHit;
 
-    private float rayLength = 0.5f;
+    private float rayLength = 0.4f;
 
     public bool isGrounded;
     public bool isSlope;

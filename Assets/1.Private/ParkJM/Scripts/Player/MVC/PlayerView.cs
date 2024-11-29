@@ -22,9 +22,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         offsetY = 0;
         offsetZ = 42.5f;
     }
-
-        
-
     //private void Start()
     //{
     //    if(PhotonNetwork.IsMasterClient)
@@ -41,9 +38,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     //        animator.ResetTrigger(triggers);
     //    }
     //}
-    
-
-
 
     private int[] grabAnimationHashes = new int[]
     {
@@ -54,11 +48,9 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
 
     public void UpSpine()
     {
-        
         Vector3 chestDir = player.camTransform.forward;
         playerChestTr.LookAt(chestDir);
         playerChestTr.localRotation = Quaternion.Euler(offsetX, offsetY, offsetZ);
-
     }
 
     private int[] animationStateHashes = new int[]
@@ -81,6 +73,11 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     {
         photonView.RPC(nameof(SetBoolParameter_RPC), RpcTarget.All, _parameter, boolValue);
     }
+    public void SetBoolParameter(E_AniParameters _parameter, bool boolValue)
+    {
+        animator.SetBool(animationStateHashes[(int)_parameter], boolValue);
+    }
+
 
     [PunRPC]
     public void SetTriggerParameter_RPC(E_AniParameters _parameter)
@@ -93,21 +90,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     {
         animator.SetBool(animationStateHashes[(int)_parameter], boolValue);
     }
-
-
-
-    //public void SetAnimationTrigger(string tirggerName)
-    //{
-    //    animator.SetTrigger(tirggerName);
-    //}
-
-    public void SetBoolParameter(E_AniParameters _parameter, bool _bool)
-    {
-        animator.SetBool(animationStateHashes[(int)_parameter], _bool);
-    }
-
-
-
 
     public void SetBoolInGrabAnimation(int _animationIndex, bool playing)
     {
