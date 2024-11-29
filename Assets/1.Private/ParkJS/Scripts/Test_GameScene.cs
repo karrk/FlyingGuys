@@ -70,6 +70,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     // 플레이어 죽었을때 데드존 연동
     public void DeadPlayer(int id)
     {
+        Debug.Log(id);
+
         _idSet.Remove(id);
         int myId = PhotonNetwork.LocalPlayer.GetPlayerNumber();
 
@@ -98,7 +100,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     IEnumerator GoResultScene()
     {
         yield return new WaitForSeconds(1f);
-        PhotonNetwork.LoadLevel("UI_End");
+        PhotonNetwork.LoadLevel("Public_Result");
     }
 
     private void Awake()
@@ -168,11 +170,11 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if (changedProps.ContainsKey(CustomProperty.LOAD))
+        if (changedProps.ContainsKey(CustomProperty.LOAD) && load == false)
         {
             bool allLoad = CheckAllLoad();
             Debug.Log($"모든 플레이어 준비 : {allLoad}");
-            if (allLoad && PhotonNetwork.IsMasterClient && load == false)
+            if (allLoad && PhotonNetwork.IsMasterClient)
             {
                 load = true;
                 StartCoroutine(CountDownRoutine());
@@ -236,7 +238,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                 }
 
                 yield return new WaitForSeconds(1f);
-                PhotonNetwork.LoadLevel("UI_End");  // 결과 씬으로 이동
+                PhotonNetwork.LoadLevel("Public_Result");  // 결과 씬으로 이동
                 yield break;
             }
 

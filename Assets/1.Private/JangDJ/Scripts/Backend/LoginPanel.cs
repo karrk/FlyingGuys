@@ -62,16 +62,19 @@ public class LoginPanel : MonoBehaviour
                         switch (errorCode)
                         {
                             case AuthError.InvalidEmail:
-                                _error.ChangeText("유효하지 않은 이메일입니다");
+                                _error.ChangeText("잘못된 형식의 이메일입니다");
                                 break;
-
                             case AuthError.WrongPassword:
-                                _error.ChangeText("비밀번호를 확인해주세요");
+                                _error.ChangeText("올바른 비밀번호가 아닙니다");
+                                break;
+                            case AuthError.UserNotFound:
+                                _error.ChangeText("존재하지 않는 계정입니다");
+                                break;
+                            case AuthError.EmailAlreadyInUse:
+                                _error.ChangeText("이미 사용중인 계정입니다");
                                 break;
 
                             #region 에러코드
-                            case AuthError.EmailAlreadyInUse:
-                                break;
                             case AuthError.TooManyRequests:
                                 break;
                             case AuthError.Failure:
@@ -91,8 +94,6 @@ public class LoginPanel : MonoBehaviour
                             case AuthError.RequiresRecentLogin:
                                 break;
                             case AuthError.CredentialAlreadyInUse:
-                                break;
-                            case AuthError.UserNotFound:
                                 break;
                             case AuthError.ProviderAlreadyLinked:
                                 break;

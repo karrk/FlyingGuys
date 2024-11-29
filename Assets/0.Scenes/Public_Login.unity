@@ -3766,7 +3766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3244645115309909294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3835,6 +3835,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294342fcd7ebc594d935f4d2e8247320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ErrorText: {fileID: 0}
+  NickInputField: {fileID: 0}
+  EmailInputField: {fileID: 0}
 --- !u!114 &3244645115360266016
 MonoBehaviour:
   m_ObjectHideFlags: 0
