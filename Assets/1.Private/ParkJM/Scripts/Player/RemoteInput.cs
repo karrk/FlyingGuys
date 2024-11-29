@@ -46,7 +46,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
 
         InputMoving();
         InputJumpBuffer();
-        //InputJump();
         
         InputDiving();
         InputGrab();
@@ -66,17 +65,17 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         moveDir = (moveInput.z * camForward + moveInput.x * camRight).normalized;
     }
 
-    private bool preJumpInput = false;
-    private void InputJump()
-    {
-        bool curJumpInput = Input.GetButtonDown("Jump");
+    //private bool preJumpInput = false;
+    //private void InputJump()
+    //{
+    //    bool curJumpInput = Input.GetButtonDown("Jump");
 
-        if(curJumpInput != preJumpInput)
-        {
-            photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
-            preJumpInput = curJumpInput;
-        }
-    }
+    //    if(curJumpInput != preJumpInput)
+    //    {
+    //        photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
+    //        preJumpInput = curJumpInput;
+    //    }
+    //}
 
     private Queue<bool> jumpBuffer = new Queue<bool>(); // 현재 안씀
     private void InputJumpBuffer()
@@ -92,7 +91,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
         }
     }
-
 
     [PunRPC]
     private void Jump_RPC(int playerNum, bool isJumping)

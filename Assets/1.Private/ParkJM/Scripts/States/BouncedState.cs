@@ -44,19 +44,13 @@ public class BouncedState : PlayerState
         //{
         //    return;
         //}
-            
 
-
-    }
-
-    public override void FixedUpdate()
-    {
         if (bounceDelayCounter < bounceDelay)
         {
-            bounceDelayCounter += Time.fixedDeltaTime;
+            bounceDelayCounter += Time.deltaTime;
             return;
         }
-            
+
 
         //if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
         {
@@ -69,6 +63,31 @@ public class BouncedState : PlayerState
                 player.ChangeState(E_PlayeState.Fall);
             }
         }
+
+
+
+    }
+
+    public override void FixedUpdate()
+    {
+        //if (bounceDelayCounter < bounceDelay)
+        //{
+        //    bounceDelayCounter += Time.fixedDeltaTime;
+        //    return;
+        //}
+            
+
+        ////if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
+        //{
+        //    if (player.isGrounded)
+        //    {
+        //        player.ChangeState(E_PlayeState.Idle);
+        //    }
+        //    else
+        //    {
+        //        player.ChangeState(E_PlayeState.Fall);
+        //    }
+        //}
 
         //bounceDelayCounter += Time.fixedDeltaTime;
 

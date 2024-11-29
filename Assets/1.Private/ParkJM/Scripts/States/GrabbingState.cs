@@ -113,21 +113,6 @@ public class GrabbingState : PlayerState
         while (true)
         {
             GameObject detectedObject = player.CheckGrabPoint();
-            //if (detectedObject != null && detectedObject != grabbedObject)
-            //{
-            //    if(grabbedObject != null)
-            //    {
-            //        grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
-            //    }
-
-            //    grabbedObject = detectedObject;
-            //    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
-            //}
-            //else if (detectedObject == null)
-            //{
-            //    grabbedObject = detectedObject;
-            //}
-
 
             if (detectedObject != grabbedObject)
             {
@@ -164,7 +149,6 @@ public class GrabbingState : PlayerState
 
         Vector3 camForward = player.camTransform.forward;
         camForward.y = 0f;
-        //camForward.Normalize();
         Vector3 moveDir = player.moveDir;
 
         // 내적 계산 후 push인지 pull인지 결정

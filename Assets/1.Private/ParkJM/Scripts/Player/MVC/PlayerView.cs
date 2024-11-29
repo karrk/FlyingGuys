@@ -43,17 +43,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     //}
     
 
-    private int[] animationHashes = new int[]
-    {
-        Animator.StringToHash("Idle"),
-        Animator.StringToHash("Run"),
-        Animator.StringToHash("Jump"),
-        Animator.StringToHash("Fall"),
-        Animator.StringToHash("Dive"),
-        Animator.StringToHash("FallImpact"),
-        Animator.StringToHash("StandUp"),
-        Animator.StringToHash("Bounced")
-    };
+
 
     private int[] grabAnimationHashes = new int[]
     {
@@ -117,17 +107,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     }
 
 
-    public void PlayAnimation(int _animationIndex)
-    {
-        if (_animationIndex >= 0 && _animationIndex < animationHashes.Length)
-        {
-            animator.Play(animationHashes[_animationIndex], 0, 0);
-        }
-        else
-        {
-            Debug.LogError("애니메이션 인덱스 에러");
-        }
-    }
+
 
     public void SetBoolInGrabAnimation(int _animationIndex, bool playing)
     {
@@ -139,32 +119,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         return animator.GetBool(grabAnimationHashes[_animationIndex]);
     }
 
-
-    public void ToggleRun()
-    {
-        bool isRunning = animator.GetBool(animationHashes[(int)E_PlayeState.Run]);
-        animator.SetBool(animationHashes[(int)E_PlayeState.Run], !isRunning);
-    }
-
-    public void PlayRun()
-    {
-        animator.SetBool(animationHashes[(int)E_PlayeState.Run], true);
-    }
-
-    public void StopRun()
-    {
-        animator.SetBool(animationHashes[(int)E_PlayeState.Run], false);
-    }
-
-    public void PlayDive()
-    {
-        animator.SetBool(animationHashes[(int)E_PlayeState.Diving], true);
-    }
-
-    public void EndDive()
-    {
-        animator.SetBool(animationHashes[(int)E_PlayeState.Diving], false);
-    }
 
     public bool IsAnimationFinished()
     {
@@ -181,4 +135,54 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     {
         
     }
+
+    //private int[] animationHashes = new int[]
+    //{
+    //    Animator.StringToHash("Idle"),
+    //    Animator.StringToHash("Run"),
+    //    Animator.StringToHash("Jump"),
+    //    Animator.StringToHash("Fall"),
+    //    Animator.StringToHash("Dive"),
+    //    Animator.StringToHash("FallImpact"),
+    //    Animator.StringToHash("StandUp"),
+    //    Animator.StringToHash("Bounced")
+    //};
+
+    //public void PlayAnimation(int _animationIndex)
+    //{
+    //    if (_animationIndex >= 0 && _animationIndex < animationHashes.Length)
+    //    {
+    //        animator.Play(animationHashes[_animationIndex], 0, 0);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("애니메이션 인덱스 에러");
+    //    }
+    //}
+
+    //public void ToggleRun()
+    //{
+    //    bool isRunning = animator.GetBool(animationHashes[(int)E_PlayeState.Run]);
+    //    animator.SetBool(animationHashes[(int)E_PlayeState.Run], !isRunning);
+    //}
+
+    //public void PlayRun()
+    //{
+    //    animator.SetBool(animationHashes[(int)E_PlayeState.Run], true);
+    //}
+
+    //public void StopRun()
+    //{
+    //    animator.SetBool(animationHashes[(int)E_PlayeState.Run], false);
+    //}
+
+    //public void PlayDive()
+    //{
+    //    animator.SetBool(animationHashes[(int)E_PlayeState.Diving], true);
+    //}
+
+    //public void EndDive()
+    //{
+    //    animator.SetBool(animationHashes[(int)E_PlayeState.Diving], false);
+    //}
 }

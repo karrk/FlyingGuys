@@ -23,16 +23,20 @@ public class FallState : PlayerState
         {
             player.ChangeState(E_PlayeState.Diving);
         }
+        else if (player.isGrounded)
+        {
+            player.ChangeState(E_PlayeState.Idle);
+        }
 
         // Todo : 점핑 발판을 받았을 때 어떻게 할것인지 처리
     }
 
     public override void FixedUpdate()
     {
-        if (player.isGrounded)
-        {
-            player.ChangeState(E_PlayeState.Idle);
-        }
+        //if (player.isGrounded)
+        //{
+        //    player.ChangeState(E_PlayeState.Idle);
+        //}
     }
 
     public override void Exit()
