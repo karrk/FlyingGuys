@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 public class OBJ_Hurdle_Roller : MonoBehaviour
 {
     protected Rigidbody _rb;
-    [SerializeField] private float _speed;
+    [SerializeField] public float Speed;
     [SerializeField] protected Axis _axis;
     [SerializeField] private Transform _com;
     private ConfigurableJoint _joint;
@@ -58,6 +58,6 @@ public class OBJ_Hurdle_Roller : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        _rb.angularVelocity = _rotDir * _speed;
+        _rb.angularVelocity = _rotDir * Speed;
     }
 }

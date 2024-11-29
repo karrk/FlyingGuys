@@ -11,6 +11,9 @@ public class Char_Spawner : MonoBehaviour
 
     // 생성된 플레이어 게임 오브젝트 목록 // Player 컴포넌트를 받아오는게 좋을것같음
     public List<GameObject> SpawnedPlayers { get; private set; }
+    [SerializeField] private Transform _customPointer;
+
+    private Vector3[] _poses;
 
     private int _spawnNumber = 0;
 
@@ -22,9 +25,24 @@ public class Char_Spawner : MonoBehaviour
     private void Start()
     {
         SpawnedPlayers = new List<GameObject>();
-        _ranger.CalculateSize();
-        _ranger.SettingPlayerInfo(8);
-        _ranger.DrawCrossRay();
+
+        if(_customPointer == null)
+        {
+            _ranger.CalculateSize();
+            _ranger.SettingPlayerInfo(8);
+            _ranger.DrawCrossRay();
+        }
+        else
+        {
+            _ranger = null;
+            _poses = new Vector3[8];
+
+            for (int i = 0; i < _customPointer.childCount; i++)
+            {
+                _poses[i] = _customPointer.GetChild(i).position;
+            }
+        }
+
     }
 
     /// <summary>
@@ -33,7 +51,7 @@ public class Char_Spawner : MonoBehaviour
     public void SpawnCharacter(PhotonMessageInfo info)
     {
         GameObject newObj = PhotonNetwork.InstantiateRoomObject
-            ("Player", _ranger[_spawnNumber++],
+            ("Player", _ranger != null ? _ranger[_spawnNumber++] : _poses[_spawnNumber++],
             Quaternion.Euler(Camera.main.transform.forward), data: new object[] { info.Sender });
 
         SpawnedPlayers.Add(newObj);

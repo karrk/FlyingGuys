@@ -8,6 +8,7 @@ public class DeadZone : MonoBehaviour
 {
     [SerializeField] private bool _isRecoveryMode;
     [SerializeField] private Transform[] _recoverPoints;
+    public Test_GameScene _myScene;
     public Player player;
 
     //private void OnTriggerEnter(Collider other)
@@ -40,8 +41,9 @@ public class DeadZone : MonoBehaviour
                 {
                     DeadLogic(view.ViewID);
                     player = (Player)view.InstantiationData[0];
-                    Debug.Log(player);
                     player.SetLife(false);
+
+                    _myScene.DeadPlayer(other.GetComponent<PlayerModel>().playerNumber);
                 }
             }
         }
@@ -70,8 +72,8 @@ public class DeadZone : MonoBehaviour
         return _recoverPoints[idx].position;
     }
 
-    private void DeadLogic(int playerNumber)
+    private void DeadLogic(int characterViewID)
     {
-        RPCDelegate.Instance.DeadPlayer(playerNumber);
+        RPCDelegate.Instance.DeadPlayer(characterViewID);
     }
 }
