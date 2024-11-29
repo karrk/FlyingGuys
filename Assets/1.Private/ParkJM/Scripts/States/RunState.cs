@@ -7,15 +7,22 @@ public class RunState : PlayerState
     Vector3 targetVelocity;
     public RunState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.Run;
+        //animationIndex = (int)E_PlayeState.Run;
     }
 
     public override void Enter()
     {
         Debug.Log("Run 진입");
+        //player.view.SetBoolParameter(E_AniParameters.Running, true);
+
+        //player.view.BroadCastBoolParameter(E_AniParameters.Running, true);
+        player.view.SetBoolParameter(E_AniParameters.Running, true);
+
+
+
         //player.view.SetAnimationBoolTrue(E_PlayeState.Run);
         //player.view.PlayRun();
-        player.view.PlayAnimation(animationIndex);
+        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
@@ -58,6 +65,13 @@ public class RunState : PlayerState
     public override void Exit()
     {
         Debug.Log("Run 종료");
+
+        //player.view.BroadCastBoolParameter(E_AniParameters.Running, false);
+        player.view.SetBoolParameter(E_AniParameters.Running, false);
+
+
+
+        //player.view.SetBoolParameter(E_AniParameters.Running, false);
         //player.view.SetAnimationBoolFalse(E_PlayeState.Run);
         //player.view.StopRun();
         targetVelocity = Vector3.zero;

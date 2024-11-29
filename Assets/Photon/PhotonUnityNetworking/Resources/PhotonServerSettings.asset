@@ -61,6 +61,11 @@ MonoBehaviour:
   - Shot
   - PlayStartFXRPC
   - HideText
+  - SetTriggerParameter_RPC
+  - BroadCastTriggerParameter_RPC
+  - ResetAllTriggers_RPC
+  - SetParameter_RPC
+  - SetBoolParameter_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

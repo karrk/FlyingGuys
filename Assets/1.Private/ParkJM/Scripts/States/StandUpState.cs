@@ -6,25 +6,27 @@ public class StandUpState : PlayerState
 {
     public StandUpState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.StandUp;
+        //animationIndex = (int)E_PlayeState.StandUp;
     }
 
     public override void Enter()
     {
         Debug.Log("StandUp 진입");
-        player.view.PlayAnimation(animationIndex);
+        player.view.BroadCastTriggerParameter(E_AniParameters.StandingUp);
+        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
     {
         if (!player.view.IsAnimationFinished())
             return;
-        if(player.isGrounded)
+        //if(player.isGrounded)
             player.ChangeState(E_PlayeState.Idle);
     }
 
     public override void Exit()
     {
+
         Debug.Log("StandUp 퇴거");
     }
 }

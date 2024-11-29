@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public RaycastHit chosenHit;
 
-    private float rayLength = 0.5f;
+    private float rayLength = 0.4f;
 
     public bool isGrounded;
     public bool isSlope;
@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         HandleMoveInputs();
         ControlJumpBuffer();
+
 
         states[(int)curState].Update();
 
@@ -218,14 +219,21 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public void HandleMoveInputs()
     {
+        //if (!photonView.IsMine)
+        //    return;
+
         moveDir = RemoteInput.inputs[model.playerNumber].MoveDir;
     }
 
     private void ControlJumpBuffer()
     {
+        //if (!photonView.IsMine)
+        //    return;
+
         //점프 인풋이 들어왔으면
         if (RemoteInput.inputs[model.playerNumber].jumpInput)
         {
+            Debug.Log("점프 인풋 들어옴");
             jumpBufferCounter = jumpBufferTime;
         }
         else
@@ -291,6 +299,24 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
             Debug.Log("grabbable 오브젝트 잡음");
             grabbableObject.OnGrabbedEnter();
             return grabbedColliders[0].gameObject;
+        }
+
+        return null;
+    }
+
+    // 전체 다 잡기
+    public GameObject CheckGrabPointAll()
+    {
+        Collider[] grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
+
+        foreach (Collider col in grabbedColliders)
+        {
+            IGrabbable grabbableObject = col.GetComponent<IGrabbable>();
+            if (grabbableObject != null)
+            {
+                grabbableObject.OnGrabbedEnter();
+                return col.gameObject;
+            }
         }
 
         return null;

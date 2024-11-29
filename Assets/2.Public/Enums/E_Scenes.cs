@@ -28,3 +28,19 @@ public enum E_PlayeState
     Grabbed,
     Size
 }
+
+public enum E_AniParameters
+{
+    Idling, // bool
+    Running, // bool
+    Jumping,
+    Falling,
+    Diving,
+    FallingImpact,
+    StandingUp,
+    Bouncing,
+    Pushing, // bool
+    Pulling, // bool
+    Struggling, // bool
+    Size
+}

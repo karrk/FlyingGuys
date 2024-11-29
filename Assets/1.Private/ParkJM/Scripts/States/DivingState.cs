@@ -6,20 +6,13 @@ public class DivingState : PlayerState
 {
     public DivingState(PlayerController player) : base(player)
     {
-        animationIndex = (int)E_PlayeState.Diving;
+        //animationIndex = (int)E_PlayeState.Diving;
     }
 
     public override void Enter()
     {
         Debug.Log("Diving 진입");
-        //player.view.SetAnimationTrigger(E_PlayeState.Diving);
-        player.view.PlayAnimation(animationIndex);
-        // player.isDiving = true;
-
-        // Todo : 다이빙 구현
-        // 점프를 하지않고도 다이빙을 할 수 있음
-        // 기본적으로 y축으로도 힘을 가해줘야함
-        // 이동 방향이 있었을 경우 그쪽으로도 약간의 힘을 가해주어야 함
+        player.view.BroadCastTriggerParameter(E_AniParameters.Diving);
 
         //Vector3 diveSpeed = player.moveDir * player.model.divingForce;
         //diveSpeed.y = 5.0f; // 임시 y축 힘
@@ -50,8 +43,8 @@ public class DivingState : PlayerState
     {
         // Todo : 다이빙 애니메이션이 끝나면 Fall로 전환
 
-        //if (!player.view.IsAnimationFinished()) // 없는편이 더 자연스럽다
-        //    return;
+        if (!player.view.IsAnimationFinished()) // 없는편이 더 자연스럽다
+            return;
 
         if (player.isGrounded) // player.rb.velocity.y  < 0.1f ||
         {

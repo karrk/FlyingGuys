@@ -617,6 +617,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6061134214172827285}
   - {fileID: 7260444563137328551}
+  - {fileID: 5212827164425966037}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -627,7 +628,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5524819013048835332}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 
@@ -636,13 +637,37 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
+    SynchronizeType: 2
+    Name: Idling
+  - Type: 4
+    SynchronizeType: 2
+    Name: Running
+  - Type: 9
     SynchronizeType: 0
+    Name: Jumping
+  - Type: 9
+    SynchronizeType: 0
+    Name: Falling
+  - Type: 9
+    SynchronizeType: 0
+    Name: Diving
+  - Type: 9
+    SynchronizeType: 0
+    Name: FallingImpact
+  - Type: 9
+    SynchronizeType: 0
+    Name: Bouncing
+  - Type: 9
+    SynchronizeType: 0
+    Name: StandingUp
+  - Type: 4
+    SynchronizeType: 2
     Name: Pulling
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Pushing
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Struggling
   m_SynchronizeLayers:
   - SynchronizeType: 2
