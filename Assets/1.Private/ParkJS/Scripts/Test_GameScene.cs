@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
+public class Test_GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] bool inGamePlay;
     [SerializeField] Char_Spawner charSpawner;
@@ -16,10 +17,89 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] OBJ_Crown crown;
     [SerializeField] DeadZone deadZone;
 
-    [SerializeField] private bool alone;
+    private bool load;
     private int count;
     private Image winImage;
     private Image loseImage;
+
+    private HashSet<int> _idSet = new HashSet<int>();
+
+    // 이벤트 등록
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PlayerNumbering.OnPlayerNumberingChanged += PlayerNumbering_OnPlayerNumberingChanged;
+    }
+
+    // 이벤트 해제
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerNumbering.OnPlayerNumberingChanged -= PlayerNumbering_OnPlayerNumberingChanged;
+    }
+
+    // 연동 메서드
+    private void PlayerNumbering_OnPlayerNumberingChanged()
+    {
+        bool check = FindMinusOne();
+
+        if (check == false)
+            return;
+
+        foreach (var item in PhotonNetwork.CurrentRoom.Players)
+        {
+            int id = item.Value.GetPlayerNumber();
+
+            if (_idSet.Contains(id) == false)
+                _idSet.Add(id);
+        }
+    }
+
+    // 넘버링 -1 확인
+    private bool FindMinusOne()
+    {
+        foreach (var item in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (item.Value.GetPlayerNumber() == -1)
+                return false;
+        }
+
+        return true;
+    }
+
+    // 플레이어 죽었을때 데드존 연동
+    public void DeadPlayer(int id)
+    {
+        _idSet.Remove(id);
+        int myId = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
+        if (myId == id)
+            WinOrLose(false);
+        else if (_idSet.Count <= 1)
+        {
+            if (_idSet.Contains(myId))
+            {
+                WinOrLose(true);
+                PhotonNetwork.LocalPlayer.SetWinner(true);
+            }
+
+            if (PhotonNetwork.IsMasterClient == true)
+            {
+                StartCoroutine(GoResultScene());
+            }
+
+            // 요놈의 프로퍼티에 win ??? 등록시키고
+            // 마스터한테 씬넘겨달라 요청하고 
+
+            // 마스터가 씬전환시키고 결과가 나올까 입니다.
+        }
+    }
+
+    IEnumerator GoResultScene()
+    {
+        yield return new WaitForSeconds(1f);
+        PhotonNetwork.LoadLevel("UI_End");
+    }
 
     private void Awake()
     {
@@ -40,7 +120,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         countText.text = null;
-
         if (inGamePlay) // 내일 주석 예정
         {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -70,9 +149,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         // 모든 클라이언트가 실행 하는 곳
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
+        PhotonNetwork.LocalPlayer.SetWinner(false);
         PhotonNetwork.LocalPlayer.SetLoad(true);
         PhotonNetwork.LocalPlayer.SetLife(true);
-        PhotonNetwork.LocalPlayer.SetWinner(false);
         StartCoroutine(ClearRoutine());
 
         if (PhotonNetwork.IsMasterClient == false)
@@ -85,7 +164,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
     private void PlayerSpawn(PhotonMessageInfo info)
     {
         charSpawner.SpawnCharacter(info);
-        //NetWorkManager.Instance.PlayerList.Add(info.Sender);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -94,11 +172,18 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             bool allLoad = CheckAllLoad();
             Debug.Log($"모든 플레이어 준비 : {allLoad}");
-            if (allLoad && PhotonNetwork.IsMasterClient)
+            if (allLoad && PhotonNetwork.IsMasterClient && load == false)
             {
+                load = true;
                 StartCoroutine(CountDownRoutine());
             }
         }
+
+        if(changedProps.ContainsKey(CustomProperty.LIFE))
+        {
+            
+        }
+
     }
 
     private bool CheckAllLoad()
@@ -119,7 +204,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(1f);
 
         RPCDelegate.Instance.PlayStartFX();
-
         //for (int i = 3; i >= 0; i--)
         //{
         //    photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
@@ -128,24 +212,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
         ////NetWorkManager.IsPlay = true;
         //photonView.RPC(nameof(HideText), RpcTarget.All, false);
-    }
-
-    [PunRPC]
-    private void ShowCount(int count)
-    {
-        if (count <= 0)
-        {
-            countText.text = "Go!";
-            return;
-        }
-
-        countText.text = count.ToString();
-    }
-
-    [PunRPC]
-    private void HideText(bool result)
-    {
-        countText.gameObject.SetActive(result);
     }
 
     IEnumerator ClearRoutine()
@@ -160,15 +226,13 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
                     // TODO : 승리 연출
                     Debug.Log("승리");
                     PhotonNetwork.LocalPlayer.SetWinner(true);
-                    winUI.SetActive(true);
-                    ShowImage(winImage);
+                    WinOrLose(true);
                 }
                 else
                 {
                     // TODO : 패배 연출
                     Debug.Log("패배");
-                    loseUI.SetActive(true);
-                    ShowImage(loseImage);
+                    WinOrLose(false);
                 }
 
                 yield return new WaitForSeconds(1f);
@@ -182,40 +246,29 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
 
         while (deadZone != null)
         {
-            alone = NetWorkManager.IsAlone;
-
-            if (PhotonNetwork.CurrentRoom.Players.Count != PhotonNetwork.CurrentRoom.MaxPlayers)
+            if (PhotonNetwork.CurrentRoom.Players.Count != PhotonNetwork.CurrentRoom.MaxPlayers || !PhotonNetwork.IsConnected)
             {
                 yield return null;
                 continue;
             }
 
-            if (deadZone.player == PhotonNetwork.LocalPlayer)
-            {
-                Debug.Log("패배");
-                Debug.Log(deadZone.player);
-            }
-            //else if (NetWorkManager.IsAlone)
-            //{
-            //    Debug.Log("승리");
-            //}
-            else
-            {
-                foreach (Player player in PhotonNetwork.PlayerList)
-                {
-                    if (player.GetLife())
-                    {
-                        count++;
-                    }
-                }
-
-                if (count <= 1)
-                    Debug.Log("확인용");
-                else
-                    count = 0;
-            }
-
             yield return null;
+        }
+    }
+
+    private void WinOrLose(bool result)
+    {
+        if(result)
+        {
+            // Win
+            winUI.SetActive(true);
+            ShowImage(winImage);
+        }
+        else
+        {
+            // Lose
+            loseUI.SetActive(true);
+            ShowImage(loseImage);
         }
     }
 
@@ -226,13 +279,5 @@ public class Test_GameScene : MonoBehaviourPunCallbacks, IPunObservable
         {
             iamge.fillAmount += 2f * Time.deltaTime;
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Util.SendAndReceiveStruct(stream, ref count);
-        Debug.Log($"전달되는 값 : {count}");
-        Util.SendAndReceiveStruct(stream, ref alone);
-        Debug.Log($"전달되는 값 : {alone}");
     }
 }
