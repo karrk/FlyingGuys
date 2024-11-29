@@ -8,6 +8,6 @@ public class UI_UserDataPanel : MonoBehaviour
 
     private void Start()
     {
-        userNameText.text = PhotonNetwork.LocalPlayer.NickName;
+        userNameText.text = BackendManager.Auth.CurrentUser.DisplayName;
     }
 }

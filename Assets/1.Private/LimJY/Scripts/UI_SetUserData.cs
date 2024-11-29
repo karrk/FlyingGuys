@@ -108,7 +108,8 @@ public class UI_SetUserData : MonoBehaviour
                 else
                 {
                     dic[snap.Child(curEmail).Key] = email;
-                    curUser.SendEmailVerificationBeforeUpdatingEmailAsync(email);
+                    //curUser.SendEmailVerificationBeforeUpdatingEmailAsync(email);
+                    curUser.UpdateEmailAsync(email);
                 }
 
 
