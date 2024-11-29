@@ -17,13 +17,10 @@ public class LoginPanel : MonoBehaviour
 
     [SerializeField] private NicknamePanel _nickPanel;
 
-    private bool IsError;
-
 
     private void OnEnable()
     {
         _email.onEndEdit.AddListener(CheckEmailpattern);
-        IsError = _error.gameObject.activeSelf;
     }
 
     private void OnDisable()
@@ -41,7 +38,6 @@ public class LoginPanel : MonoBehaviour
         else if (!text.Contains('.') || !text.Contains('@'))
         {
             _email.text = "";
-            if (IsError != true) _error.gameObject.SetActive(true);
             _error.ChangeText("올바른 이메일을 입력해주세요");
         }
     }
@@ -66,12 +62,10 @@ public class LoginPanel : MonoBehaviour
                         switch (errorCode)
                         {
                             case AuthError.InvalidEmail:
-                                if (IsError != true) _error.gameObject.SetActive(true);
                                 _error.ChangeText("유효하지 않은 이메일입니다");
                                 break;
 
                             case AuthError.WrongPassword:
-                                if (IsError != true) _error.gameObject.SetActive(true);
                                 _error.ChangeText("비밀번호를 확인해주세요");
                                 break;
 
@@ -260,26 +254,14 @@ public class LoginPanel : MonoBehaviour
 
             DataSnapshot snapshot = task.Result;
 
-            if(snapshot.HasChild(uid) == false)
-            {
-                Debug.Log("신규 가입자");
-
-                _nickPanel.gameObject.SetActive(true);
-                _nickPanel.RegistedEmail = _email.text;
-                _nickPanel.LoginPanel = this;
-
-                return;
-            }
-            else
+            if(snapshot.HasChild(uid) == true)
             {
                 isUsing = (bool)snapshot.Child(uid).Child("used").Value;
 
                 if (isUsing == true)
                 {
-                    if (IsError != true) _error.gameObject.SetActive(true);
                     _error.ChangeText("사용중인 계정입니다");
                 }
-
                 else
                 {
                     BackendManager.Instance.ConvertUseState(true);
@@ -292,7 +274,6 @@ public class LoginPanel : MonoBehaviour
 
     public void LoadNextScene()
     {
-        _nickPanel.gameObject.SetActive(false);
         PhotonNetwork.LoadLevel("Public_Menu");
     }
 }
