@@ -10,6 +10,7 @@ public static class CustomProperty
     public const string READY = "Ready";
     public const string WINNER = "Winner";
     public const string LIFE = "Life";
+    public const string COLOR = "Color";
 
     private static PhotonHashtable customProperty = new PhotonHashtable();
 
@@ -79,5 +80,22 @@ public static class CustomProperty
         }
         else
             return false;
+    }
+
+    public static void SetColor(this Player player, Color mat)
+    {
+        customProperty[COLOR] = mat;
+        player.SetCustomProperties(customProperty);
+    }
+
+    public static Color GetColor(this Player player)
+    {
+        PhotonHashtable customProperty = player.CustomProperties;
+        if (customProperty.ContainsKey(COLOR))
+        {
+            return (Color)customProperty[COLOR];
+        }
+        else
+            return Color.white;
     }
 }

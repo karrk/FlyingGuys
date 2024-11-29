@@ -16,14 +16,9 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     private bool isTriggerCrown;
     public static bool IsTriggerCrown { get { return Instance.isTriggerCrown; } set { Instance.isTriggerCrown = value; } }
 
-    public static bool IsAlone { get { return Instance.PlayerList.Count <= 1; } }
-
     // 백엔드 생성전 이름 저장 공간
     private string nickName;
     public static string NickName { get { return Instance.nickName; } set { Instance.nickName = value; } }
-
-    private List<Player> playerList = new List<Player>();
-    public List<Player> PlayerList { get { return playerList; } set { playerList = value; } }
 
     public void Init()
     {
