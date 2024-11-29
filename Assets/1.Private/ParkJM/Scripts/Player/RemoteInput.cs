@@ -45,9 +45,8 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         //    return;
 
         InputMoving();
-        InputJumpBuffer();
-        
-        InputDiving();
+        InputJump();
+        InputDive();
         InputGrab();
     }
 
@@ -77,17 +76,17 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     //    }
     //}
 
-    private Queue<bool> jumpBuffer = new Queue<bool>(); // 현재 안씀
-    private void InputJumpBuffer()
+    //private Queue<bool> jumpBuffer = new Queue<bool>(); // 현재 안씀
+    private void InputJump()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            jumpBuffer.Enqueue(true);
+            //jumpBuffer.Enqueue(true);
             photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, true);
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            jumpBuffer.Enqueue(false);
+            //jumpBuffer.Enqueue(false);
             photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, false);
         }
     }
@@ -108,26 +107,24 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         }
     }
 
-    // 여기서부터 입력 바꿔야함 현재 임시
-
-    private void InputDiving()
+    private void InputDive()
     {
         if(Input.GetButtonDown("Diving"))
         {
-            photonView.RPC(nameof(Diving_RPC), RpcTarget.MasterClient, playerNumber);
+            photonView.RPC(nameof(Diving_RPC), RpcTarget.MasterClient, playerNumber, true);
         }
-        else
+        else if(Input.GetButtonUp("Diving"))
         {
-            inputs[playerNumber].divingInput = false;
+            photonView.RPC(nameof(Diving_RPC), RpcTarget.MasterClient, playerNumber, false);
         }
     }
 
     [PunRPC]
-    private void Diving_RPC(int playerNum) 
+    private void Diving_RPC(int playerNum, bool isDiving) 
     {
         if (inputs[playerNum] != null)
         {
-            inputs[playerNum].divingInput = true;
+            inputs[playerNum].divingInput = isDiving;
         }
     }
     
@@ -135,21 +132,20 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     {
         if(Input.GetButtonDown("Grab"))
         {
-            Debug.Log("그랩 버튼눌림");
-            photonView.RPC(nameof(Grab_RPC), RpcTarget.MasterClient, playerNumber);
+            photonView.RPC(nameof(Grab_RPC), RpcTarget.MasterClient, playerNumber, true);
         }
-        else
+        else if(Input.GetButtonUp("Grab"))
         {
-            inputs[playerNumber].grabInput = false;
+            photonView.RPC(nameof(Grab_RPC), RpcTarget.MasterClient, playerNumber, false);
         }
     }
 
     [PunRPC]
-    private void Grab_RPC(int playerNum)
+    private void Grab_RPC(int playerNum, bool isGrabbing)
     {
         if(inputs[playerNum] != null)
         {
-            inputs[playerNum].grabInput = true;
+            inputs[playerNum].grabInput = isGrabbing;
         }
     }
 
