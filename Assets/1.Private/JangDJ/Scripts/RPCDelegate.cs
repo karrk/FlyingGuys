@@ -1,5 +1,4 @@
 using Photon.Pun;
-using System.Collections.Specialized;
 using UnityEngine;
 
 public class RPCDelegate : MonoBehaviourPun
@@ -32,7 +31,7 @@ public class RPCDelegate : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
-        photonView.RPC(nameof(DeadPlayerRPC), RpcTarget.All, viewId);
+        photonView.RPC(nameof(DeadPlayerRPC), RpcTarget.MasterClient, viewId);
     }
 
     [PunRPC]
@@ -58,9 +57,6 @@ public class RPCDelegate : MonoBehaviourPun
         {
             Destroy(hit.collider.gameObject);
         }
-
-        //Debug.DrawRay(targetpos + Vector3.up * upOffset,
-        //    Vector3.down * 1f, Color.red, 5f);
     }
 
     public void PlayStartFX()

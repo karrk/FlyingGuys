@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class DropFloor : MonoBehaviour
 {
-    private const float TIMESEC = 0.1f;
+    public const float TIMESEC = 0.1f;
 
-    private static float MAX_SHAKE_POWER = 0.075f;
-    private static float SHAKE_TIME = 1.5f;
+    public static float MAX_SHAKE_POWER = 0.075f;
+    public static float SHAKE_TIME = 1.5f;
 
-    private static WaitForSeconds TimeSec = new WaitForSeconds(TIMESEC);
+    public static WaitForSeconds TimeSec = new WaitForSeconds(TIMESEC);
 
     private Vector3 _initPos;
     private Vector3 _tempVec;

@@ -17,6 +17,22 @@ public class StageFXs : MonoBehaviour
     [SerializeField] private Sprite _go;
 
     [SerializeField] private Vector3 _startSize;
+    
+    public MonoBehaviour _starterMono;
+    private IStarter _starter;
+
+    private void OnValidate()
+    {
+        if (_starterMono is IStarter)
+        {
+            _starter = (IStarter)_starterMono;
+        }
+        else
+        {
+            _starter = null;
+            _starterMono = null;
+        }
+    }
 
     private void OnEnable()
     {
@@ -25,13 +41,22 @@ public class StageFXs : MonoBehaviour
 
     public IEnumerator PlayStartFX()
     {
-        yield return StartCountDown();
-        NetWorkManager.IsPlay = true;
-        StartCoroutine(StepPlayFX());
-        StartCoroutine(Shutdown());
+        if(_starter == null)
+        {
+            yield return StartCountDown();
+            NetWorkManager.IsPlay = true;
+            StartCoroutine(StepPlayFX());
+        }
+        else
+        {
+            _starter.StartStage();
+        }
     }
 
-    private IEnumerator StepPlayFX()
+    /// <summary>
+    /// StageFX 에 달린 파티클 재생로직
+    /// </summary>
+    public IEnumerator StepPlayFX()
     {
         if(_stepPoints == null || _stepPoints.Length <= 0)
         {
@@ -59,7 +84,10 @@ public class StageFXs : MonoBehaviour
         }
     }
 
-    private IEnumerator StartCountDown()
+    /// <summary>
+    /// 이미지를 활용한 카운트다운 코루틴
+    /// </summary>
+    public IEnumerator StartCountDown()
     {
         _countDown.gameObject.SetActive(true);
 
@@ -74,6 +102,7 @@ public class StageFXs : MonoBehaviour
         yield return new WaitForSeconds(1);
         _countDown.sprite = _go;
         StartCoroutine(PunchImage());
+        StartCoroutine(Shutdown());
     }
 
     private IEnumerator Shutdown()

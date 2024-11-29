@@ -5778,6 +5778,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
+      propertyPath: Speed
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
       propertyPath: _speed
       value: -11
       objectReference: {fileID: 0}
@@ -6913,6 +6918,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
+      propertyPath: Speed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
       propertyPath: _speed
       value: 3
       objectReference: {fileID: 0}
@@ -7698,6 +7708,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245308308532583013, guid: c54f6f27f1143cf4f8f55f276700c4ce,
         type: 3}
+      propertyPath: Speed
+      value: -3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245308308532583013, guid: c54f6f27f1143cf4f8f55f276700c4ce,
+        type: 3}
       propertyPath: _speed
       value: -1
       objectReference: {fileID: 0}
@@ -8300,6 +8315,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -8.723
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245308308532583013, guid: c54f6f27f1143cf4f8f55f276700c4ce,
+        type: 3}
+      propertyPath: Speed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8245308308532583013, guid: c54f6f27f1143cf4f8f55f276700c4ce,
         type: 3}
@@ -9268,6 +9288,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5990808081329391729, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
         type: 3}
+      propertyPath: Speed
+      value: -12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990808081329391729, guid: 2ea2b73cdb8e79b4ea4e729984f9df28,
+        type: 3}
       propertyPath: _speed
       value: -8
       objectReference: {fileID: 0}
@@ -10185,6 +10210,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blue1Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 769926046105963557, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
+        type: 3}
+      propertyPath: Speed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 769926046105963557, guid: 79af1d8af3a5d294090b3b6cad5ab33c,
         type: 3}
@@ -11398,6 +11428,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 316074179686363859, guid: 0b6b4064c88653a4bb154fa18237c261,
         type: 3}
+      propertyPath: Speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 316074179686363859, guid: 0b6b4064c88653a4bb154fa18237c261,
+        type: 3}
       propertyPath: _speed
       value: 1.5
       objectReference: {fileID: 0}
@@ -12030,6 +12065,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PinkHorizonHammer (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
+      propertyPath: Speed
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
@@ -14463,6 +14503,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
+      propertyPath: Speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
       propertyPath: _speed
       value: -5
       objectReference: {fileID: 0}
@@ -15583,6 +15628,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
+      propertyPath: Speed
+      value: 7.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
       propertyPath: _speed
       value: 2.5
       objectReference: {fileID: 0}
@@ -16628,6 +16678,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
+      propertyPath: Speed
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
       propertyPath: _speed
       value: -2.5
       objectReference: {fileID: 0}
@@ -17040,6 +17095,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PinkHorizonHammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
+        type: 3}
+      propertyPath: Speed
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8251426453583679059, guid: a8fcf9b0dc247294cb4d03c1e696406d,
         type: 3}
