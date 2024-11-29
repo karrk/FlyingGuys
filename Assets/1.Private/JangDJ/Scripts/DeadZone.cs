@@ -43,7 +43,7 @@ public class DeadZone : MonoBehaviour
                     player = (Player)view.InstantiationData[0];
                     player.SetLife(false);
 
-                    _myScene.DeadPlayer(other.GetComponent<PlayerController>().ID);
+                    _myScene.DeadPlayer(other.GetComponent<PlayerModel>().playerNumber);
                 }
             }
         }
