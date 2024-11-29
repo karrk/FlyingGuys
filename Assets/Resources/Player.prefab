@@ -661,13 +661,13 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: StandingUp
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Pulling
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Pushing
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Struggling
   m_SynchronizeLayers:
   - SynchronizeType: 2

@@ -304,6 +304,24 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         return null;
     }
 
+    // 전체 다 잡기
+    public GameObject CheckGrabPointAll()
+    {
+        Collider[] grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
+
+        foreach (Collider col in grabbedColliders)
+        {
+            IGrabbable grabbableObject = col.GetComponent<IGrabbable>();
+            if (grabbableObject != null)
+            {
+                grabbableObject.OnGrabbedEnter();
+                return col.gameObject;
+            }
+        }
+
+        return null;
+    }
+
 
     private void OnDrawGizmos()
     {

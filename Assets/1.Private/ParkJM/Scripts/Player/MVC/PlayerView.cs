@@ -62,7 +62,10 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         Animator.StringToHash("Diving"),
         Animator.StringToHash("FallingImpact"),
         Animator.StringToHash("StandingUp"),
-        Animator.StringToHash("Bouncing")
+        Animator.StringToHash("Bouncing"),
+        Animator.StringToHash("Pulling"),
+        Animator.StringToHash("Pushing"),
+        Animator.StringToHash("Struggling"),
     };
 
     public void BroadCastTriggerParameter(E_AniParameters _parameter)
@@ -96,11 +99,10 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         animator.SetBool(grabAnimationHashes[_animationIndex], playing);
     }
 
-    public bool GetBoolInGrabAnimation(int _animationIndex)
+    public bool GetBoolParameter(E_AniParameters _parameter)
     {
-        return animator.GetBool(grabAnimationHashes[_animationIndex]);
+        return animator.GetBool(animationStateHashes[(int)_parameter]);
     }
-
 
     public bool IsAnimationFinished()
     {

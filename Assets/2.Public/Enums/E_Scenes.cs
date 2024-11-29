@@ -39,5 +39,8 @@ public enum E_AniParameters
     FallingImpact,
     StandingUp,
     Bouncing,
+    Pushing, // bool
+    Pulling, // bool
+    Struggling, // bool
     Size
 }
