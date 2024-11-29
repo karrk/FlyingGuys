@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviourPun
+public class PlayerView : MonoBehaviourPun, IPunObservable
 {
     PlayerController player;
     [HideInInspector] public AnimatorStateInfo stateInfo;
@@ -22,6 +22,26 @@ public class PlayerView : MonoBehaviourPun
         offsetY = 0;
         offsetZ = 42.5f;
     }
+
+        
+
+    //private void Start()
+    //{
+    //    if(PhotonNetwork.IsMasterClient)
+    //    {
+    //        photonView.RPC(nameof(ResetAllTriggers_RPC), RpcTarget.AllBuffered);
+    //    }
+    //}
+
+    //[PunRPC]
+    //private void ResetAllTriggers_RPC()
+    //{
+    //    foreach (int triggers in animationStateHashes)
+    //    {
+    //        animator.ResetTrigger(triggers);
+    //    }
+    //}
+    
 
     private int[] animationHashes = new int[]
     {
@@ -63,10 +83,28 @@ public class PlayerView : MonoBehaviourPun
         Animator.StringToHash("Bouncing")
     };
 
-    public void SetTriggerParameter(E_AniParameters _parameter)
+    public void BroadCastTriggerParameter(E_AniParameters _parameter)
+    {
+        photonView.RPC(nameof(SetTriggerParameter_RPC), RpcTarget.All, _parameter);
+    }
+    public void BroadCastBoolParameter(E_AniParameters _parameter, bool boolValue)
+    {
+        photonView.RPC(nameof(SetBoolParameter_RPC), RpcTarget.All, _parameter, boolValue);
+    }
+
+    [PunRPC]
+    public void SetTriggerParameter_RPC(E_AniParameters _parameter)
     {
         animator.SetTrigger(animationStateHashes[(int)_parameter]);
     }
+
+    [PunRPC]
+    public void SetBoolParameter_RPC(E_AniParameters _parameter, bool boolValue)
+    {
+        animator.SetBool(animationStateHashes[(int)_parameter], boolValue);
+    }
+
+
 
     //public void SetAnimationTrigger(string tirggerName)
     //{
@@ -139,4 +177,8 @@ public class PlayerView : MonoBehaviourPun
             return false;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+    }
 }

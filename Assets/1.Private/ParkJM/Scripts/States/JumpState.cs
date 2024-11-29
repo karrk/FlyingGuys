@@ -12,14 +12,11 @@ public class JumpState : PlayerState
     public override void Enter()
     {
         Debug.Log("Jump 진입");
-        player.view.SetTriggerParameter(E_AniParameters.Jumping);
+        player.view.BroadCastTriggerParameter(E_AniParameters.Jumping);
         //player.view.SetAnimationTrigger(E_PlayeState.Jump);
         //player.view.PlayAnimation(animationIndex);
 
         Jump();
-
-
-
     }
 
     public override void Update()
@@ -33,6 +30,12 @@ public class JumpState : PlayerState
         else if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
             player.ChangeState(E_PlayeState.Diving);
+        }
+
+        //else if(player.isGrounded)
+        {
+            // 추가됨, 활성화하면 슈퍼점프 버그
+            //player.ChangeState(E_PlayeState.Idle);
         }
 
         //Debug.Log($"점프 velocity: {player.rb.velocity.y}");

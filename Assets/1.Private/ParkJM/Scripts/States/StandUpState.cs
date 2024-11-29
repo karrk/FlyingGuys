@@ -12,7 +12,7 @@ public class StandUpState : PlayerState
     public override void Enter()
     {
         Debug.Log("StandUp 진입");
-        player.view.SetTriggerParameter(E_AniParameters.StandingUp);
+        player.view.BroadCastTriggerParameter(E_AniParameters.StandingUp);
         //player.view.PlayAnimation(animationIndex);
     }
 
@@ -20,12 +20,13 @@ public class StandUpState : PlayerState
     {
         if (!player.view.IsAnimationFinished())
             return;
-        if(player.isGrounded)
+        //if(player.isGrounded)
             player.ChangeState(E_PlayeState.Idle);
     }
 
     public override void Exit()
     {
+
         Debug.Log("StandUp 퇴거");
     }
 }

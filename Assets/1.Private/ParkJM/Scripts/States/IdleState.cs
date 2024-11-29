@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,13 @@ public class IdleState : PlayerState
     {
         Debug.Log("Idle 진입");
 
-        player.view.SetBoolParameter(E_AniParameters.Idling, true);
+        player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
 
+        //if (!player.photonView.IsMine)
+        //    return;
 
         player.rb.velocity = Vector3.zero;
-        player.isJumpable = true; // 임시, spawn 상태에서 해주는것이 좋을듯
+        player.isJumpable = true;
         //player.view.SetAnimationTrigger(E_PlayeState.Idle);  
         //player.view.PlayAnimation(animationIndex);
     }
@@ -77,7 +80,8 @@ public class IdleState : PlayerState
     public override void Exit()
     {
         Debug.Log("Idle 종료");
-        player.view.SetBoolParameter(E_AniParameters.Idling, false);
+        player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
+        //player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }
 
 }

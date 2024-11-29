@@ -219,11 +219,17 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public void HandleMoveInputs()
     {
+        //if (!photonView.IsMine)
+        //    return;
+
         moveDir = RemoteInput.inputs[model.playerNumber].MoveDir;
     }
 
     private void ControlJumpBuffer()
     {
+        //if (!photonView.IsMine)
+        //    return;
+
         //점프 인풋이 들어왔으면
         if (RemoteInput.inputs[model.playerNumber].jumpInput)
         {

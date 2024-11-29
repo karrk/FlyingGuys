@@ -12,7 +12,7 @@ public class DivingState : PlayerState
     public override void Enter()
     {
         Debug.Log("Diving 진입");
-        player.view.SetTriggerParameter(E_AniParameters.Diving);
+        player.view.BroadCastTriggerParameter(E_AniParameters.Diving);
         //player.view.SetAnimationTrigger(E_PlayeState.Diving);
         //player.view.PlayAnimation(animationIndex);
         // player.isDiving = true;

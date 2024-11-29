@@ -12,7 +12,7 @@ public class FallingImpact : PlayerState
     public override void Enter()
     {
         Debug.Log("FallingImpact 진입");
-        player.view.SetTriggerParameter(E_AniParameters.FallingImpact);
+        player.view.BroadCastTriggerParameter(E_AniParameters.FallingImpact);
         //player.view.PlayAnimation(animationIndex);
     }
 

@@ -10,4 +10,6 @@ public class BaseState
     public virtual void FixedUpdate() { }
 
     public virtual void LateUpdate() { }
+
+    public virtual void PlayAnimation() { }
 }

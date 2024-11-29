@@ -41,8 +41,8 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
             return;
         InputRot();
 
-        if (NetWorkManager.IsPlay == false)
-            return;
+        //if (NetWorkManager.IsPlay == false)
+        //    return;
 
         InputMoving();
         InputJumpBuffer();

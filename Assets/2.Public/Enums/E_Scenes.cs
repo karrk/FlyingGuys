@@ -31,8 +31,8 @@ public enum E_PlayeState
 
 public enum E_AniParameters
 {
-    Idling,
-    Running,
+    Idling, // bool
+    Running, // bool
     Jumping,
     Falling,
     Diving,
