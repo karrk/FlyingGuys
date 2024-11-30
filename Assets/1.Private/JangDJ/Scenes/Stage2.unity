@@ -2398,7 +2398,7 @@ GameObject:
   - component: {fileID: 7453445649637843714}
   m_Layer: 10
   m_Name: DeadZone
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141705,8 +141705,7 @@ MonoBehaviour:
   Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8334606517271333256}
+  ObservedComponents: []
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0

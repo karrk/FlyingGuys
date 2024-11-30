@@ -50,37 +50,20 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     // 연동 메서드
     private void PlayerNumbering_OnPlayerNumberingChanged()
     {
-        bool check = FindMinusOne();
-
-        if (check == false)
-            return;
-
         foreach (var item in PhotonNetwork.CurrentRoom.Players)
         {
             int id = item.Value.GetPlayerNumber();
 
-            if (_idSet.Contains(id) == false)
-                _idSet.Add(id);
-        }
-    }
+            if (id == -1 || _idSet.Contains(id) == true)
+                continue;
 
-    // 넘버링 -1 확인
-    private bool FindMinusOne()
-    {
-        foreach (var item in PhotonNetwork.CurrentRoom.Players)
-        {
-            if (item.Value.GetPlayerNumber() == -1)
-                return false;
+            _idSet.Add(id);
         }
-
-        return true;
     }
 
     // 플레이어 죽었을때 데드존 연동
     public void DeadPlayer(int id)
     {
-        Debug.Log(id);
-
         _idSet.Remove(id);
         int myId = PhotonNetwork.LocalPlayer.GetPlayerNumber();
 
