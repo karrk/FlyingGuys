@@ -63,8 +63,8 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         Animator.StringToHash("FallingImpact"),
         Animator.StringToHash("StandingUp"),
         Animator.StringToHash("Bouncing"),
-        Animator.StringToHash("Pulling"),
         Animator.StringToHash("Pushing"),
+        Animator.StringToHash("Pulling"),
         Animator.StringToHash("Struggling"),
     };
 
