@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
             if (((1 << chosenHit.collider.gameObject.layer) & (1 << conveyorLayer)) != 0)
             {
                 onConveyor = true;
-                conveyorVel = chosenHit.collider.gameObject.GetComponent<ConveyorBelt_script>().conveyorVelocity;
+                conveyorVel = chosenHit.collider.gameObject.GetComponent<ConveyorBeltController>().conveyorVelocity;
                 //Debug.Log($" 컨베이어 {conveyorVel}");
             }
             else

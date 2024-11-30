@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 83647635}
   - component: {fileID: 83647634}
   - component: {fileID: 83647633}
+  - component: {fileID: 83647639}
   m_Layer: 23
   m_Name: ConveyorBelt_prefab (9)
   m_TagString: Untagged
@@ -459,13 +460,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83647631}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9fe7f71f377fe4d89f3fdf3b0bd699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  maxSpeed: 0
   direction: {x: 0, y: 0, z: -1}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -532,6 +532,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83647631}
   m_Mesh: {fileID: 3172952020475843674, guid: aed6dfd35ae91514099c1cabee37589f, type: 3}
+--- !u!114 &83647639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83647631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebad9f8dc0480e4bad5befe92be6f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  direction: {x: 0, y: 0, z: 0}
+  conveyorVelocity: {x: 0, y: 0, z: 0}
+  onBelt: []
 --- !u!1 &307347250
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,6 +743,7 @@ GameObject:
   - component: {fileID: 416936996}
   - component: {fileID: 416936995}
   - component: {fileID: 416936994}
+  - component: {fileID: 416937000}
   m_Layer: 23
   m_Name: ConveyorBelt_prefab (8)
   m_TagString: Untagged
@@ -786,13 +803,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416936992}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9fe7f71f377fe4d89f3fdf3b0bd699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  maxSpeed: 0
   direction: {x: 0, y: 0, z: -1}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -859,6 +875,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416936992}
   m_Mesh: {fileID: 3172952020475843674, guid: aed6dfd35ae91514099c1cabee37589f, type: 3}
+--- !u!114 &416937000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416936992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebad9f8dc0480e4bad5befe92be6f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  direction: {x: 0, y: 0, z: 0}
+  conveyorVelocity: {x: 0, y: 0, z: 0}
+  onBelt: []
 --- !u!1 &499470384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,6 +1618,7 @@ GameObject:
   - component: {fileID: 1436503970}
   - component: {fileID: 1436503969}
   - component: {fileID: 1436503968}
+  - component: {fileID: 1436503974}
   m_Layer: 23
   m_Name: ConveyorBelt_prefab (7)
   m_TagString: Untagged
@@ -1645,13 +1678,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436503966}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9fe7f71f377fe4d89f3fdf3b0bd699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  maxSpeed: 0
   direction: {x: 0, y: 0, z: -1}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -1718,6 +1750,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436503966}
   m_Mesh: {fileID: 3172952020475843674, guid: aed6dfd35ae91514099c1cabee37589f, type: 3}
+--- !u!114 &1436503974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436503966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebad9f8dc0480e4bad5befe92be6f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  direction: {x: 0, y: 0, z: 0}
+  conveyorVelocity: {x: 0, y: 0, z: 0}
+  onBelt: []
 --- !u!1001 &1596676912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1828,6 +1876,7 @@ GameObject:
   - component: {fileID: 1787507137}
   - component: {fileID: 1787507136}
   - component: {fileID: 1787507135}
+  - component: {fileID: 1787507141}
   m_Layer: 23
   m_Name: ConveyorBelt_prefab (6)
   m_TagString: Untagged
@@ -1887,13 +1936,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787507133}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9fe7f71f377fe4d89f3fdf3b0bd699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  maxSpeed: 0
   direction: {x: 0, y: 0, z: -1}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -1960,6 +2008,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787507133}
   m_Mesh: {fileID: 3172952020475843674, guid: aed6dfd35ae91514099c1cabee37589f, type: 3}
+--- !u!114 &1787507141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787507133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebad9f8dc0480e4bad5befe92be6f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  direction: {x: 0, y: 0, z: 0}
+  conveyorVelocity: {x: 0, y: 0, z: 0}
+  onBelt: []
 --- !u!1 &1811736179
 GameObject:
   m_ObjectHideFlags: 0
@@ -4668,7 +4732,7 @@ MonoBehaviour:
   rayPoint3: {fileID: 0}
   isGrounded: 0
   isSlope: 0
-  OnConveyor: 0
+  onConveyor: 0
   groundAngleValue: 0
   perpAngle: {x: 0, y: 0, z: 0}
   curState: 0
@@ -6562,7 +6626,7 @@ MonoBehaviour:
   rayPoint3: {fileID: 4007214600802778466}
   isGrounded: 0
   isSlope: 0
-  OnConveyor: 0
+  onConveyor: 0
   groundAngleValue: 0
   perpAngle: {x: 0, y: 0, z: 0}
   curState: 0
@@ -7614,7 +7678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -7631,7 +7694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -7648,7 +7710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -7665,7 +7726,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -7682,7 +7742,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
@@ -7699,7 +7758,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  maxSpeed: 0
   direction: {x: 2, y: 0, z: 0}
   conveyorVelocity: {x: 0, y: 0, z: 0}
   onBelt: []
