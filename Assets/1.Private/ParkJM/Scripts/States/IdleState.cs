@@ -27,7 +27,7 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-        else if (player.moveDir != Vector3.zero && player.isGrounded)
+        else if (player.moveDir != Vector3.zero && player.isGrounded )
         {
             Debug.Log("이동 입력 idle 상태에 들어옴");
             player.ChangeState(E_PlayeState.Run);
@@ -53,7 +53,10 @@ public class IdleState : PlayerState
 
     public override void FixedUpdate()
     {
-        
+        if(player.OnConveyor)
+        {
+            player.rb.AddForce(player.conveyorVel-player.rb.velocity, ForceMode.VelocityChange);
+        }
     }
 
     public override void Exit()

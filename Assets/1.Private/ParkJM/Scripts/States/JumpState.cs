@@ -22,7 +22,7 @@ public class JumpState : PlayerState
     public override void Update()
     {
         // 임시
-        if (player.rb.velocity.y < 0f && !player.isGrounded)
+        if (player.rb.velocity.y < 0.1f && !player.isGrounded)
         {
             Debug.Log("jump에서 Fall로 전환");
             player.ChangeState(E_PlayeState.Fall);
@@ -31,6 +31,10 @@ public class JumpState : PlayerState
         {
             player.ChangeState(E_PlayeState.Diving);
         }
+        //else if(player.isGrounded)
+        //{
+        //    player.ChangeState(E_PlayeState.Idle);
+        //}
 
         //else if(player.isGrounded)
         {

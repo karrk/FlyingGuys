@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public bool isGrounded;
     public bool isSlope;
+    public bool OnConveyor;
     public float groundAngleValue;
     public Vector3 perpAngle;
 
@@ -59,6 +60,10 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     // 물리 충돌 레이어
     private int obstacleLayer;
     private int playerLayer; //grab에 사용할것
+
+    // 컨베이어
+    private int conveyorLayer;
+    public Vector3 conveyorVel;
 
     [SerializeField] private Transform grabPoint;
 
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         // 레이어 미리 캐싱
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
         playerLayer = LayerMask.NameToLayer("Player");
+        conveyorLayer = LayerMask.NameToLayer("Conveyor");
     }
 
     private void Update()
@@ -270,6 +276,17 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
             if (rayhit3 && chosenHit.distance > groundhit3.distance)
             {
                 chosenHit = groundhit3;
+            }
+
+            if (((1 << chosenHit.collider.gameObject.layer) & (1 << conveyorLayer)) != 0)
+            {
+                OnConveyor = true;
+                conveyorVel = chosenHit.collider.gameObject.GetComponent<ConveyorBelt_script>().conveyorVelocity;
+                //Debug.Log($" 컨베이어 {conveyorVel}");
+            }
+            else
+            {
+                OnConveyor = false;
             }
 
             // 각도 계산
