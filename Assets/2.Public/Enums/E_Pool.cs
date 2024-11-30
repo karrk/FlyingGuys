@@ -26,6 +26,13 @@ public enum E_Object
     Cannon
 }
 
+public enum E_RoomObject
+{
+    Canon_Small,
+    Canon,
+    Size,
+}
+
 //public enum E_MyType
 //{
 //    TTTT,
