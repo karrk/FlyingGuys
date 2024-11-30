@@ -11,27 +11,8 @@ public class DeadZone : MonoBehaviour
     public Test_GameScene _myScene;
     public Player player;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("Player"))
-    //    {
-    //        if(_isRecoveryMode)
-    //            other.transform.position 
-    //                = FindClosetPoint(other.transform.position);
-    //        else
-    //        {
-    //            if(other.TryGetComponent<PhotonView>(out PhotonView view))
-    //            {
-    //                DeadLogic(view.ViewID);
-    //            }
-    //        }
-    //    }
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError($"트리거 충돌 확인");
-
         if (other.CompareTag("Player"))
         {
             if (_isRecoveryMode)
