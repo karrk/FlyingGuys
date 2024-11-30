@@ -15,6 +15,8 @@ public class CamController : MonoBehaviour
     [SerializeField, Range(10, 0)] private float _minTrZ;
     [SerializeField, Range(20, 0)] private float _maxTrZ;
 
+    [SerializeField, Range(0.01f, 10f)] private float _mouseSensitivity = 1f;
+
     private float _clampValue;
     private float _normalizeValue;
     private float _resultZ;
@@ -23,7 +25,6 @@ public class CamController : MonoBehaviour
     {
         _cam = GetComponent<CinemachineVirtualCamera>();
         _tr = _cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        //_aim = _cam.GetCinemachineComponent<CinemachineComposer>();
     }
 
     /// <summary>
@@ -31,6 +32,8 @@ public class CamController : MonoBehaviour
     /// </summary>
     public void RotY(float value)
     {
+        value *= _mouseSensitivity;
+
         _clampValue = Mathf.Clamp(_tr.m_FollowOffset.y + value, _minRotY, _maxRotY);
         _normalizeValue = (_clampValue - _minRotY) / (_minRotY - _maxRotY);
         _resultZ = Mathf.Lerp(-_maxTrZ, -_minTrZ, -_normalizeValue);
