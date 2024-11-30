@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayMatch : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_Text descriptionText;
+    [SerializeField] int num;
 
     private void Start()
     {
@@ -64,6 +65,28 @@ public class PlayMatch : MonoBehaviourPunCallbacks
     {
         SetDescriptionText("Game Loading...");
         yield return new WaitForSeconds(3f);
-        PhotonNetwork.LoadLevel("TestSecne 1.4");
+
+        if (PhotonNetwork.IsMasterClient == false)
+            yield break;
+
+        ChoiceGameScene();
+    }
+
+    private void ChoiceGameScene()
+    {
+        num = Random.Range(0, 3);
+        Debug.Log($"당첨된 수 {num}");
+        switch (num)
+        {
+            case 0: // 산 무너져유
+                PhotonNetwork.LoadLevel("TestSecne 1.4");
+                break;
+            case 1: // 바닥 떨어져유
+                PhotonNetwork.LoadLevel("Stage2");
+                break;
+            case 2: // 점프 쇼다운
+                PhotonNetwork.LoadLevel("Stage3");
+                break;
+        }
     }
 }

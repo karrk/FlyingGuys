@@ -18,6 +18,7 @@ public class UI_MainControll : MonoBehaviour
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         RandomMatch();
     }
 
