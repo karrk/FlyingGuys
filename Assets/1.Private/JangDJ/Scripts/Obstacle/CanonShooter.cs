@@ -8,7 +8,8 @@ public class CanonShooter : MonoBehaviour
     [SerializeField] private float _fireDelay = 1f;
     [SerializeField] private float _arriveTime = 3f;
 
-    [SerializeField] private List<Transform> _muzzlePoints;
+    [SerializeField] private List<Canon> _canons;
+    //[SerializeField] private List<Transform> _muzzlePoints;
     [SerializeField] private List<Transform> _arrivePoints;
     [SerializeField] private bool _switch;
 
@@ -43,7 +44,7 @@ public class CanonShooter : MonoBehaviour
 
         while (true)
         {
-            SelectMuzzlePos();
+            SelectCannon();
             SelectArrivePos();
 
             _distValue = _arrivePos - _muzzlePos;
@@ -77,8 +78,15 @@ public class CanonShooter : MonoBehaviour
             rb.angularVelocity = new Vector3(Random.Range(10, 40), 0, Random.Range(-20, 20));
             rb.velocity = resultVelocity;
 
+            EffectManager.Instance.PlayFX(_muzzlePos, SelectEXPType(), E_NetworkType.Public);
+
             yield return delay;
         }
+    }
+
+    private E_VFX SelectEXPType()
+    {
+        return (E_VFX)Random.Range((int)E_VFX.Exp1, (int)E_VFX.Exp2 + 1);
     }
 
     private E_RoomObject SelectBallType()
@@ -86,9 +94,11 @@ public class CanonShooter : MonoBehaviour
         return (E_RoomObject)Random.Range((int)E_RoomObject.Canon_Small, (int)E_RoomObject.Canon + 1);
     }
 
-    private void SelectMuzzlePos()
+    private void SelectCannon()
     {
-        _muzzlePos = _muzzlePoints[Random.Range(0, _muzzlePoints.Count)].position;
+        Canon canon = _canons[Random.Range(0, _canons.Count)];
+        canon.Anim.Play();
+        _muzzlePos = canon.MuzzlePos;
     }
 
     private void SelectArrivePos()

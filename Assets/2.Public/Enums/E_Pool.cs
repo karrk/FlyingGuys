@@ -18,6 +18,8 @@ public enum E_VFX
     Smoke,
     Hit1,
     Hit2,
+    Exp1,
+    Exp2,
 }
 
 public enum E_Object

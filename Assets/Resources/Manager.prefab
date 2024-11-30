@@ -598,11 +598,12 @@ MonoBehaviour:
       - Type: 3
         Prefab: {fileID: 7381055855893286726, guid: 5a87d9304d7919d46b4942e53d078e98,
           type: 3}
-  roomPrefabs:
-  - _type: 0
-    _path: CanonSmallBall
-  - _type: 1
-    _path: CanonBall
+      - Type: 4
+        Prefab: {fileID: 7051625971724910229, guid: 7047fb0ffaf67804d8b20ae69b0133ee,
+          type: 3}
+      - Type: 5
+        Prefab: {fileID: 3911869914990522071, guid: 9673dbe1c1a0a6e4abf969360b0b029e,
+          type: 3}
 --- !u!114 &807464459930342589
 MonoBehaviour:
   m_ObjectHideFlags: 0
