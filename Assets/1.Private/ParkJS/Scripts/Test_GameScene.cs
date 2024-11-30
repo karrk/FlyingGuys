@@ -28,14 +28,23 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-        PlayerNumbering.OnPlayerNumberingChanged += PlayerNumbering_OnPlayerNumberingChanged;
+
+        if (PhotonNetwork.InRoom)
+        {
+            PlayerNumbering_OnPlayerNumberingChanged();
+        }
+
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // 이벤트 해제
     public override void OnDisable()
     {
         base.OnDisable();
-        PlayerNumbering.OnPlayerNumberingChanged -= PlayerNumbering_OnPlayerNumberingChanged;
+
+        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
     }
 
     // 연동 메서드
@@ -77,7 +86,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
         if (myId == id)
             WinOrLose(false);
-        else if (_idSet.Count <= 1)
+
+        if (_idSet.Count <= 1)
         {
             if (_idSet.Contains(myId))
             {
