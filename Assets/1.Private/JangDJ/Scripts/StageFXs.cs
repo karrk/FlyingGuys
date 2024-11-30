@@ -18,21 +18,7 @@ public class StageFXs : MonoBehaviour
 
     [SerializeField] private Vector3 _startSize;
     
-    public MonoBehaviour _starterMono;
-    private IStarter _starter;
-
-    private void OnValidate()
-    {
-        if (_starterMono is IStarter)
-        {
-            _starter = (IStarter)_starterMono;
-        }
-        else
-        {
-            _starter = null;
-            _starterMono = null;
-        }
-    }
+    [SerializeField] private StageStarter _starter;
 
     private void OnEnable()
     {
@@ -49,7 +35,7 @@ public class StageFXs : MonoBehaviour
         }
         else
         {
-            _starter.StartStage();
+            _starter.StageStart();
         }
     }
 
