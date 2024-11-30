@@ -29,7 +29,7 @@ public class IdleState : PlayerState
         }
         else if (player.moveDir != Vector3.zero && player.isGrounded )
         {
-            Debug.Log("이동 입력 idle 상태에 들어옴");
+            //Debug.Log("이동 입력 idle 상태에 들어옴");
             player.ChangeState(E_PlayeState.Run);
         }
         else if(!player.isGrounded && player.rb.velocity.y != 0)

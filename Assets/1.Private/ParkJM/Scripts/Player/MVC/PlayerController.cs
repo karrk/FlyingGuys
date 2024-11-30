@@ -66,9 +66,10 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     public Vector3 conveyorVel;
 
     [SerializeField] private Transform grabPoint;
+    private bool isAlreadyGrabbed;
 
     // 임시 변수
-    public float bouncedForce = float.MinValue; // 충돌한 장애물에서 받아오는게 더 적합해보임
+    public float bouncedForce = float.MinValue;
     public Vector3 bouncedDir;
 
     private void Awake()
@@ -316,7 +317,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         if (grabbedColliders.Length > 0)
         {
             IGrabbable grabbableObject = grabbedColliders[0].GetComponent<IGrabbable>();
-            Debug.Log("grabbable 오브젝트 잡음");
+            //Debug.Log("grabbable 오브젝트 잡음");
             grabbableObject.OnGrabbedEnter();
             return grabbedColliders[0].gameObject;
         }
@@ -363,7 +364,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         if(curState != E_PlayeState.Grabbed)
         {
-            Debug.Log($"OnGrabbedEnter 실행");
+            //Debug.Log($"OnGrabbedEnter 실행");
             ChangeState(E_PlayeState.Grabbed);
         }
     }
@@ -372,7 +373,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         if(curState == E_PlayeState.Grabbed)
         {
-            Debug.Log($"OnGrabbedLeave 실행");
+            //Debug.Log($"OnGrabbedLeave 실행");
             ChangeState(E_PlayeState.Idle);
         }
     }

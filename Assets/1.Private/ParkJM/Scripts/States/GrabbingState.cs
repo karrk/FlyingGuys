@@ -41,19 +41,19 @@ public class GrabbingState : PlayerState
             return;
         }
 
-        if (grabbedObject == null)
-        {
-            grabSearchCounter += Time.deltaTime;
-            if (grabSearchCounter >= grabSearchTime)
-            {
-                player.ChangeState(E_PlayeState.Idle);
-                return;
-            }
-        }
-        else
-        {
-            grabSearchCounter = 0f;
-        }
+        //if (grabbedObject == null)
+        //{
+        //    grabSearchCounter += Time.deltaTime;
+        //    if (grabSearchCounter >= grabSearchTime)
+        //    {
+        //        player.ChangeState(E_PlayeState.Idle);
+        //        return;
+        //    }
+        //}
+        //else
+        //{
+        //    grabSearchCounter = 0f;
+        //}
     }
 
     public override void FixedUpdate()
@@ -165,7 +165,7 @@ public class GrabbingState : PlayerState
         if (dotProduct > 0f)
         {
             // 밀기
-            Debug.Log("밀기");
+            //Debug.Log("밀기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             // 밀기 애니메이션 재생
             // 이미 재생중이라면 애니메이션 중복 재생x 밀기 당기기 바꿀때만 재생
@@ -188,7 +188,7 @@ public class GrabbingState : PlayerState
         else if(dotProduct < 0f)
         {
             // 당기기
-            Debug.Log("당기기");
+            //Debug.Log("당기기");
             grabbedObjectRb.velocity = moveDir * player.model.grabForce;
             //if (!player.view.GetBoolInGrabAnimation(0)) //
             //{

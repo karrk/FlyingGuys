@@ -116,7 +116,7 @@ public class RunState : PlayerState
             player.rb.AddForce(moveForce, ForceMode.VelocityChange);
         }
 
-        Debug.Log(player.rb.velocity.sqrMagnitude);
+        //Debug.Log(player.rb.velocity.sqrMagnitude);
         //moveForce = Vector3.ClampMagnitude(moveForce, player.model.maxSpeed);
         
        

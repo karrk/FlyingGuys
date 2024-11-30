@@ -711,7 +711,7 @@ MonoBehaviour:
   rayPoint3: {fileID: 0}
   isGrounded: 0
   isSlope: 0
-  OnConveyor: 0
+  onConveyor: 0
   groundAngleValue: 0
   perpAngle: {x: 0, y: 0, z: 0}
   curState: 0
