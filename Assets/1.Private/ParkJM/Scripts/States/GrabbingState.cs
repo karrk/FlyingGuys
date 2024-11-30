@@ -64,6 +64,8 @@ public class GrabbingState : PlayerState
         {
             PushOrPullGrabbedObject(grabbedObject);
         }
+
+        player.MoveOnConveyor();
     }
 
     public override void LateUpdate()

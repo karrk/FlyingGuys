@@ -98,15 +98,16 @@ public class RunState : PlayerState
 
         // 여기서 앞서 계산한 targetVelocity방향에 따른 속도 증감 처리
         // 플레이어의 최대 속도는 제한되어야함, 컨베이어 벨트 위에서 최대속도를 넘어설수도 있도록 속도처리도 될 수 있게
-        if (targetVelocity.sqrMagnitude > player.model.maxSpeed * player.model.maxSpeed)
-        {
-            Debug.Log("제한됨"); // 어지간한 상황에선 안나올듯
-            targetVelocity = targetVelocity.normalized * player.model.maxSpeed;
-        }
+
+        //if (targetVelocity.sqrMagnitude > player.model.maxSpeed * player.model.maxSpeed)
+        //{
+        //    Debug.Log("제한됨"); // 어지간한 상황에선 안나올듯
+        //    targetVelocity = targetVelocity.normalized * player.model.maxSpeed;
+        //}
 
         Vector3 moveForce = targetVelocity - player.rb.velocity;
 
-        if(player.OnConveyor)
+        if (player.onConveyor)
         {
             player.rb.AddForce(moveForce + player.conveyorVel, ForceMode.VelocityChange);
         }

@@ -53,10 +53,7 @@ public class IdleState : PlayerState
 
     public override void FixedUpdate()
     {
-        if(player.OnConveyor)
-        {
-            player.rb.AddForce(player.conveyorVel-player.rb.velocity, ForceMode.VelocityChange);
-        }
+        player.MoveOnConveyor();
     }
 
     public override void Exit()

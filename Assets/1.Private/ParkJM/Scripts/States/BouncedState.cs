@@ -70,12 +70,13 @@ public class BouncedState : PlayerState
 
     public override void FixedUpdate()
     {
+        //player.MoveOnConveyor();
         //if (bounceDelayCounter < bounceDelay)
         //{
         //    bounceDelayCounter += Time.fixedDeltaTime;
         //    return;
         //}
-            
+
 
         ////if (player.rb.velocity.sqrMagnitude < 0.1f) // 밀려나는 힘이 거의 사라졌을 때?
         //{

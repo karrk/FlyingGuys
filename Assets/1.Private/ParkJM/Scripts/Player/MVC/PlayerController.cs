@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public bool isGrounded;
     public bool isSlope;
-    public bool OnConveyor;
+    public bool onConveyor;
     public float groundAngleValue;
     public Vector3 perpAngle;
 
@@ -146,7 +146,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         states[(int)curState].FixedUpdate();
         CheckGround();
 
-        if(!isGrounded && curState != E_PlayeState.Bounced)
+        //MoveOnConveyor();
+
+        if (!isGrounded && curState != E_PlayeState.Bounced)
         {
             MoveInAir();
         }
@@ -280,13 +282,13 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
             if (((1 << chosenHit.collider.gameObject.layer) & (1 << conveyorLayer)) != 0)
             {
-                OnConveyor = true;
+                onConveyor = true;
                 conveyorVel = chosenHit.collider.gameObject.GetComponent<ConveyorBelt_script>().conveyorVelocity;
                 //Debug.Log($" 컨베이어 {conveyorVel}");
             }
             else
             {
-                OnConveyor = false;
+                onConveyor = false;
             }
 
             // 각도 계산
@@ -301,6 +303,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         else
         {
             isSlope = false;
+            onConveyor = false;
         }
     }
 
@@ -339,6 +342,13 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         return null;
     }
 
+    public void MoveOnConveyor()
+    {
+        if (onConveyor)
+        {
+            rb.AddForce(conveyorVel - rb.velocity, ForceMode.VelocityChange);
+        }
+    }
 
     private void OnDrawGizmos()
     {
