@@ -14,10 +14,10 @@ public class ObjPoolManager : MonoBehaviour, IManager
     private Dictionary<E_PoolType, ObjectPool> _pools
         = new Dictionary<E_PoolType, ObjectPool>();
 
+    private RoomObjectPool _roomPool;
+
     #region 등록 프리팹 목록 인스펙터를 통해 확인 가능
     [SerializeField] private Prefabs<E_VFX> vfxPrefabs;
-    [SerializeField] private Prefabs<E_Object> objectPrefabs;
-    //[SerializeField] private Prefabs<E_MyType> testPrefabs;
 
     #endregion
 
@@ -40,13 +40,13 @@ public class ObjPoolManager : MonoBehaviour, IManager
     private void InitPrefabList()
     {
         vfxPrefabs.CopyToTable();
-        objectPrefabs.CopyToTable();
     }
 
     private void InitPools()
     {
+        _roomPool = new RoomObjectPool();
+
         _pools.Add(E_PoolType.VFX, new ObjectPool(typeof(E_VFX),vfxPrefabs.GetTable()));
-        _pools.Add(E_PoolType.Object, new ObjectPool(typeof(E_Object), objectPrefabs.GetTable()));
     }
 
     /// <summary>
@@ -78,6 +78,12 @@ public class ObjPoolManager : MonoBehaviour, IManager
         return GetObject(type).GetComponent<T>();
     }
 
+    public int GetObjectID(E_RoomObject type)
+    {
+        return _roomPool.GetObjectID(type);
+    }
+
+
     /// <summary>
     /// 대상 오브젝트를 다시 풀로 반환합니다.
     /// </summary>
@@ -94,6 +100,11 @@ public class ObjPoolManager : MonoBehaviour, IManager
                 pool.Return(obj);
             }
         }
+    }
+
+    public void ReturnObj(E_RoomObject type, int id)
+    {
+        _roomPool.ReturnObj(type, id);
     }
 
     #region 신규 오브젝트 등록방법

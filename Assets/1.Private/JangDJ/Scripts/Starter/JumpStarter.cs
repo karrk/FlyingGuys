@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpStarter : MonoBehaviour, IStarter
+public class JumpStarter : StageStarter
 {
-    private const float CHANGE_DURATION = 1f;
+    private const float CHANGE_DURATION = 2f;
     private const int REMAIN_GROUNDS = 2;
-    private const float FALL_TIME_INTERVAL = 3f;
+    private const float FALL_TIME_INTERVAL = 18f;
 
     [SerializeField] private Animation _anim;
     [SerializeField] private List<JumpSpeed> _speeds;
@@ -23,10 +23,9 @@ public class JumpStarter : MonoBehaviour, IStarter
 
     private int _speedIdx = 0;
 
-    public void StartStage()
+    public override void StageStart()
     {
         StartCoroutine(JumpStart());
-                    
     }
 
     private IEnumerator JumpStart()
@@ -152,6 +151,8 @@ public class JumpStarter : MonoBehaviour, IStarter
         if (_rotater != null)
             StopCoroutine(_rotater);
     }
+
+    
 
     [System.Serializable]
     private class JumpSpeed

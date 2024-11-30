@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class MountainStarter : MonoBehaviour, IStarter
+public class MountainStarter : StageStarter
 {
     private PlayableDirector _timeline;
     [SerializeField] private CinemachineVirtualCamera _dollyCam;
@@ -22,11 +22,6 @@ public class MountainStarter : MonoBehaviour, IStarter
         _composer.m_ScreenY = 0.5f;
     }
 
-    public void StartStage()
-    {
-        _timeline.Play();
-    }
-
     public void EndTimeLine()
     {
         StartCoroutine(MountainStart());
@@ -39,5 +34,8 @@ public class MountainStarter : MonoBehaviour, IStarter
         StartCoroutine(StageFXs.Instance.StepPlayFX());
     }
 
-
+    public override void StageStart()
+    {
+        _timeline.Play();
+    }
 }

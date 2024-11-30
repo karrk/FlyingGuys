@@ -11,23 +11,6 @@ public class DeadZone : MonoBehaviour
     public Test_GameScene _myScene;
     public Player player;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("Player"))
-    //    {
-    //        if(_isRecoveryMode)
-    //            other.transform.position 
-    //                = FindClosetPoint(other.transform.position);
-    //        else
-    //        {
-    //            if(other.TryGetComponent<PhotonView>(out PhotonView view))
-    //            {
-    //                DeadLogic(view.ViewID);
-    //            }
-    //        }
-    //    }
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -43,7 +26,8 @@ public class DeadZone : MonoBehaviour
                     player = (Player)view.InstantiationData[0];
                     player.SetLife(false);
 
-                    _myScene.DeadPlayer(other.GetComponent<PlayerController>().model.playerNumber);
+                    int num = other.GetComponent<PlayerController>().model.playerNumber;
+                    _myScene.DeadPlayer(num);
                 }
             }
         }

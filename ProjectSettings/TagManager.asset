@@ -36,8 +36,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - CanonBall
+  - CanonZone
   m_SortingLayers:
   - name: Default
     uniqueID: 0

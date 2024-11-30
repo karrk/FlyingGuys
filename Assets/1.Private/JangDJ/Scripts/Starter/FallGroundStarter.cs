@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallGroundStarter : MonoBehaviour, IStarter
+public class FallGroundStarter : StageStarter
 {
     [SerializeField] private GameObject _emptyBoard;
     [SerializeField] private Animation _uiAnim;
-
-    public void StartStage()
-    {
-        StartCoroutine(FallStart());
-    }
 
     public IEnumerator FallStart()
     {
@@ -19,5 +14,10 @@ public class FallGroundStarter : MonoBehaviour, IStarter
         NetWorkManager.IsPlay = true;
         StartCoroutine(StageFXs.Instance.StepPlayFX());
         _emptyBoard.SetActive(false);
+    }
+
+    public override void StageStart()
+    {
+        StartCoroutine(FallStart());
     }
 }

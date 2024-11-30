@@ -69,4 +69,15 @@ public class RPCDelegate : MonoBehaviourPun
     {
         StartCoroutine(StageFXs.Instance.PlayStartFX());
     }
+
+    public void SetActive(int id, bool value)
+    {
+        photonView.RPC(nameof(SetActiveRPC), RpcTarget.MasterClient, id, value);
+    }
+
+    [PunRPC]
+    private void SetActiveRPC(int id, bool value)
+    {
+        PhotonView.Find(id).gameObject.SetActive(value);
+    }
 }

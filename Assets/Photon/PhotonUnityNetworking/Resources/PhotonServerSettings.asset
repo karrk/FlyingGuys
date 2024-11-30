@@ -66,6 +66,7 @@ MonoBehaviour:
   - ResetAllTriggers_RPC
   - SetParameter_RPC
   - SetBoolParameter_RPC
+  - SetActiveRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

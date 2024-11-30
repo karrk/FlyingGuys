@@ -48235,7 +48235,7 @@ MonoBehaviour:
   _one: {fileID: 21300000, guid: 410f0d0712681d245b0725a121dcd1d3, type: 3}
   _go: {fileID: 21300000, guid: 9f9cfd242f3fd514e992c13009a901af, type: 3}
   _startSize: {x: 0.2, y: 0.2, z: 0.2}
-  _starterMono: {fileID: 2026374500}
+  _starter: {fileID: 2026374500}
 --- !u!1 &3267621990316930059
 GameObject:
   m_ObjectHideFlags: 0
