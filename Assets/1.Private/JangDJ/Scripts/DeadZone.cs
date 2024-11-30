@@ -30,6 +30,8 @@ public class DeadZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.LogError($"트리거 충돌 확인");
+
         if (other.CompareTag("Player"))
         {
             if (_isRecoveryMode)
@@ -43,7 +45,8 @@ public class DeadZone : MonoBehaviour
                     player = (Player)view.InstantiationData[0];
                     player.SetLife(false);
 
-                    _myScene.DeadPlayer(other.GetComponent<PlayerController>().model.playerNumber);
+                    int num = other.GetComponent<PlayerController>().model.playerNumber;
+                    _myScene.DeadPlayer(num);
                 }
             }
         }
