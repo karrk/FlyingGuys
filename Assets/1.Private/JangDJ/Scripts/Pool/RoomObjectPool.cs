@@ -26,9 +26,13 @@ public class RoomObjectPool
         }
     }
 
-    public void ClearPool(E_RoomObject type)
+    public void ClearPools()
     {
-        _pools[type] = new List<int>();
+        foreach (var e in _pools)
+        {
+            if (e.Value.Count >= 0)
+                e.Value.Clear();
+        }
     }
 
     private void CreateMainDirectory()
@@ -47,10 +51,6 @@ public class RoomObjectPool
         int id = list[list.Count - 1];
         list.RemoveAt(list.Count - 1);
         RPCDelegate.Instance.SetActive(id, true);
-
-        //GameObject obj = list[list.Count - 1];
-        //list.RemoveAt(list.Count - 1);
-        //obj.SetActive(true);
 
         return id;
     }
