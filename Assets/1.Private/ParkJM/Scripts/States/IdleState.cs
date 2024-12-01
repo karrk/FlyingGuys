@@ -12,8 +12,6 @@ public class IdleState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Idle 진입");
-
         //player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
         player.view.SetBoolParameter(E_AniParameters.Idling, true);
 
@@ -58,7 +56,6 @@ public class IdleState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Idle 종료");
         //player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
         player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }

@@ -12,7 +12,6 @@ public class RunState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Run 진입");
         //player.view.SetBoolParameter(E_AniParameters.Running, true);
 
         //player.view.BroadCastBoolParameter(E_AniParameters.Running, true);
@@ -64,8 +63,6 @@ public class RunState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Run 종료");
-
         //player.view.BroadCastBoolParameter(E_AniParameters.Running, false);
         player.view.SetBoolParameter(E_AniParameters.Running, false);
 

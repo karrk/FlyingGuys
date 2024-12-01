@@ -19,7 +19,7 @@ public class GrabbingState : PlayerState
     }
     public override void Enter()
     {
-        Debug.Log("Grab 상태 진입");
+        //EffectManager.Instance.PlayFX(player.grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
         grabbedObject = null;
         grabSearchCounter = 0;
         player.view.SetBoolParameter(E_AniParameters.Pushing, true);
@@ -75,7 +75,6 @@ public class GrabbingState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Grab 상태 해제");
         ReleaseGrabbedObject();
         grabSearchCounter = 0f;
         player.view.SetBoolParameter(E_AniParameters.Pushing, false);
@@ -124,19 +123,21 @@ public class GrabbingState : PlayerState
             if (detectedObject != grabbedObject)
             {
                 // 잡힌 오브젝트가 바뀌거나, 잡힌 오브젝트가 범위를 벗어났을 때
-                if (grabbedObject != null) 
-                {
-                    // 이전에 잡힌 오브젝트가 있을 경우
-                    grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
-                    Debug.Log($"GrabbedObject 해제: {grabbedObject.name}");
-                }
 
+                //if (grabbedObject != null) 
+                //{
+                //    // 이전에 잡힌 오브젝트가 있을 경우
+                //    grabbedObject.GetComponent<IGrabbable>().OnGrabbedLeave();
+                //    Debug.Log($"GrabbedObject 해제: {grabbedObject.name}");
+                //}
+                ReleaseGrabbedObject();
                 grabbedObject = detectedObject;
 
                 if (grabbedObject != null) 
                 {
                     // 새롭게 잡힌 오브젝트가 있을 경우
-                    Debug.Log($"새로운 GrabbedObject: {grabbedObject.name}");
+                    // 임시 위치
+                    EffectManager.Instance.PlayFX(player.grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
                 }
             }
 

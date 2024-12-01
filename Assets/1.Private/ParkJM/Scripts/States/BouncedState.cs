@@ -14,7 +14,6 @@ public class BouncedState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Bounced 상태 진입");
         //player.view.SetAnimationTrigger(E_PlayeState.Bounced);
         //player.view.PlayAnimation((int)E_PlayeState.Bounced);
         player.view.BroadCastTriggerParameter(E_AniParameters.Bouncing);
@@ -113,7 +112,6 @@ public class BouncedState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Bounced 상태 종료");
         bounceDelayCounter = 0;
 
     }

@@ -11,7 +11,6 @@ public class DivingState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Diving 진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.Diving);
 
         //Vector3 diveSpeed = player.moveDir * player.model.divingForce;
@@ -68,7 +67,6 @@ public class DivingState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Diving 종료");
         //player.view.isAniFinished = false;
     }
 }

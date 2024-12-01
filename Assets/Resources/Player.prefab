@@ -700,7 +700,7 @@ MonoBehaviour:
     jumpForce: 15
     divingForce: 10
     grabRadius: 0.2
-    grabForce: 2
+    grabForce: 1.5
   view: {fileID: 0}
   _cam: {fileID: 3270130517049065077}
   camTransform: {fileID: 1324314045750503273}

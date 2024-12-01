@@ -11,7 +11,6 @@ public class StandUpState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("StandUp 진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.StandingUp);
         //player.view.PlayAnimation(animationIndex);
     }
@@ -26,7 +25,5 @@ public class StandUpState : PlayerState
 
     public override void Exit()
     {
-
-        Debug.Log("StandUp 퇴거");
     }
 }

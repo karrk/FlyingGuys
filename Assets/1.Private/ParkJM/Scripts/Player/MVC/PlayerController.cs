@@ -60,12 +60,14 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     // 물리 충돌 레이어
     private int obstacleLayer;
     private int playerLayer; //grab에 사용할것
+    private int groundLayer;
+    private int conveyorLayer;
+    private int combinedGroundLayer;
 
     // 컨베이어
-    private int conveyorLayer;
     public Vector3 conveyorVel;
 
-    [SerializeField] private Transform grabPoint;
+    public Transform grabPoint;
     private bool isAlreadyGrabbed;
 
     // 임시 변수
@@ -109,7 +111,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         // 레이어 미리 캐싱
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
         playerLayer = LayerMask.NameToLayer("Player");
+        groundLayer = LayerMask.NameToLayer("Ground");
         conveyorLayer = LayerMask.NameToLayer("Conveyor");
+        combinedGroundLayer = (1 << groundLayer) | (1 << conveyorLayer);
     }
 
     private void Update()
@@ -202,6 +206,12 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         rb.velocity = targetVelocity;
 
+        //Vector3 moveForce = targetVelocity - rb.velocity;
+        //rb.AddForce(moveForce, ForceMode.VelocityChange);
+
+
+
+
         Quaternion targetRotation = Quaternion.LookRotation(moveDir);
         targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
@@ -242,7 +252,6 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         //점프 인풋이 들어왔으면
         if (RemoteInput.inputs[model.playerNumber].jumpInput)
         {
-            Debug.Log("점프 인풋 들어옴");
             jumpBufferCounter = jumpBufferTime;
         }
         else
@@ -262,9 +271,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         //    return isGrounded = false;
         //}
 
-        bool rayhit1 = Physics.Raycast(rayPoint1.position, Vector3.down, out groundhit1, rayLength);
-        bool rayhit2 = Physics.Raycast(rayPoint2.position, Vector3.down, out groundhit2, rayLength);
-        bool rayhit3 = Physics.Raycast(rayPoint3.position, Vector3.down, out groundhit3, rayLength);
+        bool rayhit1 = Physics.Raycast(rayPoint1.position, Vector3.down, out groundhit1, rayLength, combinedGroundLayer);
+        bool rayhit2 = Physics.Raycast(rayPoint2.position, Vector3.down, out groundhit2, rayLength, combinedGroundLayer);
+        bool rayhit3 = Physics.Raycast(rayPoint3.position, Vector3.down, out groundhit3, rayLength, combinedGroundLayer);
 
         isGrounded = rayhit1 || rayhit2 || rayhit3;
 
@@ -358,6 +367,16 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         //Gizmos.color = isGrounded ? Color.green : Color.red;
         //Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
+    }
+
+    private void SubscribeEvents()
+    {
+
+    }
+
+    private void UnSubscribeEvents()
+    {
+
     }
 
     public void OnGrabbedEnter()

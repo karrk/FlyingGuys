@@ -11,7 +11,6 @@ public class FallingImpact : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("FallingImpact 진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.FallingImpact);
         //player.view.PlayAnimation(animationIndex);
     }
@@ -27,6 +26,5 @@ public class FallingImpact : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("FallingImpact 퇴거");
     }
 }
