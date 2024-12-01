@@ -118,7 +118,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         if (inGamePlay) // 내일 주석 예정
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.LocalPlayer.NickName = NetWorkManager.NickName ?? $"Player {Random.Range(100, 1000)}";
+            PhotonNetwork.LocalPlayer.NickName = BackendManager.Auth.CurrentUser.DisplayName ?? $"Player {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (PhotonNetwork.InRoom)
@@ -173,12 +173,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                 StartCoroutine(CountDownRoutine());
             }
         }
-
-        if(changedProps.ContainsKey(CustomProperty.LIFE))
-        {
-            
-        }
-
     }
 
     private bool CheckAllLoad()
@@ -199,14 +193,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
 
         RPCDelegate.Instance.PlayStartFX();
-        //for (int i = 3; i >= 0; i--)
-        //{
-        //    photonView.RPC(nameof(ShowCount), RpcTarget.All, i);
-        //    yield return new WaitForSeconds(1f);
-        //}
-
-        ////NetWorkManager.IsPlay = true;
-        //photonView.RPC(nameof(HideText), RpcTarget.All, false);
     }
 
     IEnumerator ClearRoutine()

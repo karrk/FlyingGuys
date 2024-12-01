@@ -16,10 +16,6 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     private bool isTriggerCrown;
     public static bool IsTriggerCrown { get { return Instance.isTriggerCrown; } set { Instance.isTriggerCrown = value; } }
 
-    // 백엔드 생성전 이름 저장 공간
-    private string nickName;
-    public static string NickName { get { return Instance.nickName; } set { Instance.nickName = value; } }
-
     public void Init()
     {
         Instance = this;
