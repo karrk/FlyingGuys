@@ -21,7 +21,7 @@ public class JumpState : PlayerState
     public override void Update()
     {
         // 임시
-        if (player.rb.velocity.y < 0.1f && !player.isGrounded)
+        if (player.rb.velocity.y < 0.1f)// && !player.isGrounded)
         {
             player.ChangeState(E_PlayeState.Fall);
         }

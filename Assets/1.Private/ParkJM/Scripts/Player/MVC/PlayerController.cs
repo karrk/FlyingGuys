@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         if (!isGrounded && curState != E_PlayeState.Bounced)
         {
+            // Todo : 벽에 끼이는 문제 수정필요
             MoveInAir();
         }
 
