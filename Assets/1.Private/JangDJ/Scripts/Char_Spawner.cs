@@ -9,8 +9,6 @@ public class Char_Spawner : MonoBehaviour
 
     [SerializeField] private Tr_Ranger _ranger = new Tr_Ranger();
 
-    // 생성된 플레이어 게임 오브젝트 목록 // Player 컴포넌트를 받아오는게 좋을것같음
-    public List<GameObject> SpawnedPlayers { get; private set; }
     [SerializeField] private Transform _customPointer;
 
     private Vector3[] _poses;
@@ -24,8 +22,6 @@ public class Char_Spawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnedPlayers = new List<GameObject>();
-
         if(_customPointer == null)
         {
             _ranger.CalculateSize();
@@ -53,8 +49,6 @@ public class Char_Spawner : MonoBehaviour
         GameObject newObj = PhotonNetwork.InstantiateRoomObject
             ("Player", _ranger != null ? _ranger[_spawnNumber++] : _poses[_spawnNumber++],
             Quaternion.Euler(Camera.main.transform.forward), data: new object[] { info.Sender });
-
-        SpawnedPlayers.Add(newObj);
     }
 
     private void OnDisable()
