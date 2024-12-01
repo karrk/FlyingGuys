@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     [SerializeField] private Transform rayPoint2;
     [SerializeField] private Transform rayPoint3;
 
+    [SerializeField] private Renderer _renderer;
+
     private RaycastHit groundhit1;
     private RaycastHit groundhit2;
     private RaycastHit groundhit3;
@@ -96,6 +98,10 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         {
             _cam.SetForcePriority(10);
         }
+
+        Vector3 colorValue = player.GetColor();
+        Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
+        _renderer.material.color = color;
 
         curState = E_PlayeState.Idle;
         states[(int)curState].Enter();

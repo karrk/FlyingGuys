@@ -82,20 +82,37 @@ public static class CustomProperty
             return false;
     }
 
-    public static void SetColor(this Player player, Color mat)
+    public static void SetColor(this Player player, Vector3 color)
     {
-        customProperty[COLOR] = mat;
+        customProperty[COLOR] = color;
         player.SetCustomProperties(customProperty);
     }
 
-    public static Color GetColor(this Player player)
+    public static Vector3 GetColor(this Player player)
     {
         PhotonHashtable customProperty = player.CustomProperties;
         if (customProperty.ContainsKey(COLOR))
         {
-            return (Color)customProperty[COLOR];
+            return (Vector3)customProperty[COLOR];
         }
         else
-            return Color.white;
+            return Vector3.one;
     }
+
+    //public static void SetColor(this Player player, Color mat)
+    //{
+    //    customProperty[COLOR] = mat;
+    //    player.SetCustomProperties(customProperty);
+    //}
+
+    //public static Color GetColor(this Player player)
+    //{
+    //    PhotonHashtable customProperty = player.CustomProperties;
+    //    if (customProperty.ContainsKey(COLOR))
+    //    {
+    //        return (Color)customProperty[COLOR];
+    //    }
+    //    else
+    //        return Color.white;
+    //}
 }
