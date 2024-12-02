@@ -120,12 +120,12 @@ public class UI_SetUserData : MonoBehaviour
 
                 user.Child(userID).UpdateChildrenAsync(dic).ContinueWithOnMainThread(task =>
                 {
+                    StartCoroutine(UI_UserDataPanel.Instance.ChangeNickName());
+
                     SttingPanel.SetActive(true);
                     this.gameObject.SetActive(false);
                 });
             }
         });
-
-
     }
 }
