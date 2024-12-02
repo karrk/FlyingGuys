@@ -118,6 +118,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         if (inGamePlay) // 내일 주석 예정
         {
             PhotonNetwork.AutomaticallySyncScene = true;
+
             PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
