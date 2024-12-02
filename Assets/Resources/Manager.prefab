@@ -604,6 +604,9 @@ MonoBehaviour:
       - Type: 5
         Prefab: {fileID: 3911869914990522071, guid: 9673dbe1c1a0a6e4abf969360b0b029e,
           type: 3}
+  sptPrefabs:
+    _list:
+      List: []
 --- !u!114 &807464459930342589
 MonoBehaviour:
   m_ObjectHideFlags: 0
