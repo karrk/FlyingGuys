@@ -92,7 +92,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     IEnumerator GoResultScene()
     {
-        yield return new WaitForSeconds(1f);
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1;
         PhotonNetwork.LoadLevel("Public_Result");
     }
 
