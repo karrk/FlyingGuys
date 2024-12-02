@@ -2579,6 +2579,7 @@ GameObject:
   - component: {fileID: 825301536}
   - component: {fileID: 825301537}
   - component: {fileID: 825301535}
+  - component: {fileID: 825301538}
   m_Layer: 0
   m_Name: Loading
   m_TagString: Untagged
@@ -2599,6 +2600,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 245116529}
+  waitTime: 10
+  num: 0
 --- !u!4 &825301536
 Transform:
   m_ObjectHideFlags: 0
@@ -2628,6 +2631,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCount: {fileID: 133218350}
   matchPlayer: {fileID: 1942592773}
+--- !u!114 &825301538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825301534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &838729238
 GameObject:
   m_ObjectHideFlags: 0
