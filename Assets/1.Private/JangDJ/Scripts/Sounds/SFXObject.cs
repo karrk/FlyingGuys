@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SFXObject : MonoBehaviour, IPooledObject
 {
-    public Enum MyType => E_Object.Sfx;
+    public Enum MyType => E_Object.SoundSource;
 
     public GameObject MyObject => gameObject;
 

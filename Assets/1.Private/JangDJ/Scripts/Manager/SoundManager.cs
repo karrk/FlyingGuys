@@ -27,7 +27,8 @@ public class SoundManager : MonoBehaviour, IManager
     [SerializeField] private AudioSource _SFX;
 
     private BGMList _bgmList;
-    private SFXList _sfxList;
+    private UISFXList _uiSfxList;
+    private StageSFXList _stageSfxList;
 
     private Coroutine _bgmCleaner;
     private Coroutine _bgmChanger;
@@ -93,10 +94,11 @@ public class SoundManager : MonoBehaviour, IManager
     private void ConnectSources()
     {
         _bgmList = GetComponentInChildren<BGMList>();
-        _sfxList = GetComponentInChildren<SFXList>();
+        _uiSfxList = GetComponentInChildren<UISFXList>();
+        _stageSfxList = GetComponentInChildren<StageSFXList>();
 
         _BGM = _bgmList.Source;
-        _SFX = _sfxList.Source;
+        _SFX = _uiSfxList.Source;
     }
 
     /// <summary>
@@ -112,7 +114,7 @@ public class SoundManager : MonoBehaviour, IManager
             case E_SoundType.BGM:
                 _tempKey = BGM_VOLUME_KEY;
                 break;
-            case E_SoundType.SFX:
+            case E_SoundType.UISFX:
                 _tempKey = SFX_VOLUME_KEY;
                 break;
             default:
@@ -137,7 +139,7 @@ public class SoundManager : MonoBehaviour, IManager
                 _mixer.GetFloat(BGM_VOLUME_KEY, out volume);
                 return volume;
                 
-            case E_SoundType.SFX:
+            case E_SoundType.UISFX:
                 _mixer.GetFloat(SFX_VOLUME_KEY, out volume);
                 return volume;
         }
@@ -148,22 +150,49 @@ public class SoundManager : MonoBehaviour, IManager
     /// <summary>
     /// sfx 타입의 음원을 재생합니다.
     /// </summary>
-    public void Play(E_SFX sfxClip)
+    public void Play(E_UISFX sfxClip)
     {
-        _SFX.PlayOneShot(_sfxList[sfxClip]);
+        _SFX.PlayOneShot(_uiSfxList[sfxClip]);
+    }
+
+    /// <summary>
+    /// sfx 타입의 음원을 재생합니다.
+    /// </summary>
+    public void Play(E_StageSFX sfxClip)
+    {
+        _SFX.PlayOneShot(_stageSfxList[sfxClip]);
     }
 
     /// <summary>
     /// 공간계 SFX 타입의 음원을 재생합니다.
     /// networkType.private = 개인만 진행, public = 공용 진행
     /// </summary>
-    public void Play(Vector3 requestPos, E_SFX sfxClip, E_NetworkType networkType = E_NetworkType.Private)
+    public void Play(Vector3 requestPos, E_UISFX sfxClip, E_NetworkType networkType = E_NetworkType.Private)
     {
         if(networkType == E_NetworkType.Private)
         {
-            SFXObject newSfx = ObjPoolManager.Instance.GetObject<SFXObject>(E_Object.Sfx);
+            SFXObject newSfx = ObjPoolManager.Instance.GetObject<SFXObject>(E_Object.SoundSource);
 
-            newSfx.Init(_sfxList[sfxClip], requestPos);
+            newSfx.Init(_uiSfxList[sfxClip], requestPos);
+            newSfx.Play();
+        }
+        else
+        {
+            RPCDelegate.Instance.PlaySFX(requestPos, sfxClip);
+        }
+    }
+
+    /// <summary>
+    /// 공간계 SFX 타입의 음원을 재생합니다.
+    /// networkType.private = 개인만 진행, public = 공용 진행
+    /// </summary>
+    public void Play(Vector3 requestPos, E_StageSFX sfxClip, E_NetworkType networkType = E_NetworkType.Private)
+    {
+        if (networkType == E_NetworkType.Private)
+        {
+            SFXObject newSfx = ObjPoolManager.Instance.GetObject<SFXObject>(E_Object.SoundSource);
+
+            newSfx.Init(_stageSfxList[sfxClip], requestPos);
             newSfx.Play();
         }
         else

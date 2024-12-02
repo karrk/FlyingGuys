@@ -2,7 +2,8 @@ public enum E_SoundType
 {
     Master,
     BGM,
-    SFX,
+    UISFX,
+    StageSFX,
 }
 
 // 해당 enum 순서 변경을 금지합니다.
@@ -34,7 +35,7 @@ public enum E_BGM
 }
 
 // 해당 enum 순서 변경을 금지합니다.
-public enum E_SFX
+public enum E_UISFX
 {
     None = -1,
     S_Highlighted,
@@ -48,4 +49,10 @@ public enum E_SFX
     S_Loser,
 
     Size,
+}
+
+// 해당 enum 순서 변경을 금지합니다.
+public enum E_StageSFX
+{
+
 }
