@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 {
     public static NetWorkManager Instance { get; private set; }
+    public static bool[,] PlayerResults = new bool[8, 2];
 
     private bool isPlay;
     public static bool IsPlay { get { return Instance.isPlay; } set { Instance.isPlay = value; } }
@@ -47,7 +48,7 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log($"연결 종료 : {cause}");
-        if(SceneManager.GetActiveScene().name == "Public_Result")
+        if (SceneManager.GetActiveScene().name == "Public_Result")
         {
             SceneManager.LoadScene("Public_Menu");
         }
