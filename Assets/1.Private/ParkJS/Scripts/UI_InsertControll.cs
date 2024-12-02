@@ -11,11 +11,11 @@ public class UI_InsertControll : MonoBehaviour
         if (nameInput.text == "")
         {
             Debug.LogWarning("랜덤한 닉네임으로 지정합니다.");
-            NetWorkManager.NickName = $"Player {Random.Range(100, 1000)}";
+            //NetWorkManager.NickName = $"Player {Random.Range(100, 1000)}";
         }
         else
         {
-            NetWorkManager.NickName = nameInput.text;
+            //NetWorkManager.NickName = nameInput.text;
         }
 
         SceneManager.LoadScene("UI_MainMenu");
