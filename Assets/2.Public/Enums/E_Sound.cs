@@ -20,7 +20,6 @@ public enum E_SFX
 {
     None = -1,
     S_Test_1,
-    S_Test_2,
 
     Size,
 }

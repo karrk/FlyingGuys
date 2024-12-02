@@ -18,6 +18,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
 
     #region 등록 프리팹 목록 인스펙터를 통해 확인 가능
     [SerializeField] private Prefabs<E_VFX> vfxPrefabs;
+    [SerializeField] private Prefabs<E_Object> objPrefabs;
 
     #endregion
 
@@ -40,6 +41,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
     private void InitPrefabList()
     {
         vfxPrefabs.CopyToTable();
+        objPrefabs.CopyToTable();
     }
 
     private void InitPools()
@@ -47,6 +49,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
         _roomPool = new RoomObjectPool();
 
         _pools.Add(E_PoolType.VFX, new ObjectPool(typeof(E_VFX),vfxPrefabs.GetTable()));
+        _pools.Add(E_PoolType.Object, new ObjectPool(typeof(E_Object), objPrefabs.GetTable()));
     }
 
     /// <summary>

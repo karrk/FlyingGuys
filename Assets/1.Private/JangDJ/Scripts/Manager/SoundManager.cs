@@ -154,6 +154,25 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
+    /// 공간계 SFX 타입의 음원을 재생합니다.
+    /// networkType.private = 개인만 진행, public = 공용 진행
+    /// </summary>
+    public void Play(Vector3 requestPos, E_SFX sfxClip, E_NetworkType networkType = E_NetworkType.Private)
+    {
+        if(networkType == E_NetworkType.Private)
+        {
+            SFXObject newSfx = ObjPoolManager.Instance.GetObject<SFXObject>(E_Object.Sfx);
+
+            newSfx.Init(_sfxList[sfxClip], requestPos);
+            newSfx.Play();
+        }
+        else
+        {
+            RPCDelegate.Instance.PlaySFX(requestPos, sfxClip);
+        }
+    }
+
+    /// <summary>
     /// bgm 타입의 음원을 재생합니다.
     /// </summary>
     /// <param name="fadeInTime"> 현재 설정된 볼륨값까지 올리는데 걸리는 시간 </param>
