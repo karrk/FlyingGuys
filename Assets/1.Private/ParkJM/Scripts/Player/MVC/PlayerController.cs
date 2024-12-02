@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     public float groundAngleValue;
     public Vector3 perpAngle;
 
+    [SerializeField] private Renderer _renderer;
 
     // 상태
     [SerializeField] E_PlayeState curState;
@@ -104,6 +105,10 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         {
             _cam.SetForcePriority(10);
         }
+
+        Vector3 colorValue = player.GetColor();
+        Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
+        _renderer.material.color = color;
 
         curState = E_PlayeState.Idle;
         states[(int)curState].Enter();
