@@ -2,6 +2,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using Photon.Pun;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -66,6 +67,7 @@ public class BackendManager : MonoBehaviour, IManager
     public async void Logout()
     {
         await ConvertUseState(false);
+        PhotonNetwork.LoadLevel("Public_Login");
     }
 
     public class User

@@ -10,6 +10,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviourPun, IGrabbable
 {
     public Rigidbody rb;
+    private CapsuleCollider playerCollider;
     public Vector3 moveDir;
     public bool isJumpable;
     public bool isDiving;
@@ -53,6 +54,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     public Vector3 perpAngle;
 
     [SerializeField] private Renderer _renderer;
+    
+    // 벽 체크
+    [SerializeField] WallChecker wallChecker;
 
     // 상태
     [SerializeField] E_PlayeState curState;
@@ -81,22 +85,16 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         player = (Player)photonView.InstantiationData[0];
         model.playerNumber = player.GetPlayerNumber();
         view = GetComponent<PlayerView>();
+        playerCollider = GetComponent<CapsuleCollider>();
+        
         rayPoint1 = transform.Find("RayPoints/rayPointForward");
         rayPoint2 = transform.Find("RayPoints/rayPointLeft");
         rayPoint3 = transform.Find("RayPoints/rayPointRight");
         grabPoint = transform.Find("GrabPoint");
+        wallChecker = GetComponentInChildren<WallChecker>();
 
         // 상태
-        states[(int)E_PlayeState.Idle] = new IdleState(this);
-        states[(int)E_PlayeState.Run] = new RunState(this);
-        states[(int)E_PlayeState.Jump] = new JumpState(this);
-        states[(int)E_PlayeState.Fall] = new FallState(this);
-        states[(int)E_PlayeState.Diving] = new DivingState(this);
-        states[(int)E_PlayeState.FallingImpact] = new FallingImpact(this);
-        states[(int)E_PlayeState.StandUp] = new StandUpState(this);
-        states[(int)E_PlayeState.Bounced] = new BouncedState(this);
-        states[(int)E_PlayeState.Grabbing] = new GrabbingState(this);
-        states[(int) E_PlayeState.Grabbed] = new GrabbedState(this);
+        InitStates();
     }
 
     private void Start()
@@ -130,22 +128,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         HandleMoveInputs();
         ControlJumpBuffer();
-
-
         states[(int)curState].Update();
-
-        //Debug.Log(rb.velocity);
-
-        //if (RemoteInput.inputs[model.playerNumber].jumpInput && !isJumping)
-        //{
-        //    Debug.Log("점프 입력됨");
-
-
-        //    //JumpTemp();
-        //    //RemoteInput.inputs[model.playerNumber].jumpInput = false;
-        //}
-
-
     }
 
     private void FixedUpdate()
@@ -155,18 +138,14 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         
         states[(int)curState].FixedUpdate();
         CheckGround();
+        //CheckWall();
 
         //MoveOnConveyor();
 
         if (!isGrounded && curState != E_PlayeState.Bounced)
         {
-            // Todo : 벽에 끼이는 문제 수정필요
             MoveInAir();
         }
-
-        //moveDir = RemoteInput.inputs[playerNumber].MoveDir;
-        //rotVec = RemoteInput.inputs[playerNumber].RotVec;
-        //rb.velocity = moveDir.normalized * model.moveSpeed + Vector3.up * rb.velocity.y;
     }
 
     private void LateUpdate()
@@ -202,21 +181,23 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public void MoveInAir()
     {
-        // Run의 로직을 속도만 다르게한것 아마도 수정 필요
-
         if (moveDir == Vector3.zero)
             return;
+
 
         Vector3 targetVelocity = moveDir * model.moveSpeedInAir;
         targetVelocity.y = rb.velocity.y;
 
-        rb.velocity = targetVelocity;
+        if (wallChecker.IsWallDetected)
+        {
+            targetVelocity.z = 0f;
+            targetVelocity.x = 0f;
+        }
 
+
+        rb.velocity = targetVelocity;
         //Vector3 moveForce = targetVelocity - rb.velocity;
         //rb.AddForce(moveForce, ForceMode.VelocityChange);
-
-
-
 
         Quaternion targetRotation = Quaternion.LookRotation(moveDir);
         targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
@@ -228,33 +209,31 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         );
 
 
-
+            
     }
 
-    //private void JumpTemp()
-    //{
-    //    if (RemoteInput.inputs[model.playerNumber].jumpInput)
-    //    {
-    //        Debug.Log("점프 입력됨");
-    //        rb.AddForce(Vector3.up * model.jumpForce, ForceMode.Impulse);
-    //        RemoteInput.inputs[model.playerNumber].jumpInput = false;
-    //    }
-
-    //}
+    private void InitStates()
+    {
+        // 상태
+        states[(int)E_PlayeState.Idle] = new IdleState(this);
+        states[(int)E_PlayeState.Run] = new RunState(this);
+        states[(int)E_PlayeState.Jump] = new JumpState(this);
+        states[(int)E_PlayeState.Fall] = new FallState(this);
+        states[(int)E_PlayeState.Diving] = new DivingState(this);
+        states[(int)E_PlayeState.FallingImpact] = new FallingImpact(this);
+        states[(int)E_PlayeState.StandUp] = new StandUpState(this);
+        states[(int)E_PlayeState.Bounced] = new BouncedState(this);
+        states[(int)E_PlayeState.Grabbing] = new GrabbingState(this);
+        states[(int)E_PlayeState.Grabbed] = new GrabbedState(this);
+    }
 
     public void HandleMoveInputs()
     {
-        //if (!photonView.IsMine)
-        //    return;
-
         moveDir = RemoteInput.inputs[model.playerNumber].MoveDir;
     }
 
     private void ControlJumpBuffer()
     {
-        //if (!photonView.IsMine)
-        //    return;
-
         //점프 인풋이 들어왔으면
         if (RemoteInput.inputs[model.playerNumber].jumpInput)
         {
@@ -266,17 +245,11 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     private void HandleCamInput()
     {
-        //Debug.Log(_cam.gameObject.name);
         rotVec = RemoteInput.inputs[model.playerNumber].RotVec;
     }
 
     private void CheckGround()
     {
-        //if (rb.velocity.y > 0)
-        //{
-        //    return isGrounded = false;
-        //}
-
         bool rayhit1 = Physics.Raycast(rayPoint1.position, Vector3.down, out groundhit1, rayLength, combinedGroundLayer);
         bool rayhit2 = Physics.Raycast(rayPoint2.position, Vector3.down, out groundhit2, rayLength, combinedGroundLayer);
         bool rayhit3 = Physics.Raycast(rayPoint3.position, Vector3.down, out groundhit3, rayLength, combinedGroundLayer);
@@ -323,6 +296,24 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         }
     }
 
+    //private void CheckWall()
+    //{
+    //    if (curState == E_PlayeState.Bounced) // + isGrounded 할 예정
+    //        return;
+    //    if (Physics.BoxCast(wallCheckPoint.position, wallCheckArea, wallCheckPoint.forward, out RaycastHit hit, wallCheckPoint.transform.rotation, wallCheckArea.z)) // Quaternion.identity 도 안됨
+    //    {
+    //        Debug.Log($"벽체크 감지된것 {hit.collider.name}");
+    //        moveDir = Vector3.zero;
+    //        //Vector3 slideDir = Vector3.Cross(hit.normal, Vector3.up).normalized;
+    //        //rb.velocity = new Vector3(slideDir.x * rb.velocity.x, rb.velocity.y, slideDir.z * rb.velocity.z);
+    //    }
+    //}
+    //private void DrawWallCheckGizmo()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireCube(wallCheckPoint.position, wallCheckArea);
+    //}
+
     public GameObject CheckGrabPoint()
     {
         Collider[] grabbedColliders;
@@ -331,12 +322,14 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         if (grabbedColliders.Length > 0)
         {
-            IGrabbable grabbableObject = grabbedColliders[0].GetComponent<IGrabbable>();
-            //Debug.Log("grabbable 오브젝트 잡음");
-            grabbableObject.OnGrabbedEnter();
-            return grabbedColliders[0].gameObject;
+            //IGrabbable grabbableObject = grabbedColliders[0].GetComponent<IGrabbable>();
+            if(grabbedColliders[0].TryGetComponent<IGrabbable>(out IGrabbable grabbableObject))
+            {
+                //Debug.Log("grabbable 오브젝트 잡음");
+                grabbableObject.OnGrabbedEnter();
+                return grabbedColliders[0].gameObject;
+            }
         }
-
         return null;
     }
 
@@ -366,13 +359,12 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         }
     }
 
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green; // 기즈모 색상을 설정 (예: 녹색)
-        Gizmos.DrawWireSphere(grabPoint.position, model.grabRadius);
-
-        //Gizmos.color = isGrounded ? Color.green : Color.red;
-        //Gizmos.DrawLine(transform.position + Vector3.up * 0.12f, transform.position + Vector3.down * rayLength);
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawWireSphere(grabPoint.position, model.grabRadius);
+        //DrawWallCheckGizmo();
     }
 
     private void SubscribeEvents()
@@ -389,7 +381,6 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         if(curState != E_PlayeState.Grabbed)
         {
-            //Debug.Log($"OnGrabbedEnter 실행");
             ChangeState(E_PlayeState.Grabbed);
         }
     }
@@ -398,7 +389,6 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         if(curState == E_PlayeState.Grabbed)
         {
-            //Debug.Log($"OnGrabbedLeave 실행");
             ChangeState(E_PlayeState.Idle);
         }
     }

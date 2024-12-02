@@ -25,8 +25,7 @@ public enum E_VFX
 
 public enum E_Object
 {
-    Cannon_Small,
-    Cannon
+    Sfx,
 }
 
 public enum E_RoomObject
