@@ -11,7 +11,6 @@ public class FallState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Fall 진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.Falling);
         //player.view.SetAnimationTrigger(E_PlayeState.Fall);
         //player.view.PlayAnimation(animationIndex);
@@ -41,6 +40,5 @@ public class FallState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Fall 종료");
     }
 }

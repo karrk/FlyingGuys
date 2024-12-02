@@ -12,8 +12,6 @@ public class IdleState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Idle 진입");
-
         //player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
         player.view.SetBoolParameter(E_AniParameters.Idling, true);
 
@@ -27,9 +25,9 @@ public class IdleState : PlayerState
         {
             player.ChangeState(E_PlayeState.Jump);
         }
-        else if (player.moveDir != Vector3.zero && player.isGrounded)
+        else if (player.moveDir != Vector3.zero && player.isGrounded )
         {
-            Debug.Log("이동 입력 idle 상태에 들어옴");
+            //Debug.Log("이동 입력 idle 상태에 들어옴");
             player.ChangeState(E_PlayeState.Run);
         }
         else if(!player.isGrounded && player.rb.velocity.y != 0)
@@ -53,12 +51,11 @@ public class IdleState : PlayerState
 
     public override void FixedUpdate()
     {
-        
+        player.MoveOnConveyor();
     }
 
     public override void Exit()
     {
-        Debug.Log("Idle 종료");
         //player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
         player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }

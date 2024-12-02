@@ -12,7 +12,6 @@ public class RunState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Run 진입");
         //player.view.SetBoolParameter(E_AniParameters.Running, true);
 
         //player.view.BroadCastBoolParameter(E_AniParameters.Running, true);
@@ -64,8 +63,6 @@ public class RunState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Run 종료");
-
         //player.view.BroadCastBoolParameter(E_AniParameters.Running, false);
         player.view.SetBoolParameter(E_AniParameters.Running, false);
 
@@ -84,7 +81,7 @@ public class RunState : PlayerState
             Vector3 slopeDirection = Vector3.ProjectOnPlane(player.moveDir, player.chosenHit.normal).normalized;
 
             targetVelocity = slopeDirection * player.model.moveSpeed;
-            player.rb.velocity = targetVelocity;
+            //player.rb.velocity = targetVelocity;
 
             //targetVelocity = player.moveDir * player.perpAngle * player.model.moveSpeed;
         }
@@ -93,14 +90,36 @@ public class RunState : PlayerState
             targetVelocity = player.moveDir * player.model.moveSpeed;
             targetVelocity.y = player.rb.velocity.y;
 
-            player.rb.velocity = targetVelocity;
+            //player.rb.velocity = targetVelocity;
         }
 
+        // 여기서 앞서 계산한 targetVelocity방향에 따른 속도 증감 처리
+        // 플레이어의 최대 속도는 제한되어야함, 컨베이어 벨트 위에서 최대속도를 넘어설수도 있도록 속도처리도 될 수 있게
 
+        //if (targetVelocity.sqrMagnitude > player.model.maxSpeed * player.model.maxSpeed)
+        //{
+        //    Debug.Log("제한됨"); // 어지간한 상황에선 안나올듯
+        //    targetVelocity = targetVelocity.normalized * player.model.maxSpeed;
+        //}
 
-        //player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
+        Vector3 moveForce = targetVelocity - player.rb.velocity;
+
+        if (player.onConveyor)
+        {
+            player.rb.AddForce(moveForce + player.conveyorVel, ForceMode.VelocityChange);
+        }
+        else
+        {
+            player.rb.AddForce(moveForce, ForceMode.VelocityChange);
+        }
+
+        //Debug.Log(player.rb.velocity.sqrMagnitude);
+        //moveForce = Vector3.ClampMagnitude(moveForce, player.model.maxSpeed);
+        
+       
+        
     }
-
+    //player.rb.velocity = player.moveDir * player.model.moveSpeed + Vector3.up * player.rb.velocity.y;
     private void LookForward()
     {
         if (player.moveDir != Vector3.zero)

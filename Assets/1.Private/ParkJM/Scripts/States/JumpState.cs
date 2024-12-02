@@ -11,7 +11,6 @@ public class JumpState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Jump 진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.Jumping);
         //player.view.SetAnimationTrigger(E_PlayeState.Jump);
         //player.view.PlayAnimation(animationIndex);
@@ -22,15 +21,18 @@ public class JumpState : PlayerState
     public override void Update()
     {
         // 임시
-        if (player.rb.velocity.y < 0f && !player.isGrounded)
+        if (player.rb.velocity.y < 0.1f)// && !player.isGrounded)
         {
-            Debug.Log("jump에서 Fall로 전환");
             player.ChangeState(E_PlayeState.Fall);
         }
         else if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
             player.ChangeState(E_PlayeState.Diving);
         }
+        //else if(player.isGrounded)
+        //{
+        //    player.ChangeState(E_PlayeState.Idle);
+        //}
 
         //else if(player.isGrounded)
         {
@@ -64,14 +66,11 @@ public class JumpState : PlayerState
     private void Jump()
     {
         player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
-        Debug.Log("점프 힘을 줌");
-        
         player.isJumpable = false;
-        Debug.Log("isJumpable을 false로 바꿈");
     }
 
     public override void Exit()
     {
-        Debug.Log("Jump 종료");
+        
     }
 }
