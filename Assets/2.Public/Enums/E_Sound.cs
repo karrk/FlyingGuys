@@ -37,8 +37,6 @@ public enum E_BGM
 public enum E_SFX
 {
     None = -1,
-    //S_Test_1,
-    //S_Test_2,
     S_Highlighted,
     S_Pressed,
     S_Exit,

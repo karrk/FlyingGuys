@@ -26,6 +26,17 @@ public class RPCDelegate : MonoBehaviourPun
         EffectManager.Instance.PlayFX(requestPos, vfxType, E_NetworkType.Private);
     }
 
+    public void PlaySFX(Vector3 requestPos, E_SFX sfxType)
+    {
+        photonView.RPC(nameof(PlaySFXRPC), RpcTarget.All, requestPos, sfxType);
+    }
+
+    [PunRPC]
+    private void PlaySFXRPC(Vector3 requestPos, E_SFX sfxType)
+    {
+        SoundManager.Instance.Play(requestPos, sfxType, E_NetworkType.Private);
+    }
+
     public void DeadPlayer(int viewId)
     {
         if (PhotonNetwork.IsMasterClient == false)
@@ -33,6 +44,8 @@ public class RPCDelegate : MonoBehaviourPun
 
         photonView.RPC(nameof(DeadPlayerRPC), RpcTarget.MasterClient, viewId);
     }
+
+    
 
     [PunRPC]
     private void DeadPlayerRPC(int viewId)

@@ -15,37 +15,37 @@ public class OBJ_Hurdle_Cannon : MonoBehaviourPunCallbacks
     [SerializeField] float BulletRetrunTime;
 
 
-    void Start()
-    {
-        IsGamePlaying = true;
-        StartCoroutine(IShot(ShotCool));
-    }
+    //void Start()
+    //{
+    //    IsGamePlaying = true;
+    //    StartCoroutine(IShot(ShotCool));
+    //}
 
-    IEnumerator IShot(float wait)
-    {
-        yield return new WaitForSeconds(5f);
+    //IEnumerator IShot(float wait)
+    //{
+    //    yield return new WaitForSeconds(5f);
 
-        while (IsGamePlaying)
-        {
-            if (!PhotonNetwork.LocalPlayer.IsMasterClient) yield break;
+    //    while (IsGamePlaying)
+    //    {
+    //        if (!PhotonNetwork.LocalPlayer.IsMasterClient) yield break;
 
-            Debug.Log("IShot 코루틴 실행됨");
+    //        Debug.Log("IShot 코루틴 실행됨");
 
-            photonView.RPC(nameof(Shot), RpcTarget.All, muzzlePoint.position, muzzlePoint.rotation);
-            yield return new WaitForSeconds(wait);
-        }
-    }
+    //        photonView.RPC(nameof(Shot), RpcTarget.All, muzzlePoint.position, muzzlePoint.rotation);
+    //        yield return new WaitForSeconds(wait);
+    //    }
+    //}
 
-    [PunRPC]
-    public void Shot(Vector3 position, Quaternion rotation)
-    {
-        GameObject bulletOBJ = ObjPoolManager.Instance.GetObject(E_Object.Cannon);
-        bulletOBJ.GetComponent<Rigidbody>().position = position;
-        bulletOBJ.GetComponent<Rigidbody>().rotation = rotation;
+    //[PunRPC]
+    //public void Shot(Vector3 position, Quaternion rotation)
+    //{
+    //    GameObject bulletOBJ = ObjPoolManager.Instance.GetObject(E_Object.Cannon);
+    //    bulletOBJ.GetComponent<Rigidbody>().position = position;
+    //    bulletOBJ.GetComponent<Rigidbody>().rotation = rotation;
 
-        bulletOBJ.GetComponent<OBJ_Hurdle_CannonBullet>().returnTime = BulletRetrunTime;
-        bulletOBJ.GetComponent<Rigidbody>().velocity = ShootSpeed * muzzlePoint.forward;
-    }
+    //    bulletOBJ.GetComponent<OBJ_Hurdle_CannonBullet>().returnTime = BulletRetrunTime;
+    //    bulletOBJ.GetComponent<Rigidbody>().velocity = ShootSpeed * muzzlePoint.forward;
+    //}
 
 
 }
