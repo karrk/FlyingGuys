@@ -17,6 +17,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         SetDescriptionText("Server connecting...");
     }
 
+    [PunRPC]
     private void SetDescriptionText(string msg)
     {
         descriptionText.text = msg;
@@ -41,7 +42,13 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient == false)
             return;
 
-        if(playGameRoutine != null)
+        if(PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            StopCoroutine(playGameRoutine);
+            return;
+        }
+
+        else if(playGameRoutine != null)
         {
             Debug.Log("실행 중인 코루틴이 있음");
             StopCoroutine(playGameRoutine);
@@ -65,6 +72,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         }
 
         Debug.Log("게임 시작할 예정");
+        StartCoroutine(WaitPlayerRoutine());
         yield return null;
     }
 
@@ -97,7 +105,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     IEnumerator WaitPlayerRoutine()
     {
-        SetDescriptionText("Game Loading...");
+        photonView.RPC(nameof(SetDescriptionText), RpcTarget.All, "Game Loading...");
         yield return new WaitForSeconds(3f);
 
         if (PhotonNetwork.IsMasterClient == false)
@@ -108,7 +116,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     private void ChoiceGameScene()
     {
-        num = Random.Range(0, 4);
+        num = Random.Range(0, 3);
         Debug.Log($"당첨된 수 {num}");
         switch (num)
         {

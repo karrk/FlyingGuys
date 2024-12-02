@@ -26,7 +26,7 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
         Debug.Log("Master Server Connect");
         IsTriggerCrown = false;
         RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 2;
+        options.MaxPlayers = 5;
         options.IsVisible = false;
 
         PhotonNetwork.JoinOrCreateRoom("Room11", options, TypedLobby.Default);
