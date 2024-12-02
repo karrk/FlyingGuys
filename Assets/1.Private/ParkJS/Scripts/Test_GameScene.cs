@@ -107,7 +107,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         deadZone = GameObject.FindGameObjectWithTag("Target")?.GetComponent<DeadZone>();
 
         winImage = winUI.GetComponentInChildren<Image>();
-        loseImage = winUI.GetComponentInChildren<Image>();
+        loseImage = loseUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
 
