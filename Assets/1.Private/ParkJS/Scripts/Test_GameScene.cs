@@ -118,8 +118,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         if (inGamePlay) // 내일 주석 예정
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            // 임시 주석 처리
-            // PhotonNetwork.LocalPlayer.NickName = BackendManager.Auth.CurrentUser.DisplayName ?? $"Player {Random.Range(100, 1000)}";
+
+            PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (PhotonNetwork.InRoom)
@@ -180,7 +180,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     {
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            if (player.GetLoad() == false || PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.MaxPlayers)
+            if (player.GetLoad() == false || PhotonNetwork.PlayerList.Length != PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 return false;
             }
