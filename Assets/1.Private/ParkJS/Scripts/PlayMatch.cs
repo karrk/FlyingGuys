@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayMatch : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_Text descriptionText;
+    [SerializeField] float waitTime;
     [SerializeField] int num;
 
     private void Start()
@@ -16,6 +17,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         SetDescriptionText("Server connecting...");
     }
 
+    [PunRPC]
     private void SetDescriptionText(string msg)
     {
         descriptionText.text = msg;
@@ -34,14 +36,44 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         // 2명이 입장상태가 확인되면, 5초?? 더 기다리고 그냥 시작 => 가능??
     }
 
+    Coroutine playGameRoutine;
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        if (PhotonNetwork.IsMasterClient == false)
+            return;
+
+        if(PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            StopCoroutine(playGameRoutine);
+            return;
+        }
+
+        else if(playGameRoutine != null)
+        {
+            Debug.Log("실행 중인 코루틴이 있음");
+            StopCoroutine(playGameRoutine);
+        }
+
         if(PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             // 2명이 입장한 상태
             // 지정한 시간 후 참여인원이 없으면 게임 시작
             // 참여하는 인원이 있으면 지정된 시간 초기화
+            playGameRoutine = StartCoroutine(PlayGameRoutine());
         }
+    }
+
+    IEnumerator PlayGameRoutine()
+    {
+        for (int i = (int)waitTime; i >= 0; i--)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"{i} s");
+        }
+
+        Debug.Log("게임 시작할 예정");
+        StartCoroutine(WaitPlayerRoutine());
+        yield return null;
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -52,7 +84,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
             Debug.Log($"모든 플레이어 준비 : {allReady}");
             if (allReady && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                StartCoroutine(WaitPlayerRoutin());
+                StartCoroutine(WaitPlayerRoutine());
             }
         }
     }
@@ -71,9 +103,9 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         return true;
     }
 
-    IEnumerator WaitPlayerRoutin()
+    IEnumerator WaitPlayerRoutine()
     {
-        SetDescriptionText("Game Loading...");
+        photonView.RPC(nameof(SetDescriptionText), RpcTarget.All, "Game Loading...");
         yield return new WaitForSeconds(3f);
 
         if (PhotonNetwork.IsMasterClient == false)
@@ -96,6 +128,9 @@ public class PlayMatch : MonoBehaviourPunCallbacks
                 break;
             case 2: // 점프 쇼다운
                 PhotonNetwork.LoadLevel("Stage3");
+                break;
+            case 3: // 롤아웃
+                PhotonNetwork.LoadLevel("Stage4");
                 break;
         }
     }
