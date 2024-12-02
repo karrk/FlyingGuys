@@ -15,7 +15,7 @@ public class UI_MainControll : MonoBehaviour
     {
         if(PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Disconnect();
+            PhotonNetwork.LeaveRoom();
         }
         matchPlayer.SetActive(false);
     }

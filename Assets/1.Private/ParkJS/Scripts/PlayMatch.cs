@@ -28,6 +28,12 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         Debug.Log("방 진입");
         SetDescriptionText("Wait for Players...");
         PhotonNetwork.LocalPlayer.SetReady(true);
+
+        if (PhotonNetwork.IsMasterClient == false)
+            return;
+
+        num = Random.Range(0, 4);
+        Debug.Log($"선정된 수 {num}");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -116,8 +122,6 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     private void ChoiceGameScene()
     {
-        num = Random.Range(0, 4);
-        Debug.Log($"당첨된 수 {num}");
         switch (num)
         {
             case 0: // 산 무너져유
