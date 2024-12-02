@@ -22,7 +22,7 @@ public class ColorPicker : MonoBehaviour
     private void OnDisable()
     {
         Vector3 convertedValue = new Vector3(SelectedColor.r, SelectedColor.g, SelectedColor.b);
-        //PhotonNetwork.LocalPlayer.SetColor(convertedValue);
+        PhotonNetwork.LocalPlayer.SetColor(convertedValue);
         LastPostion = _picker.transform.position;
     }
     private void InitSize()
