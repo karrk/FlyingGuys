@@ -152,8 +152,6 @@ public class JumpStarter : StageStarter
             StopCoroutine(_rotater);
     }
 
-    
-
     [System.Serializable]
     private class JumpSpeed
     {
@@ -161,7 +159,6 @@ public class JumpStarter : StageStarter
         public float Roller2;
         public float Duration;
     }
-
 
 }
 

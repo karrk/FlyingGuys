@@ -3,6 +3,7 @@ public enum E_PoolType
     None = -1,
     VFX,
     Object,
+    Sprite,
     Size
 }
 
@@ -33,6 +34,11 @@ public enum E_RoomObject
     Canon_Small,
     Canon,
     Size,
+}
+
+public enum E_Sprite
+{
+    Ring,
 }
 
 //public enum E_MyType

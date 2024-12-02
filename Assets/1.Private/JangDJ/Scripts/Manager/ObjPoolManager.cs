@@ -102,9 +102,20 @@ public class ObjPoolManager : MonoBehaviour, IManager
         }
     }
 
+    /// <summary>
+    /// 룸 오브젝트를 반환합니다.
+    /// </summary>
     public void ReturnObj(E_RoomObject type, int id)
     {
         _roomPool.ReturnObj(type, id);
+    }
+
+    /// <summary>
+    /// 룸 오브젝트풀을 초기화합니다.
+    /// </summary>
+    public void ClearRoomObjpools()
+    {
+        _roomPool.ClearPools();
     }
 
     #region 신규 오브젝트 등록방법

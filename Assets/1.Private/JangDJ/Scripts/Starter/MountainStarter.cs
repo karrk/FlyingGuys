@@ -38,4 +38,9 @@ public class MountainStarter : StageStarter
     {
         _timeline.Play();
     }
+
+    private void OnDisable()
+    {
+        ObjPoolManager.Instance.ClearRoomObjpools();
+    }
 }
