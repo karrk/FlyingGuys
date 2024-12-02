@@ -116,7 +116,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     private void ChoiceGameScene()
     {
-        num = Random.Range(0, 3);
+        num = Random.Range(0, 4);
         Debug.Log($"당첨된 수 {num}");
         switch (num)
         {
