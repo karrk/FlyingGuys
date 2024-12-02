@@ -40,7 +40,8 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log($"연결 종료 : {cause}");
-        SceneManager.LoadScene("Public_Menu");
+        if(SceneManager.GetActiveScene().name == "Public_Result")
+            SceneManager.LoadScene("Public_Menu");
     }
 
 }
