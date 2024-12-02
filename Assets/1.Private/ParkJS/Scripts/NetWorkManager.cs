@@ -35,12 +35,22 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     public override void OnLeftRoom()
     {
         Debug.Log("방 나가기");
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log($"실패 사유 : {message}");
+        PhotonNetwork.CreateRoom($"Room {Random.Range(100, 1000)}", new RoomOptions { MaxPlayers = 5 }, TypedLobby.Default);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log($"연결 종료 : {cause}");
-        SceneManager.LoadScene("UI_MainMenu");
+        if(SceneManager.GetActiveScene().name == "Public_Result")
+        {
+            SceneManager.LoadScene("Public_Menu");
+        }
     }
 
 }

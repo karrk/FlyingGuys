@@ -154,7 +154,7 @@ MonoBehaviour:
   _maxRotY: 4
   _minTrZ: 1
   _maxTrZ: 4
-  _mouseSensitivity: 1
+  _mouseSensitivity: 0.6
 --- !u!135 &3529093646358334795
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -716,6 +716,7 @@ MonoBehaviour:
   onConveyor: 0
   groundAngleValue: 0
   perpAngle: {x: 0, y: 0, z: 0}
+  _renderer: {fileID: 5524819013060333674}
   wallChecker: {fileID: 0}
   curState: 0
   conveyorVel: {x: 0, y: 0, z: 0}
