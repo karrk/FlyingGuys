@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private int groundLayer;
     private int conveyorLayer;
     private int combinedGroundLayer;
+    private int ignoreWallCheckLayer;
 
     // 컨베이어
     public Vector3 conveyorVel;
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
         conveyorLayer = LayerMask.NameToLayer("Conveyor");
+        ignoreWallCheckLayer = ~(1 << LayerMask.NameToLayer("WallCheck"));
         combinedGroundLayer = (1 << groundLayer) | (1 << conveyorLayer);
     }
 
@@ -318,7 +320,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         Collider[] grabbedColliders;
 
-        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
+        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius, ignoreWallCheckLayer);
 
         if (grabbedColliders.Length > 0)
         {

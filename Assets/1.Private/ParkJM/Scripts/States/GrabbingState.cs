@@ -136,7 +136,6 @@ public class GrabbingState : PlayerState
                 if (grabbedObject != null) 
                 {
                     // 새롭게 잡힌 오브젝트가 있을 경우
-                    // 임시 위치
                     EffectManager.Instance.PlayFX(player.grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
                 }
             }

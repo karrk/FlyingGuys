@@ -1756,7 +1756,7 @@ GameObject:
   - component: {fileID: 4376338658289752306}
   - component: {fileID: 385125770699157780}
   - component: {fileID: 7153393022596577129}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: WallCheckCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
