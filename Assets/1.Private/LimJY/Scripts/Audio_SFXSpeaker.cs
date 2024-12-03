@@ -9,7 +9,7 @@ public class Audio_SFXSpeaker : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             case "leftButton":  break;
             case "rightButton": break;
-            default: SoundManager.Instance.Play(E_SFX.S_Highlighted); break;
+            default: SoundManager.Instance.Play(E_UISFX.S_Highlighted); break;
         }
     }
 
@@ -17,10 +17,10 @@ public class Audio_SFXSpeaker : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         switch (gameObject.name)
         {
-            case "_GamePlayButton": SoundManager.Instance.Play(E_SFX.S_GamePlay); break;
-            case "leftButton": SoundManager.Instance.Play(E_SFX.S_LoadingArrowLeft); break;
-            case "rightButton": SoundManager.Instance.Play(E_SFX.S_LoadingArrowRight); break;
-            default: SoundManager.Instance.Play(E_SFX.S_Pressed); break;
+            case "_GamePlayButton": SoundManager.Instance.Play(E_UISFX.S_GamePlay); break;
+            case "leftButton": SoundManager.Instance.Play(E_UISFX.S_LoadingArrowLeft); break;
+            case "rightButton": SoundManager.Instance.Play(E_UISFX.S_LoadingArrowRight); break;
+            default: SoundManager.Instance.Play(E_UISFX.S_Pressed); break;
         }
     }
 
@@ -30,7 +30,7 @@ public class Audio_SFXSpeaker : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             case "leftButton": break;
             case "rightButton": break;
-            default: SoundManager.Instance.Play(E_SFX.S_Exit); break;
+            default: SoundManager.Instance.Play(E_UISFX.S_Exit); break;
         }
     }
 }

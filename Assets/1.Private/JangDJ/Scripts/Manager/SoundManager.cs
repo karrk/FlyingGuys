@@ -229,8 +229,9 @@ public class SoundManager : MonoBehaviour, IManager
             return;
         }
 
-        _BGM.PlayOneShot(clip);
-        _bgmCleaner = StartCoroutine(DelayClean(clip.length));
+        _BGM.clip = clip;
+        _BGM.Play();
+        //_bgmCleaner = StartCoroutine(DelayClean(clip.length));
     }
 
     private IEnumerator DelayClean(float delay)
@@ -245,7 +246,8 @@ public class SoundManager : MonoBehaviour, IManager
             StopCoroutine(_fadeRoutine);
 
         yield return  FadeRoutine(fadeOutTime,false);
-        _BGM.PlayOneShot(clip);
+        _BGM.clip = clip;
+        _BGM.Play();
         _bgmCleaner = StartCoroutine(DelayClean(clip.length));
         _fadeRoutine = StartCoroutine(FadeRoutine(fadeInTime, true));
     }
