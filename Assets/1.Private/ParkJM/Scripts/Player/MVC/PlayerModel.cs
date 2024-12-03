@@ -20,8 +20,9 @@ public class PlayerModel
     public event Action OnPlayerJumped;
     public event Action OnPlayerDove;
     public event Action OnPlayerFloorImpacted;
-    public event Action OnPlayerGrabbing;
+    public event Action OnPlayerGrabbingObject;
     public event Action OnPlayerGrabbed;
+    public event Action OnPlayerBounced;
 
     public void InvokePlayerJumped()
     {
@@ -40,11 +41,16 @@ public class PlayerModel
 
     public void InvokePlayerGrabbing()
     {
-        OnPlayerGrabbing?.Invoke();
+        OnPlayerGrabbingObject?.Invoke();
     }
 
     public void InvokePlayerGrabbed()
     {
         OnPlayerGrabbed?.Invoke();
+    }
+
+    public void InvokePlayerBounced()
+    {
+        OnPlayerBounced?.Invoke();
     }
 }

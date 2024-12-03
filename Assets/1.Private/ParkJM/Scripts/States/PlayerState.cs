@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerState : BaseState
 {
     public PlayerController player;
-    //public int animationIndex;
     public PlayerState(PlayerController player)
     {
         this.player = player;

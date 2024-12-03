@@ -8,14 +8,11 @@ public class WallChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"벽 감지됨: {other.name}");
         IsWallDetected = true;
-
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"벽에서 나감: {other.name}");
         IsWallDetected = false;
     }
 }

@@ -6,12 +6,12 @@ public class DivingState : PlayerState
 {
     public DivingState(PlayerController player) : base(player)
     {
-        //animationIndex = (int)E_PlayeState.Diving;
     }
 
     public override void Enter()
     {
         player.view.BroadCastTriggerParameter(E_AniParameters.Diving);
+        player.model.InvokePlayerDove();
 
         //Vector3 diveSpeed = player.moveDir * player.model.divingForce;
         //diveSpeed.y = 5.0f; // 임시 y축 힘
