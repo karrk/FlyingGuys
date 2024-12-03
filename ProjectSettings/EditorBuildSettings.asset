@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1.Private/JangDJ/Scenes/Stage2.unity
     guid: 90676b69ac547934a9f7aad464899404
+  - enabled: 1
+    path: Assets/1.Private/JangDJ/Scenes/Stage4.unity
+    guid: ddb891dae81905341bd4444f7c1b9a73
   m_configObjects: {}

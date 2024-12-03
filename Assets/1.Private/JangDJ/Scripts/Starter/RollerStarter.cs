@@ -26,8 +26,8 @@ public class RollerStarter : StageStarter
     private IEnumerator RollerStart()
     {
         _anim.Play();
-        _emptyFloor.SetActive(false);
         yield return StageFXs.Instance.StartCountDown();
+        _emptyFloor.SetActive(false);
         NetWorkManager.IsPlay = true;
         StartCoroutine(StageFXs.Instance.StepPlayFX());
 

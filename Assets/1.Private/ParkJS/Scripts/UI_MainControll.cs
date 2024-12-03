@@ -13,6 +13,10 @@ public class UI_MainControll : MonoBehaviour
 
     private void Awake()
     {
+        if(PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
         matchPlayer.SetActive(false);
     }
 

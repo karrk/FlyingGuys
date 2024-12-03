@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     public float groundAngleValue;
     public Vector3 perpAngle;
 
+    [SerializeField] private Renderer _renderer;
+    
     // 벽 체크
     [SerializeField] WallChecker wallChecker;
 
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private int groundLayer;
     private int conveyorLayer;
     private int combinedGroundLayer;
+    private int ignoreWallCheckLayer;
 
     // 컨베이어
     public Vector3 conveyorVel;
@@ -95,12 +98,21 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         InitStates();
     }
 
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
     private void Start()
     {
         if(player == PhotonNetwork.LocalPlayer)
         {
             _cam.SetForcePriority(10);
         }
+
+        Vector3 colorValue = player.GetColor();
+        Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
+        _renderer.material.color = color;
 
         curState = E_PlayeState.Idle;
         states[(int)curState].Enter();
@@ -110,6 +122,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
         conveyorLayer = LayerMask.NameToLayer("Conveyor");
+        ignoreWallCheckLayer = ~(1 << LayerMask.NameToLayer("WallCheck"));
         combinedGroundLayer = (1 << groundLayer) | (1 << conveyorLayer);
     }
 
@@ -146,6 +159,11 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         _cam.RotY(rotVec.y);
         states[(int)curState].LateUpdate();
+    }
+
+    private void OnDisable()
+    {
+        UnSubscribeEvents();
     }
 
 
@@ -312,7 +330,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         Collider[] grabbedColliders;
 
-        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius);
+        grabbedColliders = Physics.OverlapSphere(grabPoint.position, model.grabRadius, ignoreWallCheckLayer);
 
         if (grabbedColliders.Length > 0)
         {
@@ -363,12 +381,56 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     private void SubscribeEvents()
     {
-
+        model.OnPlayerJumped += HandleJumping;
+        model.OnPlayerDove += HandleDiving;
+        model.OnPlayerFloorImpacted += HandleFloorImpact;
+        model.OnPlayerGrabbingObject += HandleGrabbing;
+        model.OnPlayerGrabbed += HandleGrabbed;
+        model.OnPlayerBounced += HandleBounced;
     }
 
     private void UnSubscribeEvents()
     {
+        model.OnPlayerJumped -= HandleJumping;
+        model.OnPlayerDove -= HandleDiving;
+        model.OnPlayerFloorImpacted -= HandleFloorImpact;
+        model.OnPlayerGrabbingObject -= HandleGrabbing;
+        model.OnPlayerGrabbed -= HandleGrabbed;
+        model.OnPlayerBounced -= HandleBounced;
+    }
 
+    private void HandleJumping()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        //EffectManager.Instance.PlayFX(transform.position, E_VFX.);
+        //SoundManager.Instance.
+
+    }
+
+    private void HandleDiving()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleFloorImpact()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleGrabbing()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        EffectManager.Instance.PlayFX(grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
+    }
+
+    private void HandleGrabbed()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleBounced()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
     }
 
     public void OnGrabbedEnter()

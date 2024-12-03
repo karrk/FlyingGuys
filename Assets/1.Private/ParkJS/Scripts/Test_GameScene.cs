@@ -58,6 +58,11 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                 continue;
 
             _idSet.Add(id);
+
+            if(item.Value == PhotonNetwork.LocalPlayer)
+            {
+                NetWorkManager.PlayerResults[id, 0] = true;
+            }
         }
     }
 
@@ -74,6 +79,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         {
             if (_idSet.Contains(myId))
             {
+                NetWorkManager.PlayerResults[myId,1] = true;
                 WinOrLose(true);
                 PhotonNetwork.LocalPlayer.SetWinner(true);
             }
@@ -92,7 +98,10 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     IEnumerator GoResultScene()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForEndOfFrame();
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1;
         PhotonNetwork.LoadLevel("Public_Result");
     }
 
@@ -105,7 +114,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         deadZone = GameObject.FindGameObjectWithTag("Target")?.GetComponent<DeadZone>();
 
         winImage = winUI.GetComponentInChildren<Image>();
-        loseImage = winUI.GetComponentInChildren<Image>();
+        loseImage = loseUI.GetComponentInChildren<Image>();
         winUI.SetActive(false);
         loseUI.SetActive(false);
 
