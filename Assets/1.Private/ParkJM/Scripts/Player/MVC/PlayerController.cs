@@ -402,6 +402,9 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private void HandleJumping()
     {
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        //EffectManager.Instance.PlayFX(transform.position, E_VFX.);
+        //SoundManager.Instance.
+
     }
 
     private void HandleDiving()
