@@ -150,11 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b8629167beede48ab4a2b33e469a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minRotY: 1
+  _minRotY: -2
   _maxRotY: 4
   _minTrZ: 1
   _maxTrZ: 4
-  _mouseSensitivity: 0.6
+  _mouseSensitivity: 0.12
 --- !u!135 &3529093646358334795
 SphereCollider:
   m_ObjectHideFlags: 0
