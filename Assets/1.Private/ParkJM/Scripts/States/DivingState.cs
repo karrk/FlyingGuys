@@ -67,6 +67,5 @@ public class DivingState : PlayerState
 
     public override void Exit()
     {
-        //player.view.isAniFinished = false;
     }
 }

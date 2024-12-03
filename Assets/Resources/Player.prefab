@@ -696,8 +696,6 @@ MonoBehaviour:
   model:
     playerNumber: 0
     moveSpeed: 8
-    maxSpeed: 8
-    maxAccel: 0
     moveSpeedInAir: 5
     jumpForce: 15
     divingForce: 10

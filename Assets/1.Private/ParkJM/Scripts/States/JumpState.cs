@@ -12,7 +12,9 @@ public class JumpState : PlayerState
     {
         player.view.BroadCastTriggerParameter(E_AniParameters.Jumping);
         player.model.InvokePlayerJumped();
-        Jump();
+        if(player.isJumpable)
+            Jump();
+        
     }
 
     public override void Update()
