@@ -22,30 +22,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
         offsetY = 0;
         offsetZ = 42.5f;
     }
-    //private void Start()
-    //{
-    //    if(PhotonNetwork.IsMasterClient)
-    //    {
-    //        photonView.RPC(nameof(ResetAllTriggers_RPC), RpcTarget.AllBuffered);
-    //    }
-    //}
-
-    //[PunRPC]
-    //private void ResetAllTriggers_RPC()
-    //{
-    //    foreach (int triggers in animationStateHashes)
-    //    {
-    //        animator.ResetTrigger(triggers);
-    //    }
-    //}
-
-    private int[] grabAnimationHashes = new int[]
-    {
-        Animator.StringToHash("Pushing"),
-        Animator.StringToHash("Pulling"),
-        Animator.StringToHash("Struggling"),
-    };
-
     public void UpSpine()
     {
         Vector3 chestDir = player.camTransform.forward;
@@ -92,11 +68,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable
     public void SetBoolParameter_RPC(E_AniParameters _parameter, bool boolValue)
     {
         animator.SetBool(animationStateHashes[(int)_parameter], boolValue);
-    }
-
-    public void SetBoolInGrabAnimation(int _animationIndex, bool playing)
-    {
-        animator.SetBool(grabAnimationHashes[_animationIndex], playing);
     }
 
     public bool GetBoolParameter(E_AniParameters _parameter)

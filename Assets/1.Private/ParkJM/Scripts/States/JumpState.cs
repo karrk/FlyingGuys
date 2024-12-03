@@ -12,9 +12,6 @@ public class JumpState : PlayerState
     {
         player.view.BroadCastTriggerParameter(E_AniParameters.Jumping);
         player.model.InvokePlayerJumped();
-        //player.view.SetAnimationTrigger(E_PlayeState.Jump);
-        //player.view.PlayAnimation(animationIndex);
-
         Jump();
     }
 

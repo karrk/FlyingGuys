@@ -20,9 +20,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     public bool jumpInput; 
     public bool divingInput;
     public bool grabInput;
-
-    
-
     Vector3 moveInput;
 
     private Vector3 camForward;
@@ -32,7 +29,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     {
         playerNumber = photonView.Owner.GetPlayerNumber();
         inputs[playerNumber] = this;
-        
     }
 
     private void Update()
@@ -40,10 +36,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
         InputRot();
-
-        //if (NetWorkManager.IsPlay == false)
-        //    return;
-
         InputMoving();
         InputJump();
         InputDive();
@@ -64,18 +56,6 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         moveDir = (moveInput.z * camForward + moveInput.x * camRight).normalized;
     }
 
-    //private bool preJumpInput = false;
-    //private void InputJump()
-    //{
-    //    bool curJumpInput = Input.GetButtonDown("Jump");
-
-    //    if(curJumpInput != preJumpInput)
-    //    {
-    //        photonView.RPC(nameof(Jump_RPC), RpcTarget.MasterClient, playerNumber, curJumpInput);
-    //        preJumpInput = curJumpInput;
-    //    }
-    //}
-
     //private Queue<bool> jumpBuffer = new Queue<bool>(); // 현재 안씀
     private void InputJump()
     {
@@ -94,16 +74,9 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
     [PunRPC]
     private void Jump_RPC(int playerNum, bool isJumping)
     {
-        //if (!PhotonNetwork.IsMasterClient)
-        //    return;
-
         if (inputs[playerNum] != null)
         {
-            // 지금 remoteInput 객체는 룸 오브젝트가 아니라 각 유저가 소유권을 가지는데 
-            // 아래 로그가 마스터의 콘솔창에서만 출력됨
-            // rpc를 마스터클라이언트에만 보내니까 그럼
             inputs[playerNum].jumpInput = isJumping;
-            //Debug.Log("점프 input 들어감");
         }
     }
 
