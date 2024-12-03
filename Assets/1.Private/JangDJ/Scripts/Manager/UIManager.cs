@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,16 +15,11 @@ public class UIManager : MonoBehaviour, IManager
     {
         Instance = this;
     }
-
-
     void Awake()
     {
         SceneManager.sceneLoaded += ButtonSFX;
-    }
-
-    void LateUpdate()
-    {
-        StartCoroutine(BGMPlay());
+        SceneManager.sceneLoaded += BGMPlay;
+        // TODO : Scene 넘어갈 때 BGM 종료
     }
 
     void ButtonSFX(Scene s, LoadSceneMode m)
@@ -39,16 +33,16 @@ public class UIManager : MonoBehaviour, IManager
         }
     }
 
-    // ㅠㅠ
-    IEnumerator BGMPlay()
+
+    void BGMPlay(Scene s, LoadSceneMode m)
     {
         switch (SceneManager.GetActiveScene().name)
         {
-            case "Public_Login": SoundManager.Instance.Play(E_BGM.BG_Login, 0f, 0f); yield break;
-            case "Public_Menu": SoundManager.Instance.Play(E_BGM.BG_MainMenu, 0f, 0f); yield break;
-            case "Public_Loading": SoundManager.Instance.Play(E_BGM.BG_Loading, 0f, 0f); yield break;
-            case "Public_Result": SoundManager.Instance.Play(E_BGM.BG_GameResult, 0f, 0f); yield break;
-            default: yield break;
+            case "Public_Login": SoundManager.Instance.Play(E_BGM.BG_Login, 0f, 0f); return;
+            case "Public_Menu": SoundManager.Instance.Play(E_BGM.BG_MainMenu, 0f, 0f); return;
+            case "Public_Loading": SoundManager.Instance.Play(E_BGM.BG_Loading, 0f, 0f); return;
+            case "Public_Result": SoundManager.Instance.Play(E_BGM.BG_GameResult, 0f, 0f); return;
+            default: return;
         }
     }
 }
