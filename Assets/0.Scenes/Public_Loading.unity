@@ -2639,8 +2639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 245116529}
-  waitTime: 10
-  num: 0
+  waitTime: 5
 --- !u!4 &825301536
 Transform:
   m_ObjectHideFlags: 0
