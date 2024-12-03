@@ -20,7 +20,6 @@ public class FallingImpact : PlayerState
             return;
         
         player.ChangeState(E_PlayeState.StandUp);
-
     }
 
     public override void Exit()

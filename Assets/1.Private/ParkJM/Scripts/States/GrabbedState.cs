@@ -32,7 +32,6 @@ public class GrabbedState : PlayerState
 
     public override void Exit()
     {
-        //player.view.SetBoolInGrabAnimation(2, false);
         player.view.SetBoolParameter(E_AniParameters.Struggling, false);
     }
 }

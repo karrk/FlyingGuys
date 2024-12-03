@@ -6,14 +6,11 @@ public class FallState : PlayerState
 {
     public FallState(PlayerController player) : base(player)
     {
-        //animationIndex = (int)E_PlayeState.Fall;
     }
 
     public override void Enter()
     {
         player.view.BroadCastTriggerParameter(E_AniParameters.Falling);
-        //player.view.SetAnimationTrigger(E_PlayeState.Fall);
-        //player.view.PlayAnimation(animationIndex);
     }
 
     public override void Update()
