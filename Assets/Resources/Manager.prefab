@@ -659,7 +659,10 @@ MonoBehaviour:
           type: 3}
   objPrefabs:
     _list:
-      List: []
+      List:
+      - Type: 0
+        Prefab: {fileID: 7253280081791011477, guid: d973b519219c0214bbf93465e5f48279,
+          type: 3}
 --- !u!114 &807464459930342589
 MonoBehaviour:
   m_ObjectHideFlags: 0

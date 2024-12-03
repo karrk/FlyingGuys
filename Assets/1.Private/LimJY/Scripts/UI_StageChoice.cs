@@ -18,7 +18,7 @@ public class UI_StageChoice : MonoBehaviour
     {
         playMath = GetComponent<PlayMatch>();
 
-        CurScreenShot = null;
+        CurScreenShot.sprite = null;
         CossName.text = "";
         CossEx.text = "";
 
