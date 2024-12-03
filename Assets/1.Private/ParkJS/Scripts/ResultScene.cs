@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using TMPro;
 using UnityEngine;
 
@@ -14,16 +15,22 @@ public class ResultScene : MonoBehaviour
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = false;
-
         Init(resultText, nicknameText);
     }
 
     private void Init(TMP_Text result, TMP_Text nickName)
     {
+        int number = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
+        if (NetWorkManager.PlayerResults[number, 0] == false)
+            return;
+
         if(nickName != null)
             nickName.text = PhotonNetwork.LocalPlayer.NickName;
 
-        if (PhotonNetwork.LocalPlayer.GetWinner())
+        bool winResult = NetWorkManager.PlayerResults[number,1];
+
+        if (winResult == true)
         {
             trophy.SetActive(true);
             anim.SetBool("Win", true);
@@ -32,6 +39,9 @@ public class ResultScene : MonoBehaviour
         }
         else
             resultText.text = "Lose";
+
+        NetWorkManager.PlayerResults[number, 0] = false;
+        NetWorkManager.PlayerResults[number, 1] = false;
     }
 
     public void SceneChange()

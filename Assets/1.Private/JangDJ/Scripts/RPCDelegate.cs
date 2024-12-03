@@ -15,6 +15,8 @@ public class RPCDelegate : MonoBehaviourPun
         Instance = null;
     }
 
+    #region 이펙트
+
     public void PlayFX(Vector3 requestPos, E_VFX vfxType)
     {
         photonView.RPC(nameof(PlayFXRPC), RpcTarget.All, requestPos, vfxType);
@@ -26,16 +28,46 @@ public class RPCDelegate : MonoBehaviourPun
         EffectManager.Instance.PlayFX(requestPos, vfxType, E_NetworkType.Private);
     }
 
-    public void PlaySFX(Vector3 requestPos, E_SFX sfxType)
+    public void PlayStartFX()
     {
-        photonView.RPC(nameof(PlaySFXRPC), RpcTarget.All, requestPos, sfxType);
+        photonView.RPC(nameof(PlayStartFXRPC), RpcTarget.All);
     }
 
     [PunRPC]
-    private void PlaySFXRPC(Vector3 requestPos, E_SFX sfxType)
+    private void PlayStartFXRPC()
+    {
+        StartCoroutine(StageFXs.Instance.PlayStartFX());
+    }
+
+    #endregion
+
+    #region 사운드
+
+    public void PlaySFX(Vector3 requestPos, E_UISFX sfxType)
+    {
+        photonView.RPC(nameof(PlayUISFXRPC), RpcTarget.All, requestPos, sfxType);
+    }
+
+    [PunRPC]
+    private void PlayUISFXRPC(Vector3 requestPos, E_UISFX sfxType)
     {
         SoundManager.Instance.Play(requestPos, sfxType, E_NetworkType.Private);
     }
+
+    public void PlaySFX(Vector3 requestPos, E_StageSFX sfxType)
+    {
+        photonView.RPC(nameof(PlayStageSFXRPC), RpcTarget.All, requestPos, sfxType);
+    }
+
+    [PunRPC]
+    private void PlayStageSFXRPC(Vector3 requestPos, E_StageSFX sfxType)
+    {
+        SoundManager.Instance.Play(requestPos, sfxType, E_NetworkType.Private);
+    }
+
+    #endregion
+
+    #region 캐릭터
 
     public void DeadPlayer(int viewId)
     {
@@ -45,13 +77,15 @@ public class RPCDelegate : MonoBehaviourPun
         photonView.RPC(nameof(DeadPlayerRPC), RpcTarget.MasterClient, viewId);
     }
 
-    
-
     [PunRPC]
     private void DeadPlayerRPC(int viewId)
     {
         PhotonNetwork.Destroy(PhotonNetwork.GetPhotonView(viewId).gameObject);
     }
+
+    #endregion
+
+    #region 환경 오브젝트
 
     public void DestroyDropFloor(Vector3 targetPos)
     {
@@ -72,17 +106,6 @@ public class RPCDelegate : MonoBehaviourPun
         }
     }
 
-    public void PlayStartFX()
-    {
-        photonView.RPC(nameof(PlayStartFXRPC), RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void PlayStartFXRPC()
-    {
-        StartCoroutine(StageFXs.Instance.PlayStartFX());
-    }
-
     public void SetActive(int id, bool value)
     {
         photonView.RPC(nameof(SetActiveRPC), RpcTarget.MasterClient, id, value);
@@ -93,4 +116,6 @@ public class RPCDelegate : MonoBehaviourPun
     {
         PhotonView.Find(id).gameObject.SetActive(value);
     }
+
+    #endregion
 }
