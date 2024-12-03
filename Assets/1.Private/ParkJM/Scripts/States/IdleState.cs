@@ -7,14 +7,11 @@ public class IdleState : PlayerState
 {
     public IdleState(PlayerController player) : base(player)
     {
-        //animationIndex = (int)E_PlayeState.Idle;
     }
 
     public override void Enter()
     {
-        //player.view.BroadCastBoolParameter(E_AniParameters.Idling, true);
         player.view.SetBoolParameter(E_AniParameters.Idling, true);
-
         player.rb.velocity = Vector3.zero;
         player.isJumpable = true;
     }
@@ -56,7 +53,6 @@ public class IdleState : PlayerState
 
     public override void Exit()
     {
-        //player.view.BroadCastBoolParameter(E_AniParameters.Idling, false);
         player.view.SetBoolParameter(E_AniParameters.Idling, false);
     }
 
