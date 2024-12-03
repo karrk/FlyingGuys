@@ -25,7 +25,7 @@ public enum E_VFX
 
 public enum E_Object
 {
-    Sfx,
+    SoundSource,
 }
 
 public enum E_RoomObject

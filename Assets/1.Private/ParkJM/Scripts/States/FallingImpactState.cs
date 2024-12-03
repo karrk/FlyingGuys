@@ -6,13 +6,12 @@ public class FallingImpact : PlayerState
 {
     public FallingImpact(PlayerController player) : base(player)
     {
-        //animationIndex = (int)E_PlayeState.FallingImpact;
     }
 
     public override void Enter()
     {
         player.view.BroadCastTriggerParameter(E_AniParameters.FallingImpact);
-        //player.view.PlayAnimation(animationIndex);
+        player.model.InvokePlayerFloorImpacted();
     }
 
     public override void Update()

@@ -9,7 +9,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_Text descriptionText;
     [SerializeField] float waitTime;
-    [SerializeField] int num;
+    [SerializeField] public int num { get; private set; }
 
     private void Start()
     {

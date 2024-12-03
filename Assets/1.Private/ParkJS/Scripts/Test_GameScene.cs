@@ -58,6 +58,11 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                 continue;
 
             _idSet.Add(id);
+
+            if(item.Value == PhotonNetwork.LocalPlayer)
+            {
+                NetWorkManager.PlayerResults[id, 0] = true;
+            }
         }
     }
 
@@ -76,6 +81,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         {
             if (_idSet.Contains(myId))
             {
+                NetWorkManager.PlayerResults[myId,1] = true;
+                WinOrLose(true);
+                
                 PhotonNetwork.LocalPlayer.SetWinner(true);
                 WinOrLose(true);
             }
@@ -94,6 +102,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     IEnumerator GoResultScene()
     {
+        yield return new WaitForEndOfFrame();
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
         Time.timeScale = 1;

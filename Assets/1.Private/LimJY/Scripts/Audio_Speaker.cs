@@ -22,14 +22,14 @@ public class Audio_Speaker : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => SoundManager.Instance.Play(E_SFX.S_Highlighted);
-    public void OnPointerClick(PointerEventData eventData) => SoundManager.Instance.Play(E_SFX.S_Pressed);
-    public void OnPointerExit(PointerEventData eventData) => SoundManager.Instance.Play(E_SFX.S_Exit);
+    public void OnPointerEnter(PointerEventData eventData) => SoundManager.Instance.Play(E_UISFX.S_Highlighted);
+    public void OnPointerClick(PointerEventData eventData) => SoundManager.Instance.Play(E_UISFX.S_Pressed);
+    public void OnPointerExit(PointerEventData eventData) => SoundManager.Instance.Play(E_UISFX.S_Exit);
 
 
-    void E_Button_GamePlay() => SoundManager.Instance.Play(E_SFX.S_GamePlay);
-    void E_Button_LoadingArrowLeft() => SoundManager.Instance.Play(E_SFX.S_LoadingArrowLeft);
-    void E_Button_LoadingArrowRight() => SoundManager.Instance.Play(E_SFX.S_LoadingArrowRight);
-    void E_Button_Winner() => SoundManager.Instance.Play(E_SFX.S_Winner);
-    void E_Button_Loser() => SoundManager.Instance.Play(E_SFX.S_Loser);
+    void E_Button_GamePlay() => SoundManager.Instance.Play(E_UISFX.S_GamePlay);
+    void E_Button_LoadingArrowLeft() => SoundManager.Instance.Play(E_UISFX.S_LoadingArrowLeft);
+    void E_Button_LoadingArrowRight() => SoundManager.Instance.Play(E_UISFX.S_LoadingArrowRight);
+    void E_Button_Winner() => SoundManager.Instance.Play(E_UISFX.S_Winner);
+    void E_Button_Loser() => SoundManager.Instance.Play(E_UISFX.S_Loser);
 }
