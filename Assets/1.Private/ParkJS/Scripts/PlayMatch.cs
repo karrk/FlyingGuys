@@ -1,15 +1,18 @@
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayMatch : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_Text descriptionText;
     [SerializeField] float waitTime;
     [SerializeField] public int num { get; private set; }
+    public event Action onChangeStageNum;
 
     private void Start()
     {
@@ -34,6 +37,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
         num = Random.Range(0, 4);
         Debug.Log($"선정된 수 {num}");
+        onChangeStageNum();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -140,6 +144,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         //        PhotonNetwork.LoadLevel("Stage4");
         //        break;
         //}
+
         PhotonNetwork.LoadLevel("Stage2");
         PhotonNetwork.CurrentRoom.IsOpen = false;
     }

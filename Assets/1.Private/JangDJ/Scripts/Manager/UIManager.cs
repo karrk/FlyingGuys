@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour, IManager
     public static UIManager Instance { get; private set; }
     [SerializeField] Button[] Buttons;
 
-    private Coroutine cor;
 
     public void Init()
     {
@@ -19,7 +18,6 @@ public class UIManager : MonoBehaviour, IManager
     {
         SceneManager.sceneLoaded += ButtonSFX;
         SceneManager.sceneLoaded += BGMPlay;
-        // TODO : Scene 넘어갈 때 BGM 종료
     }
 
     void ButtonSFX(Scene s, LoadSceneMode m)
