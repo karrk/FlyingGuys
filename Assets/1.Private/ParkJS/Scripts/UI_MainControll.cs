@@ -13,23 +13,20 @@ public class UI_MainControll : MonoBehaviour
 
     private void Awake()
     {
-        if(PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
         matchPlayer.SetActive(false);
     }
 
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
         RandomMatch();
     }
 
     public void RandomMatch()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.JoinRandomRoom();
+        //PhotonNetwork.ConnectUsingSettings();
         matchPlayer.SetActive(true);
+        PhotonNetwork.LocalPlayer.CustomProperties.Clear();
     }
 
     private void LateUpdate()

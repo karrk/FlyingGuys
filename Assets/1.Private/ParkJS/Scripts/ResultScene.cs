@@ -43,9 +43,4 @@ public class ResultScene : MonoBehaviour
         NetWorkManager.PlayerResults[number, 0] = false;
         NetWorkManager.PlayerResults[number, 1] = false;
     }
-
-    public void SceneChange()
-    {
-        PhotonNetwork.Disconnect();
-    }
 }

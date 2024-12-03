@@ -1,6 +1,7 @@
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class UI_UserDataPanel : MonoBehaviour
             {
                 string curNick = (string)snap.Child(userID).Child("nickname").Value;
                 userNameText.text = curNick;
+                PhotonNetwork.LocalPlayer.NickName = curNick;
             }
         });
 

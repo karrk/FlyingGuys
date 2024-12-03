@@ -7,7 +7,7 @@ public class UI_LoadMainMenu : MonoBehaviour
 {
     public void MainMenuScene()
     {
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
     }
 }
 

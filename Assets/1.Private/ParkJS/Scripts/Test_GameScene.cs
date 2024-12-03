@@ -73,7 +73,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         int myId = PhotonNetwork.LocalPlayer.GetPlayerNumber();
 
         if (myId == id)
+        {
             WinOrLose(false);
+        }
 
         if (_idSet.Count <= 1)
         {
@@ -81,7 +83,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
             {
                 NetWorkManager.PlayerResults[myId,1] = true;
                 WinOrLose(true);
+                
                 PhotonNetwork.LocalPlayer.SetWinner(true);
+                WinOrLose(true);
             }
 
             if (PhotonNetwork.IsMasterClient == true)
@@ -154,9 +158,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
         // 모든 클라이언트가 실행 하는 곳
         PhotonNetwork.Instantiate("RemoteInput", Vector3.zero, Quaternion.identity);
         photonView.RPC(nameof(PlayerSpawn), RpcTarget.MasterClient);
-        PhotonNetwork.LocalPlayer.SetWinner(false);
         PhotonNetwork.LocalPlayer.SetLoad(true);
-        PhotonNetwork.LocalPlayer.SetLife(true);
         StartCoroutine(ClearRoutine());
 
         if (PhotonNetwork.IsMasterClient == false)
@@ -226,8 +228,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                     WinOrLose(false);
                 }
 
-                yield return new WaitForSeconds(1f);
-                PhotonNetwork.LoadLevel("Public_Result");  // 결과 씬으로 이동
+                //yield return new WaitForSeconds(1f);
+                //PhotonNetwork.LoadLevel("Public_Result");  // 결과 씬으로 이동
+                StartCoroutine(GoResultScene());
                 yield break;
             }
 
@@ -249,7 +252,7 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
 
     private void WinOrLose(bool result)
     {
-        if(result)
+        if (result)
         {
             // Win
             winUI.SetActive(true);
