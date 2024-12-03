@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ColorPicker : MonoBehaviour
 {
     private static Vector2 LastPostion = Vector2.zero;
+    public static Vector3 LastColor = Vector3.one;
     [SerializeField] private Image _palette;
     [SerializeField] private Image _picker;
     [SerializeField] public Color SelectedColor;
@@ -21,8 +22,6 @@ public class ColorPicker : MonoBehaviour
     }
     private void OnDisable()
     {
-        Vector3 convertedValue = new Vector3(SelectedColor.r, SelectedColor.g, SelectedColor.b);
-        PhotonNetwork.LocalPlayer.SetColor(convertedValue);
         LastPostion = _picker.transform.position;
     }
     private void InitSize()
@@ -37,6 +36,7 @@ public class ColorPicker : MonoBehaviour
         Vector3 diff = Vector3.ClampMagnitude(offset, _coll.radius);
         _picker.transform.position = transform.position + diff;
         SelectedColor = GetColor();
+        LastColor = new Vector3(SelectedColor.r, SelectedColor.g, SelectedColor.b);
         _character.SetColor(SelectedColor);
     }
     private Color GetColor()

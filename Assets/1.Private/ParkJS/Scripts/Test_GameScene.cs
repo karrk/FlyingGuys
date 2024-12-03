@@ -219,6 +219,9 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
                     // TODO : 승리 연출
                     Debug.Log("승리");
                     PhotonNetwork.LocalPlayer.SetWinner(true);
+                    NetWorkManager.PlayerResults[PhotonNetwork.LocalPlayer.GetPlayerNumber(), 0] = true;
+                    NetWorkManager.PlayerResults[PhotonNetwork.LocalPlayer.GetPlayerNumber(), 1] = true;
+                    
                     WinOrLose(true);
                 }
                 else

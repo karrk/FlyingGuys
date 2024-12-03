@@ -1,9 +1,7 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class UI_MainControll : MonoBehaviour
 {
@@ -27,6 +25,8 @@ public class UI_MainControll : MonoBehaviour
         //PhotonNetwork.ConnectUsingSettings();
         matchPlayer.SetActive(true);
         PhotonNetwork.LocalPlayer.CustomProperties.Clear();
+
+        PhotonNetwork.LocalPlayer.SetColor(ColorPicker.LastColor);
     }
 
     private void LateUpdate()
