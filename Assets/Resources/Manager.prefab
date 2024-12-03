@@ -335,7 +335,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c387ef4bf1dc89438e38a416aaa5e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list: []
+  _list:
+  - Name: 0
+    Clip: {fileID: 8300000, guid: b6f4674c40cf1cc438bfd04638e4a44b, type: 3}
+  - Name: 1
+    Clip: {fileID: 8300000, guid: ace59136f9de1e3478b9fa1f6fa5152e, type: 3}
+  - Name: 2
+    Clip: {fileID: 8300000, guid: 42d55668b3e186345af5b4cad8ad47f6, type: 3}
+  - Name: 3
+    Clip: {fileID: 8300000, guid: 45980b8d8eab1fc4aa08f35031a08dd0, type: 3}
+  - Name: 4
+    Clip: {fileID: 8300000, guid: 8db6b33ad64cad94ab4aab3fb9337763, type: 3}
 --- !u!1 &1903799297
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33200401848e4e5488f69d0baac1ca48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Buttons: []
 --- !u!114 &-7549020815837305389
 MonoBehaviour:
   m_ObjectHideFlags: 0
