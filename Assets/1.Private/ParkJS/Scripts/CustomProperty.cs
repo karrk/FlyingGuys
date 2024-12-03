@@ -50,6 +50,7 @@ public static class CustomProperty
 
     public static void SetWinner(this Player player, bool number)
     {
+        customProperty.Clear();
         customProperty[WINNER] = number;
         player.SetCustomProperties(customProperty);
     }

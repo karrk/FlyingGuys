@@ -33,9 +33,4 @@ public class ResultScene : MonoBehaviour
         else
             resultText.text = "Lose";
     }
-
-    public void SceneChange()
-    {
-        PhotonNetwork.Disconnect();
-    }
 }

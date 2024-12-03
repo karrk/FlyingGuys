@@ -7,4 +7,10 @@ public class UI_LoadLoadingScene : MonoBehaviour
     {
         PhotonNetwork.LoadLevel("Public_Loading");
     }
+
+    public void RestartScene()
+    {
+        NetWorkManager.Restarter = true;
+        PhotonNetwork.LeaveRoom();
+    }
 }

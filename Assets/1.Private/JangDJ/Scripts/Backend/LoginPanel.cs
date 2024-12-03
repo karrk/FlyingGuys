@@ -275,6 +275,7 @@ public class LoginPanel : MonoBehaviour
 
     public void LoadNextScene()
     {
+        PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.LoadLevel("Public_Menu");
     }
 }
