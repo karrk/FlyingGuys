@@ -54,5 +54,9 @@ public enum E_UISFX
 // 해당 enum 순서 변경을 금지합니다.
 public enum E_StageSFX
 {
-
+    S_Bounce,
+    S_FloorImpact,
+    S_Grabbed,
+    S_Grabbing,
+    S_Jump
 }

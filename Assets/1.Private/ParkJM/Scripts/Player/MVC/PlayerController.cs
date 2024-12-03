@@ -402,6 +402,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private void HandleJumping()
     {
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_Jump, E_NetworkType.Public);
         //EffectManager.Instance.PlayFX(transform.position, E_VFX.);
         //SoundManager.Instance.
 
@@ -409,11 +410,13 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     private void HandleDiving()
     {
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_Jump, E_NetworkType.Public);
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
     }
 
     private void HandleFloorImpact()
     {
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_FloorImpact, E_NetworkType.Public);
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
     }
 
@@ -421,16 +424,20 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
         EffectManager.Instance.PlayFX(grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_Grabbing, E_NetworkType.Private);
+
     }
 
     private void HandleGrabbed()
     {
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_Grabbed, E_NetworkType.Private);
     }
 
     private void HandleBounced()
     {
         // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        SoundManager.Instance.Play(transform.position, E_StageSFX.S_Grabbed, E_NetworkType.Public);
     }
 
     public void OnGrabbedEnter()

@@ -129,23 +129,22 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
     private void ChoiceGameScene()
     {
-        //switch (num)
-        //{
-        //    case 0: // 산 무너져유
-        //        PhotonNetwork.LoadLevel("TestSecne 1.4");
-        //        break;
-        //    case 1: // 바닥 떨어져유
-        //        PhotonNetwork.LoadLevel("Stage2");
-        //        break;
-        //    case 2: // 점프 쇼다운
-        //        PhotonNetwork.LoadLevel("Stage3");
-        //        break;
-        //    case 3: // 롤아웃
-        //        PhotonNetwork.LoadLevel("Stage4");
-        //        break;
-        //}
-
-        PhotonNetwork.LoadLevel("Stage2");
         PhotonNetwork.CurrentRoom.IsOpen = false;
+
+        switch (num)
+        {
+            case 0: // 산 무너져유
+                PhotonNetwork.LoadLevel("TestSecne 1.4");
+                break;
+            case 1: // 바닥 떨어져유
+                PhotonNetwork.LoadLevel("Stage2");
+                break;
+            case 2: // 점프 쇼다운
+                PhotonNetwork.LoadLevel("Stage3");
+                break;
+            case 3: // 롤아웃
+                PhotonNetwork.LoadLevel("Stage4");
+                break;
+        }
     }
 }

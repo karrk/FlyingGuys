@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_LoadMainMenu : MonoBehaviour
 {
+    // Result -> MainMenu
     public void MainMenuScene()
     {
         PhotonNetwork.LeaveRoom();
