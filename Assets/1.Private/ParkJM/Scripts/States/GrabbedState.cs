@@ -12,8 +12,7 @@ public class GrabbedState : PlayerState
     public override void Enter()
     {
         player.view.SetBoolParameter(E_AniParameters.Struggling, true);
-        //player.view.SetBoolInGrabAnimation(2,true);
-        // Todo : 잡혔을때 해줄 동작 : 바둥거리는 애니메이션 재생?
+        player.model.InvokePlayerGrabbed();
         player.rb.velocity = Vector3.zero;
     }
 

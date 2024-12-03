@@ -98,6 +98,11 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         InitStates();
     }
 
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
     private void Start()
     {
         if(player == PhotonNetwork.LocalPlayer)
@@ -154,6 +159,11 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     {
         _cam.RotY(rotVec.y);
         states[(int)curState].LateUpdate();
+    }
+
+    private void OnDisable()
+    {
+        UnSubscribeEvents();
     }
 
 
@@ -371,12 +381,53 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     private void SubscribeEvents()
     {
-
+        model.OnPlayerJumped += HandleJumping;
+        model.OnPlayerDove += HandleDiving;
+        model.OnPlayerFloorImpacted += HandleFloorImpact;
+        model.OnPlayerGrabbingObject += HandleGrabbing;
+        model.OnPlayerGrabbed += HandleGrabbed;
+        model.OnPlayerBounced += HandleBounced;
     }
 
     private void UnSubscribeEvents()
     {
+        model.OnPlayerJumped -= HandleJumping;
+        model.OnPlayerDove -= HandleDiving;
+        model.OnPlayerFloorImpacted -= HandleFloorImpact;
+        model.OnPlayerGrabbingObject -= HandleGrabbing;
+        model.OnPlayerGrabbed -= HandleGrabbed;
+        model.OnPlayerBounced -= HandleBounced;
+    }
 
+    private void HandleJumping()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleDiving()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleFloorImpact()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleGrabbing()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+        EffectManager.Instance.PlayFX(grabPoint.transform.position, E_VFX.Grab, E_NetworkType.Public);
+    }
+
+    private void HandleGrabbed()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
+    }
+
+    private void HandleBounced()
+    {
+        // 사운드매니저, 이펙트 매니저 등의 동작 설정
     }
 
     public void OnGrabbedEnter()
