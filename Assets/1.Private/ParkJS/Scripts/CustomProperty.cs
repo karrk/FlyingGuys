@@ -16,7 +16,8 @@ public static class CustomProperty
 
     public static void SetReady(this Player player, bool ready)
     {
-        customProperty[READY] = ready;
+        customProperty.Clear();
+        customProperty.Add(READY, ready);
         player.SetCustomProperties(customProperty);
     }
 
@@ -33,6 +34,7 @@ public static class CustomProperty
 
     public static void SetLoad(this Player player, bool load)
     {
+        customProperty.Clear();
         customProperty[LOAD] = load;
         player.SetCustomProperties(customProperty);
     }
@@ -52,11 +54,6 @@ public static class CustomProperty
     {
         customProperty.Clear();
 
-        if(customProperty.ContainsKey(WINNER) == false)
-        {
-            customProperty.Add(WINNER, false);
-        }
-
         customProperty[WINNER] = number;
         player.SetCustomProperties(customProperty);
     }
@@ -74,6 +71,7 @@ public static class CustomProperty
 
     public static void SetLife(this Player player, bool result)
     {
+        customProperty.Clear();
         customProperty[LIFE] = result;
         player.SetCustomProperties(customProperty);
     }
@@ -91,6 +89,7 @@ public static class CustomProperty
 
     public static void SetColor(this Player player, Vector3 color)
     {
+        customProperty.Clear();
         customProperty[COLOR] = color;
         player.SetCustomProperties(customProperty);
     }
@@ -106,20 +105,15 @@ public static class CustomProperty
             return Vector3.one;
     }
 
-    //public static void SetColor(this Player player, Color mat)
-    //{
-    //    customProperty[COLOR] = mat;
-    //    player.SetCustomProperties(customProperty);
-    //}
-    //
-    //public static Color GetColor(this Player player)
-    //{
-    //    PhotonHashtable customProperty = player.CustomProperties;
-    //    if (customProperty.ContainsKey(COLOR))
-    //    {
-    //        return (Color)customProperty[COLOR];
-    //    }
-    //    else
-    //        return Color.white;
-    //}
+    public static void ResetProperty(this Player player)
+    {
+        customProperty.Clear();
+        Debug.Log(customProperty);
+        customProperty[READY] = null;
+        customProperty[LOAD]= null;
+        customProperty[LIFE]= null;
+        customProperty[WINNER]= null;
+
+        player.SetCustomProperties(customProperty);
+    }
 }

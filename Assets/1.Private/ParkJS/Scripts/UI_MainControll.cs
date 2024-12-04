@@ -25,8 +25,6 @@ public class UI_MainControll : MonoBehaviour
             PhotonNetwork.JoinRandomRoom();
 
         matchPlayer.SetActive(true);
-        PhotonNetwork.LocalPlayer.CustomProperties.Clear();
-
         PhotonNetwork.LocalPlayer.SetColor(ColorPicker.LastColor);
     }
 

@@ -18,6 +18,11 @@ public class ResultScene : MonoBehaviour
         Init(resultText, nicknameText);
     }
 
+    private void OnDisable()
+    {
+        PhotonNetwork.LocalPlayer.ResetProperty();
+    }
+
     private void Init(TMP_Text result, TMP_Text nickName)
     {
         int number = PhotonNetwork.LocalPlayer.GetPlayerNumber();
