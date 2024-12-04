@@ -16,6 +16,7 @@ public static class CustomProperty
 
     public static void SetReady(this Player player, bool ready)
     {
+        customProperty.Clear();
         customProperty.Add(READY, ready);
         player.SetCustomProperties(customProperty);
     }
@@ -33,6 +34,7 @@ public static class CustomProperty
 
     public static void SetLoad(this Player player, bool load)
     {
+        customProperty.Clear();
         customProperty[LOAD] = load;
         player.SetCustomProperties(customProperty);
     }
@@ -52,11 +54,6 @@ public static class CustomProperty
     {
         customProperty.Clear();
 
-        if(customProperty.ContainsKey(WINNER) == false)
-        {
-            customProperty.Add(WINNER, false);
-        }
-
         customProperty[WINNER] = number;
         player.SetCustomProperties(customProperty);
     }
@@ -74,6 +71,7 @@ public static class CustomProperty
 
     public static void SetLife(this Player player, bool result)
     {
+        customProperty.Clear();
         customProperty[LIFE] = result;
         player.SetCustomProperties(customProperty);
     }
@@ -91,6 +89,7 @@ public static class CustomProperty
 
     public static void SetColor(this Player player, Vector3 color)
     {
+        customProperty.Clear();
         customProperty[COLOR] = color;
         player.SetCustomProperties(customProperty);
     }
@@ -108,11 +107,12 @@ public static class CustomProperty
 
     public static void ResetProperty(this Player player)
     {
-        PhotonHashtable customProperty = player.CustomProperties;
-        customProperty.Add(READY, null);
-        customProperty.Add(LOAD, null);
-        customProperty.Add(LIFE, null);
-        customProperty.Add(WINNER, null);
+        customProperty.Clear();
+        Debug.Log(customProperty);
+        customProperty[READY] = null;
+        customProperty[LOAD]= null;
+        customProperty[LIFE]= null;
+        customProperty[WINNER]= null;
 
         player.SetCustomProperties(customProperty);
     }
