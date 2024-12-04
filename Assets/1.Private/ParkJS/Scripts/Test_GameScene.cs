@@ -92,11 +92,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
             {
                 StartCoroutine(GoResultScene());
             }
-
-            // 요놈의 프로퍼티에 win ??? 등록시키고
-            // 마스터한테 씬넘겨달라 요청하고 
-
-            // 마스터가 씬전환시키고 결과가 나올까 입니다.
         }
     }
 
