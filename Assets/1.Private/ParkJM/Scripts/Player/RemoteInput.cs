@@ -36,6 +36,10 @@ public class RemoteInput : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
         InputRot();
+
+        if (NetWorkManager.IsPlay == false)
+            return;
+
         InputMoving();
         InputJump();
         InputDive();
