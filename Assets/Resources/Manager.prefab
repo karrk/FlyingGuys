@@ -150,7 +150,7 @@ MonoBehaviour:
   - Name: 2
     Clip: {fileID: 8300000, guid: 85719c64c888bbb4e8b3d8ac2e86d1c3, type: 3}
   - Name: 3
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 4a748c3cc9870a547b1db3ac7e149db4, type: 3}
   - Name: 4
     Clip: {fileID: 8300000, guid: 3c707609895f4cd4bb84d8989694501f, type: 3}
   - Name: 5
