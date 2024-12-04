@@ -21,7 +21,9 @@ public class UI_MainControll : MonoBehaviour
 
     public void RandomMatch()
     {
-        PhotonNetwork.JoinRandomRoom();
+        if(PhotonNetwork.IsConnectedAndReady)
+            PhotonNetwork.JoinRandomRoom();
+
         //PhotonNetwork.ConnectUsingSettings();
         matchPlayer.SetActive(true);
         PhotonNetwork.LocalPlayer.CustomProperties.Clear();
