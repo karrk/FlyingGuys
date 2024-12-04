@@ -11,6 +11,7 @@ public class IdleState : PlayerState
 
     public override void Enter()
     {
+        Debug.Log("Idle 진입");
         player.view.SetBoolParameter(E_AniParameters.Idling, true);
         player.rb.velocity = Vector3.zero;
         player.isJumpable = true;
