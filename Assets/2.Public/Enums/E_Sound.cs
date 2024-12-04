@@ -18,18 +18,10 @@ public enum E_BGM
     BG_Loading,
     BG_GameResult,
 
-    BG_GamePlay_01_Start,
-    BG_GamePlay_01_LoopOne,
-    BG_GamePlay_01_LoopTwo,
-
-    BG_GamePlay_02_Start,
-    BG_GamePlay_02_Loop,
-
-    BG_GamePlay_03_Start,
-    BG_GamePlay_03_Loop,
-
-    BG_GamePlay_04_Start,
-    BG_GamePlay_04_Loop,
+    BG_GamePlay_01,
+    BG_GamePlay_02,
+    BG_GamePlay_03,
+    BG_GamePlay_04,
 
     Size,
 }

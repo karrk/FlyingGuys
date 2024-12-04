@@ -23,38 +23,37 @@ public class UI_StageChoice : MonoBehaviourPun
         CossName.text = "";
         CossEx.text = "";
 
-        playMath.onChangeStageNum += StageSetUse;
+        playMath.onChangeStageNum += OnStageSet;
     }
 
-    void StageSetUse()
-    {
-        photonView.RPC("OnStageSet", RpcTarget.All);
-    }
-
-    [PunRPC]
     void OnStageSet()
     {
         Debug.Log("스테이지 선정 완료");
 
+        string StageName = "None";
+
         switch (playMath.num)
         {
             case 0: // 산 무너져유
-                Mountine();
+                StageName = "Mountine";
                 break;
             case 1: // 바닥 떨어져유
-                Floor();
+                StageName = "Floor";
                 break;
             case 2: // 점프 쇼다운
-                Jump();
+                StageName = "Jump";
                 break;
             case 3: // 롤아웃
-                Roll();
+                StageName = "Roll";
                 break;
         }
+
+        photonView.RPC(StageName, RpcTarget.AllBuffered);
     }
 
     // === === === 
 
+    [PunRPC]
     void Mountine()
     {
         CurScreenShot.sprite = MapScreenShot[playMath.num];
@@ -62,6 +61,7 @@ public class UI_StageChoice : MonoBehaviourPun
         CossEx.text = "왕관에 가장 먼저 닿는 플레이어가 승리합니다!";
     }
 
+    [PunRPC]
     void Floor()
     {
         CurScreenShot.sprite = MapScreenShot[playMath.num];
@@ -69,6 +69,7 @@ public class UI_StageChoice : MonoBehaviourPun
         CossEx.text = "타일을 밟고 난 후 일정 시간이 경과할 때 마다, 바닥 타일이 하나씩 사라집니다. \n\n떨어지지 않고 가장 오래 살아남는 플레이어가 승리합니다!";
     }
 
+    [PunRPC]
     void Jump()
     {
         CurScreenShot.sprite = MapScreenShot[playMath.num];
@@ -76,6 +77,7 @@ public class UI_StageChoice : MonoBehaviourPun
         CossEx.text = "돌아가는 장애물을 피해서 가장 오래 살아남는 플레이어가 승리합니다! \n\n장애물은 시간이 지날수록 속도가 빨라집니다.";
     }
 
+    [PunRPC]
     void Roll()
     {
         CurScreenShot.sprite = MapScreenShot[playMath.num];
