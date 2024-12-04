@@ -40,7 +40,12 @@ public class UIManager : MonoBehaviour, IManager
             case "Public_Menu": SoundManager.Instance.Play(E_BGM.BG_MainMenu, 0f, 0f); return;
             case "Public_Loading": SoundManager.Instance.Play(E_BGM.BG_Loading, 0f, 0f); return;
             case "Public_Result": SoundManager.Instance.Play(E_BGM.BG_GameResult, 0f, 0f); return;
-            default: return;
+
+            case "TestSecne 1.4": SoundManager.Instance.Play(E_BGM.BG_GamePlay_01, 0f, 0f); return;
+            case "Stage2": SoundManager.Instance.Play(E_BGM.BG_GamePlay_02, 0f, 0f); return;
+            case "Stage3": SoundManager.Instance.Play(E_BGM.BG_GamePlay_03, 0f, 0f); return;
+            case "Stage4": SoundManager.Instance.Play(E_BGM.BG_GamePlay_04, 0f, 0f); return;
+            default: SoundManager.Instance.Play(E_BGM.None, 0f, 0f); return;
         }
     }
 }

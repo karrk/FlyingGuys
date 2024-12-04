@@ -1,6 +1,7 @@
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class UI_SetUserData : MonoBehaviour
     [SerializeField] GameObject SttingPanel;
     [SerializeField] GameObject _ConfirmPanel;
     [SerializeField] GameObject _SetPanel;
+    [SerializeField] GameObject _UserDeletePanel;
 
     [Header("Confirm")]
     [SerializeField] ErrorText ConfirmErrorText;
@@ -33,6 +35,7 @@ public class UI_SetUserData : MonoBehaviour
 
         _ConfirmPanel.SetActive(true);
         _SetPanel.SetActive(false);
+        _UserDeletePanel.SetActive(false);
 
         C_EmailInputField.text = "";
         C_PassInputField.text = "";
@@ -42,32 +45,44 @@ public class UI_SetUserData : MonoBehaviour
         Re_PassInputField.text = "";
     }
 
-    public async void DataConfirm()
+    public void DataConfirm()
     {
         string userID = curUser.UserId;
         string email = C_EmailInputField.text;
         string pass = C_PassInputField.text;
 
+        Credential credential = EmailAuthProvider.GetCredential(email, pass);
 
-        await user.GetValueAsync().ContinueWithOnMainThread(task =>
+        if (curUser != null)
+        {
+            curUser.ReauthenticateAsync(credential).ContinueWithOnMainThread(task =>
             {
-                DataSnapshot snapshot = task.Result;
-
-                if (snapshot.HasChild(userID) == true)
+                if (task.IsFaulted)
                 {
-                    string myEmail = (string)snapshot.Child(userID).Child("email").Value;
+                    user.GetValueAsync().ContinueWithOnMainThread(task =>
+                        {
+                            DataSnapshot snapshot = task.Result;
 
-                    if (email != myEmail)
-                    {
-                        ConfirmErrorText.ChangeText("이메일이 잘못되었습니다. 다시 입력해주세요.");
-                    }
-                    else
-                    {
-                        _ConfirmPanel.SetActive(false);
-                        _SetPanel.SetActive(true);
-                    }
+                            if (snapshot.HasChild(userID) == true)
+                            {
+                                string myEmail = (string)snapshot.Child(userID).Child("email").Value;
+
+                                if (email != myEmail)
+                                {
+                                    ConfirmErrorText.ChangeText("이메일이 잘못되었습니다. 다시 입력해주세요.");
+                                }
+                            }
+                        });
+                }
+                else
+                {
+                    _ConfirmPanel.SetActive(false);
+                    _SetPanel.SetActive(true);
                 }
             });
+        }
+
+
     }
 
     public async void DataSet()
@@ -127,5 +142,19 @@ public class UI_SetUserData : MonoBehaviour
                 });
             }
         });
+    }
+
+    public void DeleteUser()
+    {
+        FirebaseUser user = BackendManager.Auth.CurrentUser;
+        if (user != null)
+        {
+            DatabaseReference userID = BackendManager.DataBase.RootReference.Child("Users").Child(user.UserId);
+
+            userID.RemoveValueAsync();
+            user.DeleteAsync();
+
+            PhotonNetwork.LoadLevel("Public_Login");
+        }
     }
 }
