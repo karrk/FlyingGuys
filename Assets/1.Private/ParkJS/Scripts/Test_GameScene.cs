@@ -34,8 +34,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
             PlayerNumbering_OnPlayerNumberingChanged();
         }
 
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // 이벤트 해제
@@ -43,8 +43,8 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     {
         base.OnDisable();
 
-        //Cursor.visible = true;
-        //Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // 연동 메서드
