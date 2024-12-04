@@ -16,7 +16,7 @@ public static class CustomProperty
 
     public static void SetReady(this Player player, bool ready)
     {
-        customProperty[READY] = ready;
+        customProperty.Add(READY, ready);
         player.SetCustomProperties(customProperty);
     }
 
@@ -106,20 +106,14 @@ public static class CustomProperty
             return Vector3.one;
     }
 
-    //public static void SetColor(this Player player, Color mat)
-    //{
-    //    customProperty[COLOR] = mat;
-    //    player.SetCustomProperties(customProperty);
-    //}
-    //
-    //public static Color GetColor(this Player player)
-    //{
-    //    PhotonHashtable customProperty = player.CustomProperties;
-    //    if (customProperty.ContainsKey(COLOR))
-    //    {
-    //        return (Color)customProperty[COLOR];
-    //    }
-    //    else
-    //        return Color.white;
-    //}
+    public static void ResetProperty(this Player player)
+    {
+        PhotonHashtable customProperty = player.CustomProperties;
+        customProperty.Add(READY, null);
+        customProperty.Add(LOAD, null);
+        customProperty.Add(LIFE, null);
+        customProperty.Add(WINNER, null);
+
+        player.SetCustomProperties(customProperty);
+    }
 }
