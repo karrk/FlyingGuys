@@ -40,11 +40,7 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         onChangeStageNum();
     }
 
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        PhotonNetwork.CreateRoom("Room", new RoomOptions { MaxPlayers = 2, IsVisible = false });
-        // 2명이 입장상태가 확인되면, 5초?? 더 기다리고 그냥 시작 => 가능??
-    }
+
 
     Coroutine playGameRoutine;
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -69,9 +65,6 @@ public class PlayMatch : MonoBehaviourPunCallbacks
 
         if(PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            // 2명이 입장한 상태
-            // 지정한 시간 후 참여인원이 없으면 게임 시작
-            // 참여하는 인원이 있으면 지정된 시간 초기화
             playGameRoutine = StartCoroutine(PlayGameRoutine());
         }
     }
