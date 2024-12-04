@@ -10,6 +10,7 @@ public class JumpState : PlayerState
 
     public override void Enter()
     {
+        Debug.Log("점프진입");
         player.view.BroadCastTriggerParameter(E_AniParameters.Jumping);
         player.model.InvokePlayerJumped();
         if(player.isJumpable)
@@ -64,7 +65,11 @@ public class JumpState : PlayerState
 
     private void Jump()
     {
-        player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
+        Debug.Log("점프");
+        Vector3 targetVel = player.rb.velocity;
+        targetVel.y = player.model.jumpForce;
+        player.rb.velocity = targetVel;
+        //player.rb.AddForce(Vector3.up * player.model.jumpForce, ForceMode.Impulse);
         player.isJumpable = false;
     }
 
