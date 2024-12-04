@@ -1,9 +1,12 @@
+using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using WebSocketSharp;
 
@@ -47,42 +50,37 @@ public class UI_SetUserData : MonoBehaviour
 
     public void DataConfirm()
     {
-        string userID = curUser.UserId;
         string email = C_EmailInputField.text;
         string pass = C_PassInputField.text;
 
         Credential credential = EmailAuthProvider.GetCredential(email, pass);
 
-        if (curUser != null)
-        {
+
             curUser.ReauthenticateAsync(credential).ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted)
                 {
-                    user.GetValueAsync().ContinueWithOnMainThread(task =>
+                    Exception excption = task.Exception.GetBaseException();
+
+                    if (excption is FirebaseException exp)
+                    {
+                        var errorCode = (AuthError)exp.ErrorCode;
+
+                        switch (errorCode)
                         {
-                            DataSnapshot snapshot = task.Result;
-
-                            if (snapshot.HasChild(userID) == true)
-                            {
-                                string myEmail = (string)snapshot.Child(userID).Child("email").Value;
-
-                                if (email != myEmail)
-                                {
-                                    ConfirmErrorText.ChangeText("이메일이 잘못되었습니다. 다시 입력해주세요.");
-                                }
-                            }
-                        });
+                            case AuthError.InvalidEmail:
+                                ConfirmErrorText.ChangeText("잘못된 이메일 입니다");
+                                break;
+                            case AuthError.WrongPassword:
+                                ConfirmErrorText.ChangeText("올바른 비밀번호가 아닙니다");
+                                break;
+                        }
+                    }
+                    return;
                 }
-                else
-                {
                     _ConfirmPanel.SetActive(false);
                     _SetPanel.SetActive(true);
-                }
             });
-        }
-
-
     }
 
     public async void DataSet()
@@ -123,7 +121,6 @@ public class UI_SetUserData : MonoBehaviour
                 else
                 {
                     dic[snap.Child(curEmail).Key] = email;
-                    //curUser.SendEmailVerificationBeforeUpdatingEmailAsync(email);
                     curUser.UpdateEmailAsync(email);
                 }
 
