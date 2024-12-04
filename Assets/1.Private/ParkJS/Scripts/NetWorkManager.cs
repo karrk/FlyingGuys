@@ -52,12 +52,12 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log($"실패 사유 : {message}");
-        PhotonNetwork.CreateRoom($"Room {Random.Range(100, 1000)}", new RoomOptions { MaxPlayers = 5 }, TypedLobby.Default);
+        PhotonNetwork.CreateRoom($"Room {Random.Range(100, 1000)}", new RoomOptions { MaxPlayers = 8 }, TypedLobby.Default);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom($"Room {Random.Range(100, 1000)}", new RoomOptions { MaxPlayers = 5 }, TypedLobby.Default);
+        PhotonNetwork.CreateRoom($"Room {Random.Range(100, 1000)}", new RoomOptions { MaxPlayers = 8 }, TypedLobby.Default);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

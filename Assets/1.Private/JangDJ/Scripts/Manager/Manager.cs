@@ -3,7 +3,8 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     private static Manager _instance { get; set; }
-    
+    [SerializeField] public GameObject Cursor;
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
@@ -42,5 +43,10 @@ public class Manager : MonoBehaviour
     private void ProgramSetting()
     {
         Application.targetFrameRate = 60;
+    }
+
+    public static void SetCursorVisible(bool active)
+    {
+        Manager._instance.Cursor.SetActive(active);
     }
 }
