@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 8ed0c04f-41e6-4842-b7cf-0aad696aa581
+    AppIdRealtime: f2a61966-a330-4c98-abf0-f0c90489bbde
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -39,6 +39,42 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - Jump
+  - SentMoveInputToMaster
+  - SpawnPlayer
+  - Jump_RPC
+  - CreatePlayer
+  - PlayerSpawn
+  - Diving_RPC
+  - Test
+  - Action
+  - RegistMethod
+  - RemoteAction
+  - PlayFXRPC
+  - Grab_RPC
+  - ShowCount
+  - 
+  - DestroyPlayer
+  - DestoryTest
+  - DeadPlayerRPC
+  - DestroyDropFloorRPC
+  - Shot
+  - PlayStartFXRPC
+  - HideText
+  - SetTriggerParameter_RPC
+  - BroadCastTriggerParameter_RPC
+  - ResetAllTriggers_RPC
+  - SetParameter_RPC
+  - SetBoolParameter_RPC
+  - SetActiveRPC
+  - SetDescriptionText
+  - PlaySFXRPC
+  - PlayStageSFXRPC
+  - PlayUISFXRPC
+  - OnStageSet
+  - Floor
+  - Mountine
+  - Roll
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1
