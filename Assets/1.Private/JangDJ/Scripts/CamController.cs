@@ -32,7 +32,7 @@ public class CamController : MonoBehaviour
     /// </summary>
     public void RotY(float value)
     {
-        value *= _mouseSensitivity;
+        value *= _mouseSensitivity * -1;
 
         _clampValue = Mathf.Clamp(_tr.m_FollowOffset.y + value, _minRotY, _maxRotY);
         _normalizeValue = (_clampValue - _minRotY) / (_minRotY - _maxRotY);
