@@ -40,8 +40,6 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         onChangeStageNum();
     }
 
-
-
     Coroutine playGameRoutine;
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -66,6 +64,20 @@ public class PlayMatch : MonoBehaviourPunCallbacks
         if(PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             playGameRoutine = StartCoroutine(PlayGameRoutine());
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+            return;
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+        {
+            if (playGameRoutine == null)
+                return;
+
+            StopCoroutine(playGameRoutine);
         }
     }
 

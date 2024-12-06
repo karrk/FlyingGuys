@@ -47,6 +47,10 @@ public class NetWorkManager : MonoBehaviourPunCallbacks, IManager
 
             Restarter = false;
         }
+        else
+        {
+            SceneManager.LoadScene("Public_Menu");
+        }
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

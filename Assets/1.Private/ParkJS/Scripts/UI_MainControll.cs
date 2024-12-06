@@ -19,6 +19,12 @@ public class UI_MainControll : MonoBehaviour
         RandomMatch();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            PhotonNetwork.LeaveRoom();
+    }
+
     public void RandomMatch()
     {
         if(PhotonNetwork.IsConnectedAndReady)
