@@ -44,7 +44,6 @@ public class Test_GameScene : MonoBehaviourPunCallbacks
     {
         base.OnDisable();
 
-        Cursor.visible = true;
         Manager.SetCursorVisible(true);
         Cursor.lockState = CursorLockMode.None;
     }
