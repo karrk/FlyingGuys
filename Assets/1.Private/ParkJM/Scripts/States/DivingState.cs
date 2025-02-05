@@ -47,7 +47,7 @@ public class DivingState : PlayerState
 
         if (player.isGrounded) // player.rb.velocity.y  < 0.1f ||
         {
-            player.ChangeState(E_PlayeState.FallingImpact);
+            player.ChangeState(EPlayerState.FallingImpact);
             return;
             //player.transform.rotation = Quaternion.Euler(0f, player.transform.rotation.y, player.transform.rotation.z);
 

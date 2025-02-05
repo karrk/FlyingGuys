@@ -16,8 +16,8 @@ public class BeforePlayerController : MonoBehaviourPun, IPunObservable
     public int playerNumber;
 
     // 상태
-    [SerializeField] E_PlayeState curState;
-    private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
+    [SerializeField] EPlayerState curState;
+    private PlayerState[] states = new PlayerState[(int)EPlayerState.Size];
     
 
     private void Awake()
@@ -110,7 +110,7 @@ public class BeforePlayerController : MonoBehaviourPun, IPunObservable
     /// 상태 변경 기본 틀
     /// </summary>
     /// <param name="nextState"></param>
-    public void ChangeState(E_PlayeState nextState)
+    public void ChangeState(EPlayerState nextState)
     {
         states[(int)curState].Exit();
         curState = nextState;

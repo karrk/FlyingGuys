@@ -21,7 +21,7 @@ public class GrabbedState : PlayerState
         // 임시 잡힌상태 나가기
         if(player.jumpBufferCounter > 0f && player.isJumpable)
         {
-            player.ChangeState(E_PlayeState.Jump);
+            player.ChangeState(EPlayerState.Jump);
         }
     }
 

@@ -14,7 +14,7 @@ public enum E_Scenes
 }
 
 // 플레이어 상태 관련 Enum type
-public enum E_PlayeState
+public enum EPlayerState
 {
     Idle,
     Run,
@@ -28,6 +28,7 @@ public enum E_PlayeState
     Grabbed,
     Size
 }
+
 
 public enum E_AniParameters
 {

@@ -37,7 +37,7 @@ public class GrabbingState : PlayerState
         if (!RemoteInput.inputs[player.model.playerNumber].grabInput)
         {
             ReleaseGrabbedObject();
-            player.ChangeState(E_PlayeState.Idle);
+            player.ChangeState(EPlayerState.Idle);
             return;
         }
 

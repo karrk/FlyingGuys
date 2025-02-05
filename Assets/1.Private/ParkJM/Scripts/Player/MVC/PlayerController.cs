@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviourPun, IGrabbable
 {
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     public bool isSlope;
     public bool onConveyor;
     public float groundAngleValue;
-    public Vector3 perpAngle;
+    [FormerlySerializedAs("perpVec")] [FormerlySerializedAs("perpAngle")] public Vector3 perpVector;
 
     [SerializeField] private Renderer _renderer;
     
@@ -59,8 +60,8 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     [SerializeField] WallChecker wallChecker;
 
     // 상태
-    [SerializeField] E_PlayeState curState;
-    private PlayerState[] states = new PlayerState[(int)E_PlayeState.Size];
+    [SerializeField] EPlayerState curState;
+    private PlayerState[] states = new PlayerState[(int)EPlayerState.Size];
 
     // 물리 충돌 레이어
     private int obstacleLayer;
@@ -114,7 +115,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
         Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
         _renderer.material.color = color;
 
-        curState = E_PlayeState.Idle;
+        curState = EPlayerState.Idle;
         states[(int)curState].Enter();
 
         // 레이어 미리 캐싱
@@ -149,7 +150,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
         //MoveOnConveyor();
 
-        if (!isGrounded && curState != E_PlayeState.Bounced)
+        if (!isGrounded && curState != EPlayerState.Bounced)
         {
             MoveInAir();
         }
@@ -167,7 +168,7 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     }
 
 
-    public void ChangeState(E_PlayeState newState)
+    public void ChangeState(EPlayerState newState)
     {
         states[(int)curState].Exit();
         curState = newState;
@@ -177,18 +178,15 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == obstacleLayer)
-        {
-            if (curState == E_PlayeState.Bounced)
-                return;
-
-            if(collision.gameObject.TryGetComponent<BounceObject>(out BounceObject bounceObject))
-            {
-                bouncedForce = bounceObject.Power;
-                bouncedDir = collision.contacts[0].normal.normalized;
-                ChangeState(E_PlayeState.Bounced);
-            }
-        }
+        if (collision.gameObject.layer != obstacleLayer) 
+            return;
+        if (curState == EPlayerState.Bounced)
+            return;
+        if (!collision.gameObject.TryGetComponent(out BounceObject bounceObject))
+            return;
+        bouncedForce = bounceObject.Power;
+        bouncedDir = collision.contacts[0].normal.normalized;
+        ChangeState(EPlayerState.Bounced);
     }
 
     public void MoveInAir()
@@ -227,16 +225,16 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
     private void InitStates()
     {
         // 상태
-        states[(int)E_PlayeState.Idle] = new IdleState(this);
-        states[(int)E_PlayeState.Run] = new RunState(this);
-        states[(int)E_PlayeState.Jump] = new JumpState(this);
-        states[(int)E_PlayeState.Fall] = new FallState(this);
-        states[(int)E_PlayeState.Diving] = new DivingState(this);
-        states[(int)E_PlayeState.FallingImpact] = new FallingImpact(this);
-        states[(int)E_PlayeState.StandUp] = new StandUpState(this);
-        states[(int)E_PlayeState.Bounced] = new BouncedState(this);
-        states[(int)E_PlayeState.Grabbing] = new GrabbingState(this);
-        states[(int)E_PlayeState.Grabbed] = new GrabbedState(this);
+        states[(int)EPlayerState.Idle] = new IdleState(this);
+        states[(int)EPlayerState.Run] = new RunState(this);
+        states[(int)EPlayerState.Jump] = new JumpState(this);
+        states[(int)EPlayerState.Fall] = new FallState(this);
+        states[(int)EPlayerState.Diving] = new DivingState(this);
+        states[(int)EPlayerState.FallingImpact] = new FallingImpact(this);
+        states[(int)EPlayerState.StandUp] = new StandUpState(this);
+        states[(int)EPlayerState.Bounced] = new BouncedState(this);
+        states[(int)EPlayerState.Grabbing] = new GrabbingState(this);
+        states[(int)EPlayerState.Grabbed] = new GrabbedState(this);
     }
 
     public void HandleMoveInputs()
@@ -292,14 +290,16 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
                 onConveyor = false;
             }
 
+            
+            //3D는 Perpendicular가 아닌 Cross 외적계산
+            perpVector = Vector3.Cross(chosenHit.normal,Vector3.up).normalized;
             // 각도 계산
-            perpAngle = Vector3.Cross(chosenHit.normal,Vector3.up).normalized; //3D는 Perpendicular가 아닌 cross를 써야함, 외적을 계산해 수직벡터를 구하는 방식
             groundAngleValue = Vector3.Angle(chosenHit.normal, Vector3.up);
 
             isSlope = groundAngleValue > 0;
 
             Debug.DrawLine(chosenHit.point, chosenHit.point + chosenHit.normal, Color.blue); // 법선 벡터
-            Debug.DrawLine(chosenHit.point, chosenHit.point + perpAngle, Color.red);        // 법선 벡터와 수직인 벡터
+            Debug.DrawLine(chosenHit.point, chosenHit.point + perpVector, Color.red);        // 법선 벡터와 수직인 벡터
         }
         else
         {
@@ -442,17 +442,17 @@ public class PlayerController : MonoBehaviourPun, IGrabbable
 
     public void OnGrabbedEnter()
     {
-        if(curState != E_PlayeState.Grabbed)
+        if(curState != EPlayerState.Grabbed)
         {
-            ChangeState(E_PlayeState.Grabbed);
+            ChangeState(EPlayerState.Grabbed);
         }
     }
 
     public void OnGrabbedLeave()
     {
-        if(curState == E_PlayeState.Grabbed)
+        if(curState == EPlayerState.Grabbed)
         {
-            ChangeState(E_PlayeState.Idle);
+            ChangeState(EPlayerState.Idle);
         }
     }
 }

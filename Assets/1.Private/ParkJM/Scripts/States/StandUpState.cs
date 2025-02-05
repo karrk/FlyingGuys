@@ -20,7 +20,7 @@ public class StandUpState : PlayerState
         if (!player.view.IsAnimationFinished())
             return;
         //if(player.isGrounded)
-            player.ChangeState(E_PlayeState.Idle);
+            player.ChangeState(EPlayerState.Idle);
     }
 
     public override void Exit()

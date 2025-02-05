@@ -23,11 +23,11 @@ public class JumpState : PlayerState
         // 임시
         if (player.rb.velocity.y < 0.1f)// && !player.isGrounded)
         {
-            player.ChangeState(E_PlayeState.Fall);
+            player.ChangeState(EPlayerState.Fall);
         }
         else if (RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
-            player.ChangeState(E_PlayeState.Diving);
+            player.ChangeState(EPlayerState.Diving);
         }
         //else if(player.isGrounded)
         //{

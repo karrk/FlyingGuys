@@ -19,7 +19,7 @@ public class FallingImpact : PlayerState
         if (!player.view.IsAnimationFinished())
             return;
         
-        player.ChangeState(E_PlayeState.StandUp);
+        player.ChangeState(EPlayerState.StandUp);
     }
 
     public override void Exit()

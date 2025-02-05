@@ -44,11 +44,11 @@ public class BouncedState : PlayerState
         {
             if (player.isGrounded)
             {
-                player.ChangeState(E_PlayeState.Idle);
+                player.ChangeState(EPlayerState.Idle);
             }
             else
             {
-                player.ChangeState(E_PlayeState.Fall);
+                player.ChangeState(EPlayerState.Fall);
             }
         }
     }

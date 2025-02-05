@@ -21,29 +21,24 @@ public class IdleState : PlayerState
     {
         if (player.jumpBufferCounter > 0f && player.isJumpable)
         {
-            player.ChangeState(E_PlayeState.Jump);
+            player.ChangeState(EPlayerState.Jump);
         }
         else if (player.moveDir != Vector3.zero && player.isGrounded )
         {
             //Debug.Log("이동 입력 idle 상태에 들어옴");
-            player.ChangeState(E_PlayeState.Run);
+            player.ChangeState(EPlayerState.Run);
         }
         else if(!player.isGrounded && player.rb.velocity.y != 0)
         {
-            player.ChangeState(E_PlayeState.Fall);
+            player.ChangeState(EPlayerState.Fall);
         }
         else if(RemoteInput.inputs[player.model.playerNumber].divingInput)
         {
-            player.ChangeState(E_PlayeState.Diving);
+            player.ChangeState(EPlayerState.Diving);
         }
         else if (RemoteInput.inputs[player.model.playerNumber].grabInput)
         {
-            player.ChangeState(E_PlayeState.Grabbing);
-        }
-        // 임시 테스트용 잡힌상태
-        else if (Input.GetKeyDown(KeyCode.G))
-        {
-            player.ChangeState(E_PlayeState.Grabbed);
+            player.ChangeState(EPlayerState.Grabbing);
         }
     }
 

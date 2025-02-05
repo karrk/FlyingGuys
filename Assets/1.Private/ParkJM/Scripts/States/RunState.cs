@@ -28,11 +28,11 @@ public class RunState : PlayerState
     {
         if (player.jumpBufferCounter > 0f && player.isJumpable)
         {
-            player.ChangeState(E_PlayeState.Jump);
+            player.ChangeState(EPlayerState.Jump);
         }
         else if(!player.isGrounded)
         {
-            player.ChangeState(E_PlayeState.Fall);
+            player.ChangeState(EPlayerState.Fall);
         }
         //if (RemoteInput.inputs[player.model.playerNumber].jumpInput && player.isJumpable)
         //{
@@ -41,11 +41,11 @@ public class RunState : PlayerState
 
         else if (player.moveDir.sqrMagnitude < 0.1f) //== Vector3.zero)
         {
-            player.ChangeState(E_PlayeState.Idle);
+            player.ChangeState(EPlayerState.Idle);
         }
         else if (RemoteInput.inputs[player.model.playerNumber].grabInput)
         {
-            player.ChangeState(E_PlayeState.Grabbing);
+            player.ChangeState(EPlayerState.Grabbing);
         }
 
     }
@@ -85,6 +85,7 @@ public class RunState : PlayerState
 
             //targetVelocity = player.moveDir * player.perpAngle * player.model.moveSpeed;
         }
+        // ddd
         else
         {
             targetVelocity = player.moveDir * player.model.moveSpeed;
